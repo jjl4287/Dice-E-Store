@@ -5,11 +5,11 @@ An online E-store system built in Java 8=>11 and Angular
   
 ## Team
 
-- Brady Self
 - Vincent Sarubbi
 - Maximo Bustillo
 - Chris Ferioli
 - Jakob Langtry
+- Brady Self
 
 
 ## Prerequisites
