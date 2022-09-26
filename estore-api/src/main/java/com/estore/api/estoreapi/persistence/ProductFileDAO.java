@@ -15,30 +15,30 @@ import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.Product;
 
 /**
- * Implements the functionality for JSON file-based peristance for Products
+ * Provides for JSON File based persistence
  * 
- * {@literal @}Component Spring annotation instantiates a single instance of this
- * class and injects the instance into other classes as needed
+ * {@literal @} Creates single instance of class and injects into others
+ *              as needed.
  * 
- * @author SWEN Faculty
+ * @author Team A - Bovines
  */
+
 @Component
 public class ProductFileDAO implements ProductDAO {
     private static final Logger LOG = Logger.getLogger(ProductFileDAO.class.getName());
-    Map<Integer,Product> Products;   // Provides a local cache of the Product objects
-                                // so that we don't need to read from the file
-                                // each time
+    Map<Integer,Product> Products;      // Provides a local copy of products so that
+                                        // we don't need to read from the file each time
     private ObjectMapper objectMapper;  // Provides conversion between Product
                                         // objects and JSON text format written
                                         // to the file
-    private static int nextId;  // The next Id to assign to a new Product
-    private String filename;    // Filename to read from and write to
+    private static int nextId;          // The next Id to assign to a new Product
+    private String filename;            // Filename to read from and write to
 
     /**
      * Creates a Product File Data Access Object
      * 
-     * @param filename Filename to read from and write to
-     * @param objectMapper Provides JSON Object to/from Java Object serialization and deserialization
+     * @param filename     Filename to read from and write to
+     * @param objectMapper Provides JSON object
      * 
      * @throws IOException when file cannot be accessed or read from
      */
@@ -49,7 +49,7 @@ public class ProductFileDAO implements ProductDAO {
     }
 
     /**
-     * Generates the next id for a new {@linkplain Product Product}
+     * Generates the next id 
      * 
      * @return The next id
      */
@@ -60,24 +60,26 @@ public class ProductFileDAO implements ProductDAO {
     }
 
     /**
-     * Generates an array of {@linkplain Product Products} from the tree map
+     * Generates an array of Products from the tree map
      * 
-     * @return  The array of {@link Product Products}, may be empty
+     * @return  The array of Products, may be empty
      */
     private Product[] getProductsArray() {
         return getProductsArray(null);
     }
 
     /**
-     * Generates an array of {@linkplain Product Products} from the tree map for any
-     * {@linkplain Product Products} that contains the text specified by containsText
+     * Generates an array of Products from the tree map for any
+     * Products that contains the text specified by containsText
      * <br>
-     * If containsText is null, the array contains all of the {@linkplain Product Products}
+     * If containsText is null, the array contains all of the Products
      * in the tree map
+     * <br> 
+     * if containsText is null there is no filter
      * 
-     * @return  The array of {@link Product Products}, may be empty
+     * @return  The array of Products, may be empty
      */
-    private Product[] getProductsArray(String containsText) { // if containsText == null, no filter
+    private Product[] getProductsArray(String containsText) {
         ArrayList<Product> ProductArrayList = new ArrayList<>();
 
         for (Product Product : Products.values()) {
@@ -92,24 +94,24 @@ public class ProductFileDAO implements ProductDAO {
     }
 
     /**
-     * Saves the {@linkplain Product Products} from the map into the file as an array of JSON objects
+     * Saves the Products from the map into the file as an array of JSON objects
      * 
-     * @return true if the {@link Product Products} were written successfully
+     * @return true if the Products were written with little to no error.
      * 
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
         Product[] ProductArray = getProductsArray();
 
-        // Serializes the Java Objects to JSON objects into the file
-        // writeValue will thrown an IOException if there is an issue
-        // with the file or reading from the file
+        // Translates the Java Objects to JSON objects, then to the file
+        // writeValue will throw IOException if error
+        // with file or reading from file
         objectMapper.writeValue(new File(filename),ProductArray);
         return true;
     }
 
     /**
-     * Loads {@linkplain Product Products} from the JSON file into the map
+     * Loads Products from the JSON file into the map
      * <br>
      * Also sets next id to one more than the greatest id found in the file
      * 
@@ -121,9 +123,8 @@ public class ProductFileDAO implements ProductDAO {
         Products = new TreeMap<>();
         nextId = 0;
 
-        // Deserializes the JSON objects from the file into an array of Products
-        // readValue will throw an IOException if there's an issue with the file
-        // or reading from the file
+        // Reads JSON objects from file into array of Products
+        // readValue will throw IOException on error
         Product[] ProductArray = objectMapper.readValue(new File(filename),Product[].class);
 
         // Add each Product to the tree map and keep track of the greatest id
@@ -132,7 +133,7 @@ public class ProductFileDAO implements ProductDAO {
             if (Product.getId() > nextId)
                 nextId = Product.getId();
         }
-        // Make the next id one greater than the maximum from the file
+        // Make the next id one greater than maximum from file
         ++nextId;
         return true;
     }

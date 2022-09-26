@@ -4,14 +4,19 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
- * Represents a Hero entity
+ * Represents a Product
  * 
- * @author SWEN Faculty
+ * @author Team A - Bovines
  */
 public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
+
+
+
+    //                                   ????
+    // we should change this
     static final String STRING_FORMAT = "Hero [id=%d, name=%s]";
 
     @JsonProperty("id") private int id;
@@ -28,9 +33,8 @@ public class Product {
      * 
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
-     * of the JSON object to the Java object in mapping the fields.  If a field
-     * is not provided in the JSON object, the Java field gets the default Java
-     * value, i.e. 0 for int
+     * of the JSON object to the Java object in mapping the fields.  If field
+     * is not provided it will be set to default java value
      */
     public Product(@JsonProperty("id") int id, @JsonProperty("name") String name,
      @JsonProperty("qty") int qty, @JsonProperty("price") double price) {
@@ -40,36 +44,52 @@ public class Product {
         this.price = price;
     }
 
+    /**
+     * Getter for price
+     * @return price of product
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * Setter for price
+     * @param price price of product
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * Getter for qty
+     * @return qty of products
+     */
     public int getQty() {
         return qty;
     }
 
+    /**
+     * setter for quantity
+     * @param qty quantity of products
+     */
     public void setQty(int qty) {
         this.qty = qty;
     }
 
     /**
-     * Retrieves the id of the product
+     * getter for the product id
      * @return The id of the product
      */
     public int getId() {return id;}
 
     /**
-     * Sets the name of the product - necessary for JSON object to Java object deserialization
+     * Sets the name of the product - necessary for JSON/JAVA deserialization
      * @param name The name of the product
      */
     public void setName(String name) {this.name = name;}
 
     /**
-     * Retrieves the name of the product
+     * gets name of the product
      * @return The name of the product
      */
     public String getName() {return name;}
