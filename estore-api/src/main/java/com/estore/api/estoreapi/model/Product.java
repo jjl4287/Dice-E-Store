@@ -12,12 +12,7 @@ public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
-
-
-
-    //                                   ????
-    // we should change this
-    static final String STRING_FORMAT = "Hero [id=%d, name=%s]";
+    static final String STRING_FORMAT = "Product [id=%d, name=%s, price=%lf, qty=%d]";
 
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
