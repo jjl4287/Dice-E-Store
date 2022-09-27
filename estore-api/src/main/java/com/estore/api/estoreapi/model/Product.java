@@ -13,11 +13,11 @@ public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
-    static final String STRING_FORMAT = "Product [id=%d, name=%s, price=%lf, qty=%d]";
+    static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f]";
 
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
-    @JsonProperty("price") private double price;
+    @JsonProperty("price") private float price;
     @JsonProperty("qty") private int qty;
 
     /**
@@ -33,7 +33,7 @@ public class Product {
      * is not provided it will be set to default java value
      */
     public Product(@JsonProperty("id") int id, @JsonProperty("name") String name,
-     @JsonProperty("qty") int qty, @JsonProperty("price") double price) {
+     @JsonProperty("qty") int qty, @JsonProperty("price") float price) {
         this.id = id;
         this.name = name;
         this.qty = qty;
@@ -70,7 +70,7 @@ public class Product {
      * Getter for price
      * @return price of product
      */
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
@@ -78,7 +78,7 @@ public class Product {
      * Setter for price
      * @param price price of product
      */
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
