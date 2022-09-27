@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.model;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,6 +39,32 @@ public class Product {
         this.qty = qty;
         this.price = price;
     }
+
+    /**
+     * an equals function override for product comparison
+     * @param product to be compared
+     * @return true if equal, false if not.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Product)) {
+            return false;
+        }
+        Product product = (Product) o;
+        return id == product.id && Objects.equals(name, product.name);
+    }
+
+    /**
+     * a hashcode generator for products
+     * @return hashcode for product
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+
 
     /**
      * Getter for price
