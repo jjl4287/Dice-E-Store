@@ -36,7 +36,7 @@ public class UserController {
     private User currentUser;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to respond to requests
      * 
      * @param userDAO The Product Data Access Object to perform CRUD operations
      * <br>
@@ -105,11 +105,11 @@ public class UserController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * <p>
      * Example: Find all users that contain the text "nameHere"
-     * GET http://localhost:8080/products/?name=nameHere
+     * GET http://localhost:8080/users/?username=nameHere
      */
     @GetMapping("/")
-    public ResponseEntity<User[]> searchProducts(@RequestParam String username) {
-        LOG.info("GET /products/?username="+username);
+    public ResponseEntity<User[]> searchUsers(@RequestParam String username) {
+        LOG.info("GET /users/?username="+username);
 
         try {
             return new ResponseEntity<User[]>(userDAO.searchUsers(username), HttpStatus.OK);
@@ -133,7 +133,7 @@ public class UserController {
      */
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        LOG.info("POST /products " + user);
+        LOG.info("POST /users " + user);
 
         try {
             User created = userDAO.createUser(user);
@@ -217,7 +217,7 @@ public class UserController {
      * <br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping
+    @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
         LOG.info("GET /users/?username=" + username + "?password=");
        
