@@ -1,0 +1,20 @@
+
+h	java:S116"SRename this field "Products" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô¬Áá
+[
+java:S11248"EReorder the modifiers to comply with the Java Language Specification.(¥„˜—
+L
+java:S2696|"6Make the enclosing method "static" or remove this set.(½šğ§
+R
+java:S2696†"6Make the enclosing method "static" or remove this set.(à¸Ùşÿÿÿÿÿ
+R
+java:S2696‰"6Make the enclosing method "static" or remove this set.(ç©ğûÿÿÿÿ
+C
+java:S1125Ã"'Remove the unnecessary boolean literal.(¹¥ÿÿÿÿÿ
+B
+java:S1068"'Remove this unused "LOG" private field.(âÊ¦Ìşÿÿÿÿ
+k	java:S117S"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€Ã ÿøÿÿÿÿ
+k	java:S117["QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö–ğ½şÿÿÿÿ
+f	java:S117h"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Á§¿
+f	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ®½7
+g	java:S117²"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö§äÁ
+l	java:S117Á"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(áÃ†¬şÿÿÿÿ
