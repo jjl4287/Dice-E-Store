@@ -59,4 +59,9 @@ public class Order {
         return Objects.hash(uuid);
     }    
 
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, products, user);
+    }
+
 }
