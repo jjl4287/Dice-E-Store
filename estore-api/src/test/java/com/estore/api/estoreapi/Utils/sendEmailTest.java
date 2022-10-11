@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import com.estore.util.sendEmail;
 
+import com.estore.api.estoreapi.model.*;
 
 /**
  * The unit test suite for the sendEmail class
@@ -33,7 +34,7 @@ public class sendEmailTest {
 
 
         // Invoke
-        sendEmail mail  = new sendEmail(expected_sender,expected_subject,password,debug);
+        sendEmail mail  = new sendEmail(expected_sender,password,expected_subject,debug);
 
         // Analyze
         assertEquals(expected_sender,mail.getSender());
@@ -49,7 +50,10 @@ public class sendEmailTest {
     @Test
     public void testSendMail() {
     // Setup
-    User usr= new user();
+    int id = 1;
+    String userName="test";
+    String userPassword= "test";
+    User usr= new User(id,userName,userPassword);
     Set<Product> purchase = new HashSet<>();
     for(int i =0;i<5;i++){
         purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -59,10 +63,11 @@ public class sendEmailTest {
     String password = "nyijfcnuywyjoalz";
     String recipient = "maximokbustillo@gmail.com";
     boolean debug = false;
-    Order order = new Order(purchase,usr);
+
+    com.estore.api.estoreapi.model.Order order = new com.estore.api.estoreapi.model.Order(purchase,usr);
     
 
-    sendEmail mail  = new sendEmail(sender,subject,password,debug);
+    sendEmail mail  = new sendEmail(sender,password,subject,debug);
     
     // Analyze
     assertTrue(mail.sendMail(recipient, "Your order has been shipped.\n Order: "+order.toString()));

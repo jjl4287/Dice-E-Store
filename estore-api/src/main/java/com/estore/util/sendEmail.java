@@ -6,9 +6,9 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-import com.estore.api.estoreapi.model.*;
+// import com.estore.api.estoreapi.model.*;
 
-import com.estore.api.estoreapi.model.Product;
+// import com.estore.api.estoreapi.model.Product;
 
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -19,10 +19,10 @@ public class sendEmail {
     private String subject;
     private Session session;
 
-    public sendEmail(String sender,String password,String Subject,boolean debug) { 
+    public sendEmail(String sender,String password,String subject,boolean debug) { 
         // Sender's email ID needs to be mentioned
         this.sender=sender;
-
+        this.subject=subject;
         // Assuming you are sending email from through gmails smtp
         String host = "smtp.gmail.com";
 

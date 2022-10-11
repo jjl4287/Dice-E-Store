@@ -33,7 +33,6 @@ public class OrderTests {
 
 
 
-
         // Invoke
         Order order  = new Order(expected_purchase,expected_usr);
 
