@@ -21,7 +21,10 @@ public class OrderTests {
     @Test
     public void testCtor() {
         // Setup
-        User expected_usr= new user();
+        int id = 1;
+        String userName="test";
+        String password= "test";
+        User expected_usr= new User(id,userName,password);
         Set<Product> expected_purchase = new HashSet<>();
         boolean expected_fulfillment=false;
         for(int i =0;i<5;i++){
@@ -44,7 +47,10 @@ public class OrderTests {
     @Test
     public void testFullfillment() {
         // Setup
-        User usr= new user();
+        int id = 1;
+        String userName="test";
+        String password= "test";
+        User usr= new User(id,userName,password);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -65,7 +71,10 @@ public class OrderTests {
     @Test
     public void testEquality() {
      // Setup
-     User usr= new user();
+     int id = 1;
+    String userName="test";
+    String password= "test";
+    User usr= new User(id,userName,password);
      Set<Product> purchase = new HashSet<>();
      for(int i =0;i<5;i++){
          purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -83,7 +92,10 @@ public class OrderTests {
     @Test
     public void testToString() {
         // Setup
-        User usr= new user();
+        int id = 1;
+        String userName="test";
+        String password= "test";
+        User usr= new User(id,userName,password);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));

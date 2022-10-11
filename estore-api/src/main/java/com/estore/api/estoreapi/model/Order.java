@@ -24,7 +24,7 @@ public class Order {
         return copy;
     }
     public User getUser(){
-        return user.Clone();
+        return new User(user.getId(),user.getUserName(),user.getPassword());
     }
     public UUID getUuid() {
         return uuid;
