@@ -21,7 +21,7 @@ import com.estore.api.estoreapi.model.*;
  * 
  * @author SWEN Faculty
  */
-@Tag("Model-tier")
+@Tag("Utils-tier")
 public class sendEmailTest {
     @Test
     public void testCtor() {
