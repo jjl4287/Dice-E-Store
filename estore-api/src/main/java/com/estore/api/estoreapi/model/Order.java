@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Order {
 
-    public static final String STRING_FORMAT = "Product [products=%s, user=%s]";
+    public static final String STRING_FORMAT = "Product [products=%s, user=%s, uuid=%s]";
 
     @JsonProperty("products") private Set<Product> products;
     @JsonProperty("user") private User user;
@@ -67,7 +67,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, products, user);
+        return String.format(STRING_FORMAT, products, user,uuid);
     }
 
 }
