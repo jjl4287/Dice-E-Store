@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.estore.api.estoreapi.model.*;
 
 /**
- * The unit test suite for the User class
+ * The unit test suite for the Order class
  * 
  * @author Team A - Bovines - Maximo Bustillo 
  */
