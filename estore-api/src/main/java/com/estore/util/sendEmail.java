@@ -14,15 +14,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 
 
-public class sendEmail {
-    private String sender;
-    private String subject;
-    private Session session;
-
-    public sendEmail(String sender,String password,String subject,boolean debug) { 
+public class SendEmail {
+    public static boolean sendmail(String sender,String password,String recipient, String subject, String body,boolean debug) { 
         // Sender's email ID needs to be mentioned
-        this.sender=sender;
-        this.subject=subject;
         // Assuming you are sending email from through gmails smtp
         String host = "smtp.gmail.com";
 
@@ -36,7 +30,7 @@ public class sendEmail {
         properties.put("mail.smtp.auth", "true");
 
         // Get the Session object.// and pass username and password
-        this.session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
@@ -47,28 +41,7 @@ public class sendEmail {
         });
              // Used to debug SMTP issues
         session.setDebug(debug);
-    }
-    
-    public String getSender() {
-        return sender;
-    }
-    public String getSubject() {
-        return subject;
-    }
-	// public String orderToBody(Order order){
-    //     StringBuilder b = new StringBuilder();
-    //     b.append("Your order has been shipped.\n")
-    //     b.append("Your order");
-    //     double total = 0;
-    //     for(Product p: order.getProducts()){
-    //         b.append(String.format("%d %s (%f)\n",p.getQty(),p.getName(),p.getPrice()));
-    //         total+=p.getQty()*p.getPrice();
-    //     }
-    //     b.append(String.format("For a total of %f.", total));
-    //     return b.toString();
-    // }
 
-    public boolean sendMail(String recipient,String body){
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
