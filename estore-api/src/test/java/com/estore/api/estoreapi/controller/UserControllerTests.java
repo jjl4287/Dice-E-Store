@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
-import com.estore.api.estoreapi.controller.UserController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -24,28 +23,28 @@ import org.springframework.http.ResponseEntity;
  */
 @Tag("Controller-tier")
 public class UserControllerTests {
-    private StoreController storeController;
-    private UserDAO mockuserDAO;
+    private UserController userController;
+    private UserDAO mockUserDAO;
 
     /**
      * Before each test, create a new userController object and inject
      * a mock user DAO
      */
     @BeforeEach
-    public void setupuserController() {
-        mockuserDAO = mock(UserDAO.class);
-        storeController = new UserController(mockuserDAO);
+    public void setupUserController() {
+        mockUserDAO = mock(UserDAO.class);
+        userController = new UserController(mockUserDAO);
     }
 
-    @Test s
-    public void testGetuser() throws IOException {  // getuser may throw IOException
+    @Test
+    public void testGetUser() throws IOException {  // getuser may throw IOException
         // Setup
-        User user = new User(1, "D10", 20, 9.99f);
+        User user = new User(1, "testUserName", "testPassword");
         // When the same id is passed in, our mock user DAO will return the user object
-        when(mockuserDAO.getuser(user.getId())).thenReturn(user);
+        when(mockUserDAO.getUser(user.getId())).thenReturn(user);
 
         // Invoke
-        ResponseEntity<user> response = storeController.getuser(user.getId());
+        ResponseEntity<User> response = userController.getUser(user.getId());
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -53,29 +52,29 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testGetuserNotFound() throws Exception { // createuser may throw IOException
+    public void testGetUserNotFound() throws Exception { // createuser may throw IOException
         // Setup
         int userId = 99;
         // When the same id is passed in, our mock user DAO will return null, simulating
         // no user found
-        when(mockuserDAO.getuser(userId)).thenReturn(null);
+        when(mockUserDAO.getUser(userId)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<user> response = storeController.getuser(userId);
+        ResponseEntity<User> response = userController.getUser(userId);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
 
     @Test
-    public void testGetuserHandleException() throws Exception { // createuser may throw IOException
+    public void testGetUserHandleException() throws Exception { // createuser may throw IOException
         // Setup
         int userId = 99;
         // When getuser is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).getuser(userId);
+        doThrow(new IOException()).when(mockUserDAO).getUser(userId);
 
         // Invoke
-        ResponseEntity<user> response = storeController.getuser(userId);
+        ResponseEntity<User> response = userController.getUser(userId);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -87,15 +86,15 @@ public class UserControllerTests {
      ****************************************************************/
 
     @Test
-    public void testCreateuser() throws IOException {  // createuser may throw IOException
+    public void testCreateUser() throws IOException {  // createuser may throw IOException
         // Setup
-        user user = new user(1, "D20", 10, 19.99f);
+        User user = new User(1, "testUserNameTwo", "testPasswordTwo");
         // when createuser is called, return true simulating successful
         // creation and save
-        when(mockuserDAO.createuser(user)).thenReturn(user);
+        when(mockUserDAO.createUser(user)).thenReturn(user);
 
         // Invoke
-        ResponseEntity<user> response = storeController.createuser(user);
+        ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
@@ -103,47 +102,47 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateuserFailed() throws IOException {  // createuser may throw IOException
+    public void testCreateUserFailed() throws IOException {  // createuser may throw IOException
         // Setup
-        user user = new user(1, "D12", 15, 14.99f);
+        User user = new User(1, "testUserNameThree", "testPasswordThree");
         // when createuser is called, return false simulating failed
         // creation and save
-        when(mockuserDAO.createuser(user)).thenReturn(null);
+        when(mockUserDAO.createUser(user)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<user> response = storeController.createuser(user);
+        ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
     }
 
     @Test
-    public void testCreateuserHandleException() throws IOException {  // createuser may throw IOException
+    public void testCreateUserHandleException() throws IOException {  // createuser may throw IOException
         // Setup
-        user user = new user(1, "D6", 25, 6.99f);
+        User user = new User(1, "testUserName4", "testPassword4");
 
         // When createuser is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).createuser(user);
+        doThrow(new IOException()).when(mockUserDAO).createUser(user);
 
         // Invoke
-        ResponseEntity<user> response = storeController.createuser(user);
+        ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
 
     @Test
-    public void testUpdateuser() throws IOException { // updateuser may throw IOException
+    public void testUpdateUser() throws IOException { // updateuser may throw IOException
         // Setup
-        user user = new user(1, "D4", 30, 3.99f);
+        User user = new User(1, "TestingUSerName", "thisismypasswordnow");
         // when updateuser is called, return true simulating successful
         // update and save
-        when(mockuserDAO.updateuser(user)).thenReturn(user);
-        ResponseEntity<user> response = storeController.updateuser(user);
-        user.setName("Bolt");
+        when(mockUserDAO.updateUser(user)).thenReturn(user);
+        ResponseEntity<User> response = userController.updateUser(user);
+        user.setUserName("Bolt");
 
         // Invoke
-        response = storeController.updateuser(user);
+        response = userController.updateUser(user);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -153,13 +152,13 @@ public class UserControllerTests {
     @Test
     public void testUpdateuserFailed() throws IOException { // updateuser may throw IOException
         // Setup
-        user user = new user(1, "Super Dice", 5, 29.99f);
+        User user = new User(1, "blehname", "thisispassword");
         // when updateuser is called, return true simulating successful
         // update and save
-        when(mockuserDAO.updateuser(user)).thenReturn(null);
+        when(mockUserDAO.updateUser(user)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<user> response = storeController.updateuser(user);
+        ResponseEntity<User> response = userController.updateUser(user);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -168,12 +167,12 @@ public class UserControllerTests {
     @Test
     public void testUpdateuserHandleException() throws IOException { // updateuser may throw IOException
         // Setup
-        user user = new user(1, "Ultra Dice", 3, 34.99f);
+        User user = new User(1, "blehnameTwo", "thisispasswordtwo");
         // When updateuser is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).updateuser(user);
+        doThrow(new IOException()).when(mockUserDAO).updateUser(user);
 
         // Invoke
-        ResponseEntity<user> response = storeController.updateuser(user);
+        ResponseEntity<User> response = userController.updateUser(user);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -182,14 +181,14 @@ public class UserControllerTests {
     @Test
     public void testGetusers() throws IOException { // getusers may throw IOException
         // Setup
-        user[] users = new user[2];
-        users[0] = new user(1, "Insta-Dice", 10, 17.99f);
-        users[1] = new user(1, "Cool Dice", 9, 12.99f);
+        User[] users = new User[2];
+        users[0] = new User(1, "InstaUser", "InstaPassword");
+        users[1] = new User(1, "CoolUser", "CoolPassword");
         // When getusers is called return the users created above
-        when(mockuserDAO.getusers()).thenReturn(users);
+        when(mockUserDAO.getUsers()).thenReturn(users);
 
         // Invoke
-        ResponseEntity<user[]> response = storeController.getusers();
+        ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -200,10 +199,10 @@ public class UserControllerTests {
     public void testGetusersHandleException() throws IOException { // getusers may throw IOException
         // Setup
         // When getusers is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).getusers();
+        doThrow(new IOException()).when(mockUserDAO).getUsers();
 
         // Invoke
-        ResponseEntity<user[]> response = storeController.getusers();
+        ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -212,16 +211,16 @@ public class UserControllerTests {
     @Test
     public void testSearchusers() throws IOException { // findusers may throw IOException
         // Setup
-        String searchString = "la";
-        user[] users = new user[2];
-        users[0] = new user(1, "Insta-Dice", 10, 17.99f);
-        users[1] = new user(1, "Cool Dice", 9, 12.99f);
+        String searchString = "Us";
+        User[] users = new User[2];
+        users[0] = new User(1, "InstaUser", "InstaPassword");
+        users[1] = new User(1, "CoolUser", "CoolPassword");
         // When findusers is called with the search string, return the two
         /// users above
-        when(mockuserDAO.searchusers(searchString)).thenReturn(users);
+        when(mockUserDAO.searchUsers(searchString)).thenReturn(users);
 
         // Invoke
-        ResponseEntity<user[]> response = storeController.searchusers(searchString);
+        ResponseEntity<User[]> response = userController.searchUsers(searchString);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -232,11 +231,11 @@ public class UserControllerTests {
     public void testSearchusersHandleException() throws IOException { // findusers may throw IOException
         // Setup
         String searchString = "an";
-        // When createuser is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).searchusers(searchString);
+        // When searchuser is called on the Mock user DAO, throw an IOException
+        doThrow(new IOException()).when(mockUserDAO).searchUsers(searchString);
 
         // Invoke
-        ResponseEntity<user[]> response = storeController.searchusers(searchString);
+        ResponseEntity<User[]> response = userController.searchUsers(searchString);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -247,10 +246,10 @@ public class UserControllerTests {
         // Setup
         int userId = 99;
         // when deleteuser is called return true, simulating successful deletion
-        when(mockuserDAO.deleteuser(userId)).thenReturn(true);
+        when(mockUserDAO.deleteUser(userId)).thenReturn(true);
 
         // Invoke
-        ResponseEntity<user> response = storeController.deleteuser(userId);
+        ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -261,10 +260,10 @@ public class UserControllerTests {
         // Setup
         int userId = 99;
         // when deleteuser is called return false, simulating failed deletion
-        when(mockuserDAO.deleteuser(userId)).thenReturn(false);
+        when(mockUserDAO.deleteUser(userId)).thenReturn(false);
 
         // Invoke
-        ResponseEntity<user> response = storeController.deleteuser(userId);
+        ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -275,10 +274,10 @@ public class UserControllerTests {
         // Setup
         int userId = 99;
         // When deleteuser is called on the Mock user DAO, throw an IOException
-        doThrow(new IOException()).when(mockuserDAO).deleteuser(userId);
+        doThrow(new IOException()).when(mockUserDAO).deleteUser(userId);
 
         // Invoke
-        ResponseEntity<user> response = storeController.deleteuser(userId);
+        ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
