@@ -26,6 +26,7 @@ public class OrderTests {
         String password= "test";
         User expected_usr= new User(id,userName,password);
         Set<Product> expected_purchase = new HashSet<>();
+        UUID expected_uuid= UUID.randomUUID();
         boolean expected_fulfillment=false;
         for(int i =0;i<5;i++){
             expected_purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -34,13 +35,19 @@ public class OrderTests {
 
 
         // Invoke
-        Order order  = new Order(expected_purchase,expected_usr);
+        Order order1  = new Order(expected_purchase,expected_usr);
+        Order order2  = new Order(expected_purchase,expected_usr,expected_uuid);
 
         // Analyze
-        assertEquals(expected_purchase,order.getProducts());
-        assertEquals(expected_usr,order.getUser());
-        assertEquals(expected_fulfillment,order.getFulfillment());
-        assertNotNull(order.getUuid());
+        assertEquals(expected_purchase,order1.getProducts());
+        assertEquals(expected_usr,order1.getUser());
+        assertEquals(expected_fulfillment,order1.getFulfillment());
+        assertNotNull(order1.getUuid());
+
+        assertEquals(expected_purchase,order2.getProducts());
+        assertEquals(expected_usr,order2.getUser());
+        assertEquals(expected_fulfillment,order2.getFulfillment());
+        assertEquals(expected_uuid,order2.getUuid());
     }
 
     @Test
