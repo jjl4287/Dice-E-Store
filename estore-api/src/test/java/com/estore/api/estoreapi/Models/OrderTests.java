@@ -107,9 +107,10 @@ public class OrderTests {
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
         }
-        String expected_string = String.format(Order.STRING_FORMAT,purchase,usr);
+        UUID uuid = UUID.randomUUID();
+        String expected_string = String.format(Order.STRING_FORMAT,purchase,usr,uuid);
 
-        Order order = new Order(purchase,usr);
+        Order order = new Order(purchase,usr,uuid);
 
         // Invoke
         String actual_string = order.toString();
