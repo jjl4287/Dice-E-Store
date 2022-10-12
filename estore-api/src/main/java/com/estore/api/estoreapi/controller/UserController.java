@@ -137,9 +137,9 @@ public class UserController {
         try {
             User created = userDAO.createUser(user);
             if(created != null) {
-                return new ResponseEntity<User>(created, HttpStatus.OK);
+                return new ResponseEntity<User>(created, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);        
+            return new ResponseEntity<>(HttpStatus.CONFLICT);        
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
