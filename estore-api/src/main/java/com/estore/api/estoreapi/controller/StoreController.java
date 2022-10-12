@@ -137,9 +137,9 @@ public class StoreController {
         try {
             Product created = productDAO.createProduct(product);
             if(created != null) {
-                return new ResponseEntity<Product>(created, HttpStatus.OK);
+                return new ResponseEntity<Product>(created, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);        
+            return new ResponseEntity<>(HttpStatus.CONFLICT);        
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());

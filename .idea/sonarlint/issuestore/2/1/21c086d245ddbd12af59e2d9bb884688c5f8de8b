@@ -1,0 +1,18 @@
+
+=
+java:S3416"'Update this logger to use "User.class".(½†ô«
+A
+java:S1172"",Remove this unused method parameter "price".(ê­s
+F
+java:S1172]"+Remove this unused method parameter "name".(–ÑĞ…ÿÿÿÿÿ
+Q	java:S125f"<This block of commented-out lines of code should be removed.(‚¡òÌ
+E
+java:S1656%"/Remove or correct this useless self-assignment.(÷ã´½
+J
+java:S1656]"/Remove or correct this useless self-assignment.(–ÑĞ…ÿÿÿÿÿ
+=
+java:S1068"'Remove this unused "LOG" private field.(½†ô«
+|
+java:S4165%"fRemove this useless assignment; "password" already holds the assigned value along all execution paths.(÷ã´½
+
+java:S4165]"fRemove this useless assignment; "username" already holds the assigned value along all execution paths.(–ÑĞ…ÿÿÿÿÿ
