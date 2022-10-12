@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 import com.estore.api.estoreapi.model.*;
 
 /**
- * The unit test suite for the Order class
+ * The unit test suite for the User class
  * 
- * @author SWEN Faculty
+ * @author Team A - Bovines - Maximo Bustillo 
  */
 @Tag("Model-tier")
 public class OrderTests {
@@ -87,6 +87,7 @@ public class OrderTests {
          purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
      }
 
+    //create
     Order order  = new Order(purchase,usr);
     Order order2 = new Order(purchase, usr);
     
