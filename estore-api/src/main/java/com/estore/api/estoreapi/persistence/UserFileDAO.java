@@ -33,6 +33,7 @@ public class UserFileDAO implements UserDAO {
                                         // to the file
     private static int nextId;          // The next Id to assign to a new User
     private String filename;            // Filename to read from and write to
+    private User currentUser;           // The user currently logged in
 
     /**
      * Creates a User File Data Access Object
@@ -45,6 +46,7 @@ public class UserFileDAO implements UserDAO {
     public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
+        this.currentUser = new User(0, "Guest", "guestPassword");
         load();  // load the users from the file
     }
 
@@ -93,21 +95,6 @@ public class UserFileDAO implements UserDAO {
         return userArray;
     }
 
-    /**
-     *{@inheritDoc}
-     */
-    @Override
-    public User login( String username, String password){
-        User[] userArray = getUsersArray(username);
-        for (User user : userArray) {
-            if (user.getUserName().equals(username)) {
-                if (user.getPassword().equals(password)) {
-                    return user;
-                }
-            }
-        }
-        return null;
-    }
     /**
      * Saves the Users from the map into the file as an array of JSON objects
      * 
@@ -229,6 +216,30 @@ public class UserFileDAO implements UserDAO {
             else
                 return false;
         }
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public User login( String username, String password) throws IOException{
+        User[] userArray = getUsersArray(username);
+        for (User user : userArray) {
+            if (user.getUserName().equals(username)) {
+                if (user.getPassword().equals(password)) {
+                    this.currentUser = user;
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public User getCurrentUser() throws IOException {
+        return this.currentUser;
     }
 }
 
