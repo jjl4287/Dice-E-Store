@@ -10,7 +10,7 @@ import com.estore.api.estoreapi.model.Product;
 /**
  * The unit test suite for the Product class
  * 
- * @author SWEN Faculty
+ * @author Team A Bovines - Chris Ferioli, Maximo Bustillo, Vincent Sarubbi
  */
 @Tag("Model-tier")
 public class ProductTests {

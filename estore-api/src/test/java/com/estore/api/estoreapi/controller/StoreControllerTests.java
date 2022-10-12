@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 /**
  * Test the Product Controller class
  * 
- * @author 
+ * @author Team A Bovines - Chris Ferioli, Vincent Sarubbi
  */
 @Tag("Controller-tier")
 public class StoreControllerTests {
