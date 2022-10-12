@@ -1,20 +1,22 @@
 package com.estore.api.estoreapi.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.io.IOException;
+
+
 
 /**
  * Test the user Controller class
@@ -88,7 +90,7 @@ public class UserControllerTests {
     @Test
     public void testCreateUser() throws IOException {  // createuser may throw IOException
         // Setup
-        User user = new User(1, "testUserNameTwo", "testPasswordTwo");
+        User user = new User(1, "testUserName", "testPassword");
         // when createuser is called, return true simulating successful
         // creation and save
         when(mockUserDAO.createUser(user)).thenReturn(user);
@@ -104,7 +106,7 @@ public class UserControllerTests {
     @Test
     public void testCreateUserFailed() throws IOException {  // createuser may throw IOException
         // Setup
-        User user = new User(1, "testUserNameThree", "testPasswordThree");
+        User user = new User(1, "testUserName", "testPassword");
         // when createuser is called, return false simulating failed
         // creation and save
         when(mockUserDAO.createUser(user)).thenReturn(null);
