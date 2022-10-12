@@ -1,18 +1,24 @@
 package com.estore.api.estoreapi.model;
 import java.util.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Order {
 
     public static final String STRING_FORMAT = "Product [products=%s, user=%s]";
 
-    private Set<Product> products;
-    private User user;
-    private UUID uuid;
+    @JsonProperty("products") private Set<Product> products;
+    @JsonProperty("user") private User user;
+    @JsonProperty("UUID") private UUID uuid;
     private boolean fulfilled=false;
 
-    public Order(Set<Product> purchase,User user){
+    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user){
         this.products= new HashSet<>(purchase);
         this.uuid = UUID.randomUUID();
+        this.user=user;
+    }
+    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user,@JsonProperty("UUID") UUID uuid){
+        this.products= new HashSet<>(purchase);
+        this.uuid = uuid;
         this.user=user;
     }
 
