@@ -222,9 +222,9 @@ public class UserController {
         try {
             User loginUser = userDAO.login(username, password);
             if (loginUser != null) {
-                return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+                return new ResponseEntity<User>(loginUser, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+            return new ResponseEntity<>(HttpStatus.CONFLICT); 
         } catch (IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -245,7 +245,7 @@ public class UserController {
     public ResponseEntity<User> getCurrentUser() {
         LOG.info("GET /users/currentUser");
         try {
-            return new ResponseEntity<User>(userDAO.getCurrentUser(), HttpStatus.OK);
+            return new ResponseEntity<User>(userDAO.getCurrentUser(), HttpStatus.CREATED);
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
