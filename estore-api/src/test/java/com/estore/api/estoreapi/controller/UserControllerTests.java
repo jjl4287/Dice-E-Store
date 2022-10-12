@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * Test the user Controller class
  * 
- * @author Jakob Langtry
+ * @author Team A Bovines - Jakob Langtry
  */
 @Tag("Controller-tier")
 public class UserControllerTests {
@@ -283,5 +283,11 @@ public class UserControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
+    public void testLogin() throws IOException {
+        User user = new User(69, "user", "pass");
+        when(userController.login(user.getUserName(), user.getPassword()))
     }
 }
