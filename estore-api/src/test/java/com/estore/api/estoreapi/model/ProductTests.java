@@ -1,4 +1,4 @@
-package com.estore.api.estoreapi.Models;
+package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
