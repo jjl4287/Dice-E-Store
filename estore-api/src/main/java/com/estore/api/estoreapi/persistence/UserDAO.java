@@ -43,6 +43,15 @@ public interface UserDAO {
     User getUser(int id) throws IOException;
 
     /**
+     * Retrieves the current user
+     *
+     * @return the current user (could be guest)
+     *
+     * @throws IOException if an issue with underlying storage
+     */
+    User getCurrentUser() throws IOException;
+
+    /**
      * Creates and saves a User
      *
      * @param User User object to be created and saved
@@ -90,5 +99,5 @@ public interface UserDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    User login(String username, String password);
+    User login(String username, String password) throws IOException;
 }

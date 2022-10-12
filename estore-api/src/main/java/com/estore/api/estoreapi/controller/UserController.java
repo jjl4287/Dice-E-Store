@@ -33,7 +33,6 @@ import com.estore.api.estoreapi.model.User;
 public class UserController {
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());
     private UserDAO userDAO;
-    private User currentUser;
 
     /**
      * Creates a REST API controller to respond to requests
@@ -83,7 +82,7 @@ public class UserController {
      */
     @GetMapping("")
     public ResponseEntity<User[]> getUsers() {
-        LOG.info("GET /products");
+        LOG.info("GET /users");
         try {
             return new ResponseEntity<User[]>(userDAO.getUsers(), HttpStatus.OK);
         }
@@ -219,13 +218,38 @@ public class UserController {
      */
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
-        LOG.info("GET /users/?username=" + username + "?password=");
-       
-        User loginUser = userDAO.login(username, password);
-        if (loginUser != null) {
-            currentUser = loginUser;
-            return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+        LOG.info("GET /users/login?username=" + username + "?password=");
+        try {
+            User loginUser = userDAO.login(username, password);
+            if (loginUser != null) {
+                return new ResponseEntity<User>(loginUser, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        
+    }
+
+    /**
+     * Returns currently loggen in user
+     * 
+     * @return ResponseEntity with current User and HTTP status of OK if there is a user logged in
+     * <br>
+     * ResponseEntity with Guest User and HTTP status of OK
+     * <br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("/currentUser")
+    public ResponseEntity<User> getCurrentUser() {
+        LOG.info("GET /users/currentUser");
+        try {
+            return new ResponseEntity<User>(userDAO.getCurrentUser(), HttpStatus.OK);
+        }
+        catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
