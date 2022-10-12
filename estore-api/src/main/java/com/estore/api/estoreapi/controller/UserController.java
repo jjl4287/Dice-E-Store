@@ -122,7 +122,7 @@ public class UserController {
     /**
      * Creates a user with the provided user object
      * 
-     * @param product - The user to create
+     * @param user - The user to create
      * 
      * @return ResponseEntity with created user object and HTTP status of CREATED
      * <br>
@@ -150,7 +150,7 @@ public class UserController {
     /**
      * Updates the user with the provided user object, if it exists
      * 
-     * @param product The user to update
+     * @param user The user to update
      * 
      * @return ResponseEntity with updated user object and
      * HTTP status of OK if updated
