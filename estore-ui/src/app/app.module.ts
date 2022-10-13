@@ -17,6 +17,10 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './admin/admin.component';
+import { MessageService } from './message.service';
+import { ProductService } from './product.service';
+import { UserService } from './user.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -36,8 +40,9 @@ import { AdminComponent } from './admin/admin.component';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent},
+      { path: '', component: ProductsComponent},
       { path: 'products', component: ProductsComponent},
       { path: 'shopping-cart', component: ShoppingCartComponent},
       { path: 'check-out', component: CheckOutComponent},
@@ -49,7 +54,11 @@ import { AdminComponent } from './admin/admin.component';
     ]),
     NgbModule
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    ProductService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

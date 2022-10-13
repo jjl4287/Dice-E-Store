@@ -9,9 +9,12 @@ import { ProductService } from '../product.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  products: Product[] = [];
+  products: any;
+  //products: Product[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) { 
+    this.products = productService.getProducts();
+  }
 
   ngOnInit(): void {
     this.getProducts();
@@ -32,7 +35,7 @@ export class ProductsComponent implements OnInit {
   }
 
   delete(product: Product): void {
-    this.products = this.products.filter(h => h !== product);
+    this.products = this.products.filter((h: Product) => h !== product);
     this.productService.deleteProduct(product.id).subscribe();
   }
 

@@ -1,10 +1,18 @@
-<h2>My Products</h2>
+<h2>Product Warks!</h2>
+<div *ngFor="let product of products" class="card" style="width: 15rem;"> 
+  <div class="card-body">
+    <h4 class="card-title">/h4>{{ product.name }}</h4>
+      <p class="card-text">/p>{{product.price | currency: 'USD' : true }}</p>
+        <a href="#" class="btn btn-primary">Add To Cart</a>
+  </div>
+</div>
+
 
 <div>
   <label for="new-product">Product name: </label>
   <input id="new-product" #productName />
 
-  <!-- (click) passes input value to add() and then clears the input -->
+    <!-- (click) passes input value to add() and then clears the input -->
   <button type="button" class="add-button" (click)="add(productName.value); productName.value=''">
     Add product
   </button>
@@ -15,7 +23,6 @@
     <a routerLink="/detail/{{product.id}}">
       <span class="badge">{{product.id}}</span> {{product.name}}
     </a>
-    <button type="button" class="delete" title="delete product"
-      (click)="delete(product)">x</button>
+    <button type="button" class="delete" title="delete product" (click)="delete(product)">x</button>
   </li>
 </ul>
