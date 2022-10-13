@@ -10,7 +10,6 @@ import { ProductService } from '../product.service';
 })
 export class ProductsComponent implements OnInit {
   products: any;
-  //products: Product[] = [];
 
   constructor(private productService: ProductService) { 
     this.products = productService.getProducts();
@@ -20,11 +19,13 @@ export class ProductsComponent implements OnInit {
     this.getProducts();
   }
 
+  // using the service from the backend to properly grab products
   getProducts(): void {
     this.productService.getProducts()
     .subscribe(products => this.products = products);
   }
 
+  // using service to add products
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
@@ -34,6 +35,7 @@ export class ProductsComponent implements OnInit {
       });
   }
 
+  // using service to delete products
   delete(product: Product): void {
     this.products = this.products.filter((h: Product) => h !== product);
     this.productService.deleteProduct(product.id).subscribe();
