@@ -1,3 +1,7 @@
 .dropdown-toggle {
     cursor: pointer;
 }
+
+.navbar-brand {
+    font-family: 'Trebuchet MS', sans-serif;
+}
