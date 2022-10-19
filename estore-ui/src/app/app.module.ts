@@ -21,6 +21,7 @@ import { MessageService } from './message.service';
 import { ProductService } from './product.service';
 import { UserService } from './user.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    ProductFormComponent
+
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
       { path: 'my/orders', component: MyOrdersComponent},
       { path: 'login', component: LoginComponent},
       { path: 'admin/products', component: AdminProductsComponent},
+      { path: 'admin/products/new', component: ProductFormComponent},
       { path: 'admin/orders', component: AdminOrdersComponent}
     ]),
     NgbModule
