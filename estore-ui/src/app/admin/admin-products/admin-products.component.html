@@ -1,3 +1,28 @@
 <div class="padding">
-    <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+    <p>
+        <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+    </p>
+    <p>
+        <input type="text" class="form-control" placeholder="Search...">
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let p of products">
+                <th> {{p.name}} </th>
+                <th> {{p.qty}} </th>
+                <th> {{p.price}} </th>
+                <th>
+                    <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
+                </th>
+            </tr>
+        </tbody>
+    </table>
 </div>

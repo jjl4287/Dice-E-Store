@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit {
   // using service to add products
   add(name: string): void {
     name = name.trim();
-    if (!name) { return; }
+    if (!name)  { return; }
     this.productService.addProduct({ name } as Product)
       .subscribe(product => {
         this.products.push(product);
