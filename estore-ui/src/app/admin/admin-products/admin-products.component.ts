@@ -13,6 +13,8 @@ import {
 })
 export class AdminProductsComponent implements OnInit {
   products: any;
+  products$!: Observable<Product[]>;
+  private searchTerms = new Subject<string>();
 
   constructor(private productService: ProductService) {
     this.products = productService.getProducts();
@@ -44,8 +46,6 @@ export class AdminProductsComponent implements OnInit {
     this.productService.deleteProduct(product.id).subscribe();
   }
 
-  products$!: Observable<Product[]>;
-  private searchTerms = new Subject<string>();
 
   // Push a search term into the observable stream.
   search(term: string): void {
