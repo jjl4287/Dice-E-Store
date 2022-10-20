@@ -23,6 +23,8 @@ import { ProductService } from './product.service';
 import { UserService } from './user.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { AboutComponent } from './about/about.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     AdminOrdersComponent,
     LoginComponent,
     AdminComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    AboutComponent,
+    ContactUsComponent
 
   ],
   imports: [
@@ -48,6 +52,8 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent},
+      { path: 'contact-us', component: ContactUsComponent},
+      { path: 'about', component: AboutComponent},
       { path: 'products', component: ProductsComponent},
       { path: 'shopping-cart', component: ShoppingCartComponent},
       { path: 'check-out', component: CheckOutComponent},

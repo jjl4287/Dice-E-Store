@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../user.service';
 import { User } from '../user'
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,6 +10,7 @@ import { User } from '../user'
 })
 export class LoginComponent implements OnInit {
   users: any;
+  router: Router;
 
     ngOnInit() {
       //Add User form validations
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password).subscribe()
     }
   
-    // using service to add products
+    // using service to add users
     add(username: string, password: string): void {
       username = username.trim();
       if (!username) { return; }
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
         .subscribe(user => {
           this.users.push(user);
         });
+        this.userService.login(username, password)
     }
   
     // using service to delete products
@@ -52,8 +55,9 @@ export class LoginComponent implements OnInit {
   //Form Validables
   registerForm: any = FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, router: Router) {
     //this.users = userService.getUsers();
+    this.router = router;
   }
   //Add user form actions
   get f() { return this.registerForm.controls; }
@@ -67,6 +71,7 @@ export class LoginComponent implements OnInit {
     //True if all the fields are filled
     if (this.submitted) {
       this.getCurrentUser();
+      this.router.navigateByUrl("http://localhost:4200/")
     }
 
   }

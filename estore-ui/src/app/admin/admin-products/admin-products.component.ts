@@ -21,7 +21,8 @@ export class AdminProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.productService.getProducts()
+      .subscribe(products => this.products = products);
     this.products$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(200),
@@ -36,8 +37,6 @@ export class AdminProductsComponent implements OnInit {
 
   // using the service from the backend to properly grab products
   getProducts(): void {
-    this.productService.getProducts()
-      .subscribe(products => this.products = products);
   }
 
   // using service to delete products
