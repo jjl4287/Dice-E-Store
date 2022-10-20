@@ -15,6 +15,9 @@
             </tr>
         </thead>
         <tbody>
+            <div *ngIf="condition; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>Content to render when condition is true.</ng-template>
+            <ng-template #elseBlock>Content to render when condition is false.</ng-template>
             <tr *ngFor="let p of products">
                 <th> {{p.name}} </th>
                 <th> {{p.qty}} </th>
