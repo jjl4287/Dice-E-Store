@@ -1,1 +1,24 @@
-<p>shopping-cart works!</p>
+<!-- This uses bootstraps card system, and their column row alignment system
+     for the ideal level of prettyness -->
+<h3 class="padding">Shopping Cart</h3>
+<div class="container text-left">
+    <div class="row row-cols-4">
+        <div *ngFor="let product of cart" class="col">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{ product.name }}</h4>
+                    <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
+                    <p class="card-text">{{product.qty}}</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" (click)="reduceProduct(product)">-</a>
+                    <div class="divider"></div>
+                    <a class="btn btn-primary" (click)="removeProduct(product)">Delete</a>
+                    <div class="divider"></div>
+                    <a class="btn btn-primary" (click)="addProduct(product)">+</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-primary" (click)="checkOut()">Check Out</a>

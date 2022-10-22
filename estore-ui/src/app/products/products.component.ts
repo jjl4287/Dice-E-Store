@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-products',
@@ -35,10 +36,15 @@ export class ProductsComponent implements OnInit {
       });
   }
 
+  addToCart(product: Product):void{
+    ShoppingCartComponent.prototype.addProduct(product);
+  }
+
   // using service to delete products
   delete(product: Product): void {
     this.products = this.products.filter((h: Product) => h !== product);
     this.productService.deleteProduct(product.id).subscribe();
   }
+
 
 }
