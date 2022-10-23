@@ -14,7 +14,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 
 
-public class SendEmail {
+public class sendEmail {
     public static boolean sendmail(String sender,String password,String recipient, String subject, String body,boolean debug) { 
         // Sender's email ID needs to be mentioned
         // Assuming you are sending email from through gmails smtp
