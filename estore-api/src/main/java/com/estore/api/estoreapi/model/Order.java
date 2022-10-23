@@ -4,6 +4,8 @@ import java.util.*;
 import javax.swing.plaf.FontUIResource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Represents an Order
@@ -14,27 +16,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Order {
     public static final String STRING_FORMAT = "Product [products=%s, user=%s, uuid=%s]";
 
-    @JsonProperty("products") private Set<Product> products;
-    @JsonProperty("user") private User user;
-    @JsonProperty("UUID") private UUID uuid;
+    private Set<Product> products;
+    private User user;
+    private UUID uuid;
     private boolean fulfilled=false;
 
-    /**
-     * Create a new User with the given id, username, and password
-     * 
-     * @param products a set of products included in the order
-     * @param user The associated user 
-     *
-     *
-     * {@literal @}JsonProperty is used in serialization and deserialization
-     * of the JSON object to the Java object in mapping the fields.  If field
-     * is not provided it will be set to default java value
-     */
-    public Order(Set<Product> purchase,User user){
-        this.products= new HashSet<>(purchase);
-        this.uuid = UUID.randomUUID();
-        this.user=user;
-    }
+
     /**
      * Create a new User with the given id, username, and password
      * @param products a set of products included in the order
@@ -47,11 +34,28 @@ public class Order {
      * of the JSON object to the Java object in mapping the fields.  If field
      * is not provided it will be set to default java value
      */
-    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user,@JsonProperty("UUID") UUID uuid){
+    @JsonCreator
+    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid){
         this.products= new HashSet<>(purchase);
-        this.uuid = uuid;
+        this.uuid=uuid;
         this.user=user;
     }
+
+    /**
+     * Create a new User with the given id, username, and password
+     * 
+     * @param products a set of products included in the order
+     * @param user The associated user 
+     *
+     *
+     * 
+     */
+    public Order(Set<Product> purchase,User user){
+        this.products= new HashSet<>(purchase);
+        this.uuid = UUID.randomUUID();
+        this.user=user;
+    }
+    
     /**
      * Getter for products
      * @return products of order
@@ -83,7 +87,6 @@ public class Order {
      * changes it to true
      */
     public void fulfillOrder(){
-        //this.user.updateOrder(this);
         fulfilled=true;
     }
     /**

@@ -1,1 +1,1 @@
-[{"id":11,"name":"Mr. Dice","qty":10,"price":29.99},{"id":12,"name":"Mrs. Dice","qty":5,"price":39.99},{"id":13,"name":"Mr. Dice","qty":10,"price":29.99}]
+[{ "id": 11, "name": "Mr. Dice", "qty": 10, "price": 29.99 }, { "id": 12, "name": "Mrs. Dice", "qty": 5, "price": 39.99 }, { "id": 13, "name": "Mr. Dice", "qty": 10, "price": 29.99 }, { "id": 1, "name": "nextIDTest", "qty": 10, "price": 29.99 }]
