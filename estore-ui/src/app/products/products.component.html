@@ -22,13 +22,12 @@
             </ng-template>
             <ng-template #elseBlock>
                 <tr *ngFor="let p of products$ | async">
-                    <div class="container text-left">
+<div class="container text-left">
   <div class="row row-cols-4">
-    <div *ngFor="let product of products" class="col">
       <div class="card" style="width: 15rem;">
         <div class="card-body">
-          <h4 class="card-title">{{ product.name }}</h4>
-          <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
+          <h4 class="card-title">{{ p.name }}</h4>
+          <p class="card-text">{{p.price | currency: 'USD' : true }}</p>
         </div>
         <div class="card-footer">
           <a href="#" class="btn btn-primary">Add To Cart</a>
@@ -36,7 +35,6 @@
       </div>
     </div>
   </div>
-</div>
                 </tr>      
             </ng-template>
 
