@@ -1,5 +1,8 @@
 package com.estore.api.estoreapi.model;
 import java.util.*;
+
+import javax.swing.plaf.FontUIResource;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -27,7 +30,7 @@ public class Order {
      * of the JSON object to the Java object in mapping the fields.  If field
      * is not provided it will be set to default java value
      */
-    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user){
+    public Order(Set<Product> purchase,User user){
         this.products= new HashSet<>(purchase);
         this.uuid = UUID.randomUUID();
         this.user=user;
@@ -80,6 +83,7 @@ public class Order {
      * changes it to true
      */
     public void fulfillOrder(){
+        //this.user.updateOrder(this);
         fulfilled=true;
     }
     /**

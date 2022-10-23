@@ -90,10 +90,12 @@ public class OrderTests {
     //create
     Order order  = new Order(purchase,usr);
     Order order2 = new Order(purchase, usr);
+    Order order3 = new Order(purchase, usr,order.getUuid());
     
     // Analyze
     assertEquals(order,order);
     assertNotEquals(order,order2);
+    assertEquals(order,order3);
     }
 
 
