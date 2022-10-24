@@ -34,7 +34,6 @@ public class OrderTests {
 
 
 
-
         // Invoke
         Order order1  = new Order(expected_purchase,expected_usr);
         Order order2  = new Order(expected_purchase,expected_usr,expected_uuid);
