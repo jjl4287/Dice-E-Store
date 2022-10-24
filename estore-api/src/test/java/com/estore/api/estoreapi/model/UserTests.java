@@ -98,7 +98,9 @@ public class UserTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User usr= new User(id,userName,password,orders,email);
 
         // Analyze
         assertNotNull(usr.hashCode());
@@ -109,14 +111,16 @@ public class UserTests {
         int id = 1;
         String userName="test";
         String password= "test";
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
 
 
-        User usr = new User(id,userName,password);
-        User usr2 = new User(id,userName,password);
-        User usr3 = new User(id+1,userName,password);
-        User usr4 = new User(id+1,userName+"1",password);
-        User usr5 = new User(id+1,userName+"1",password+"1");
-        User usr6 = new User(id+1,userName+"1",password+"1");
+        User usr = new User(id,userName,password,orders,email);
+        User usr2 = new User(id,userName,password,orders,email);
+        User usr3 = new User(id+1,userName,password,orders,email);
+        User usr4 = new User(id+1,userName+"1",password,orders,email);
+        User usr5 = new User(id+1,userName+"1",password+"1",orders,email);
+        User usr6 = new User(id+1,userName+"1",password+"1",orders,email);
         Object o = new Object();
 
         // Analyze

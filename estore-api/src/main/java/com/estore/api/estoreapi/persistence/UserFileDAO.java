@@ -251,5 +251,12 @@ public class UserFileDAO implements UserDAO {
     public User getCurrentUser() throws IOException {
         return this.currentUser;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public User getGuest() throws IOException {
+        return GUEST_USER;
+    }
 }
 

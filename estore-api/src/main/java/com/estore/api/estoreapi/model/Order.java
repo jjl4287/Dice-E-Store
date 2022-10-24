@@ -72,7 +72,7 @@ public class Order {
      * @return user of order
      */
     public User getUser(){
-        return new User(user.getId(),user.getUserName(),user.getPassword());
+        return new User(user);
     }
     /**
      * Getter for uuid

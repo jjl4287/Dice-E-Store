@@ -341,7 +341,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getCurrentUser();
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+        assertEquals(HttpStatus.OK,response.getStatusCode());
         assertEquals(user,response.getBody());
     }
     @Test
@@ -354,5 +354,14 @@ public class UserControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+    @Test
+    public void testLogout() throws IOException {
+        //Invoke
+        userController.logout();
+        ResponseEntity<User> response = userController.getGuest();
+
+        //Analyze
+        assertEquals(userController.getCurrentUser(), response);
     }
 }

@@ -218,7 +218,7 @@ public class UserController {
      */
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
-        LOG.info("GET /users/login?username=" + username + "?password=" + password);
+        LOG.info("GET /users/login?username=" + username + "&password=" + password);
         try {
             User loginUser = userDAO.login(username, password);
             if (loginUser != null) {
@@ -263,9 +263,27 @@ public class UserController {
     public ResponseEntity<User> getCurrentUser() {
         LOG.info("GET /users/currentUser");
         try {
-            return new ResponseEntity<User>(userDAO.getCurrentUser(), HttpStatus.CREATED);
+            return new ResponseEntity<User>(userDAO.getCurrentUser(), HttpStatus.OK);
         }
         catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Returns guest user account
+     * 
+     * @return ResponseEntity with guest user and HTTP status of Ok
+     * <br>
+     * REseponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("/guest")
+    public ResponseEntity<User> getGuest(){
+        LOG.info("GET /users/guest");
+        try {
+            return new ResponseEntity<>(userDAO.getGuest(), HttpStatus.OK);
+        } catch (Exception e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
