@@ -1,0 +1,67 @@
+<div style="position:relative; top:70px;">
+    <input #query type="text" class="form-control" placeholder="Search..." (input)="search(query.value)">
+</div>
+
+<div *ngIf="query.value === ''; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <div class="container text-left">
+        <div class="row row-cols-4">
+            <div *ngFor="let product of products" class="col">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" (click)="addToCart(product)">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <tr *ngFor="let p of products$ | async">
+        <div class="container text-left">
+            <div class="row row-cols-4">
+                <div class="card" style="width: 15rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ p.name }}</h4>
+                        <p class="card-text">{{p.price | currency: 'USD' : true }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" (click)="addToCart(p)">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+<!-- This uses bootstraps card system, and their column row alignment system
+     for the ideal level of prettyness -->
+<div class="container text-left">
+    <div class="row row-cols-4">
+        <div *ngFor="let product of products" class="col">
+            <div class="card" style="width: 15rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{ product.name }}</h4>
+                    <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" (click)="addToCart(product)">Add To Cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

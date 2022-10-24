@@ -1,0 +1,41 @@
+<div class="padding">
+    <p>
+        <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+    </p>
+    <p>
+        <input #query type="text" class="form-control" placeholder="Search..." (keyup)="search(query.value)">
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <div *ngIf="query.value === ''; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+                <tr *ngFor="let p of products">
+                    <th> {{p.name}} </th>
+                    <th> {{p.qty}} </th>
+                    <th> {{p.price}} </th>
+                    <th>
+                        <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
+                    </th>
+                </tr>                
+            </ng-template>
+            <ng-template #elseBlock>
+                <tr *ngFor="let p of products$ | async">
+                    <th> {{p.name}} </th>
+                    <th> {{p.qty}} </th>
+                    <th> {{p.price}} </th>
+                    <th>
+                        <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
+                    </th>
+                </tr>      
+            </ng-template>
+        </tbody>
+    </table>
+</div>

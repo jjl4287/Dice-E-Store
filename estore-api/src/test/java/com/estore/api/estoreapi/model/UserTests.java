@@ -1,6 +1,8 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -89,5 +91,41 @@ public class UserTests {
 
         // Analyze
         assertEquals(expected_string, actual_string);
+    }
+    @Test
+    public void testHashCode() {
+        // Setup
+        int id = 1;
+        String userName="test";
+        String password= "test";
+        User usr= new User(id,userName,password);
+
+        // Analyze
+        assertNotNull(usr.hashCode());
+    }
+    @Test
+    public void testequals() {
+        // Setup
+        int id = 1;
+        String userName="test";
+        String password= "test";
+
+
+        User usr = new User(id,userName,password);
+        User usr2 = new User(id,userName,password);
+        User usr3 = new User(id+1,userName,password);
+        User usr4 = new User(id+1,userName+"1",password);
+        User usr5 = new User(id+1,userName+"1",password+"1");
+        User usr6 = new User(id+1,userName+"1",password+"1");
+        Object o = new Object();
+
+        // Analyze
+        assertEquals(usr,usr2);
+        assertNotEquals(usr2,usr3);
+        assertNotEquals(usr3,usr4);
+        assertNotEquals(usr4,usr5);
+        assertNotEquals(usr3,usr5);
+        assertNotEquals(usr2,usr6);
+        assertNotEquals(usr,o);
     }
 }

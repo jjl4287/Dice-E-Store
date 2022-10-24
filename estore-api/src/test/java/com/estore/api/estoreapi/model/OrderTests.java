@@ -1,4 +1,4 @@
-package com.estore.api.estoreapi.Models;
+package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -31,7 +31,6 @@ public class OrderTests {
         for(int i =0;i<5;i++){
             expected_purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
         }
-
 
 
 
@@ -90,10 +89,14 @@ public class OrderTests {
     //create
     Order order  = new Order(purchase,usr);
     Order order2 = new Order(purchase, usr);
+    Order order3 = new Order(purchase, usr,order.getUuid());
+    Product p = new Product(1, "test", 1, 1);
     
     // Analyze
     assertEquals(order,order);
     assertNotEquals(order,order2);
+    assertEquals(order,order3);
+    assertNotEquals(order, p);
     }
 
 
@@ -118,6 +121,24 @@ public class OrderTests {
 
         // Analyze
         assertEquals(expected_string,actual_string);
+    }
+    @Test
+    public void testHashCode() {
+        // Setup
+        int id = 1;
+        String userName="test";
+        String password= "test";
+        User usr= new User(id,userName,password);
+        Set<Product> purchase = new HashSet<>();
+        for(int i =0;i<5;i++){
+            purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+        }
+
+        Order order = new Order(purchase,usr);
+
+
+        // Analyze
+        assertNotNull(order.hashCode());
     }
 
     

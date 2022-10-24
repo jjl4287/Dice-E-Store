@@ -146,12 +146,16 @@ public class UserFileDAOTests {
         assertEquals(user, expected);
     }
 
+    @Test
     public void testLogInFailed() {
         //Invoke
+        assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUserName(), ""));
         User user = assertDoesNotThrow(() -> testUserFileDAO.login("", ""));
+        User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUserName(), ""));
 
         //Analyze
         assertNull(user);
+        assertNull(user2);
     }
 
     @Test
