@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -96,6 +97,31 @@ public class ProductTests {
         
         // Analyze
         assertEquals(newPrice,product.getPrice());
+    }
+
+    @Test
+    public void testequals() {
+        // Setup
+        int expected_id = 99;
+        String expected_name = "Mr. Dice";
+        int expected_qty = 10;
+        float expected_price = 39.99f;
+
+
+
+        // Create
+        Product product  = new Product(expected_id,expected_name,expected_qty,expected_price);
+        Product product2  = new Product(expected_id,expected_name,expected_qty-1,expected_price-1);
+        Product product3  = new Product(expected_id-1,expected_name,expected_qty-1,expected_price-1);
+        Product product4  = new Product(expected_id-1,expected_name+"1",expected_qty,expected_price);
+        Object o = new Object();
+        //invoke 
+        
+        // Analyze
+        assertEquals(product,product2);
+        assertNotEquals(product2,product3);
+        assertNotEquals(product3,product4);
+        assertNotEquals(product,o);
     }
 
 
