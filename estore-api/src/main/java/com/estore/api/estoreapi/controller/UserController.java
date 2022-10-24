@@ -218,7 +218,7 @@ public class UserController {
      */
     @GetMapping("/login")
     public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
-        LOG.info("GET /users/login?username=" + username + "?password=");
+        LOG.info("GET /users/login?username=" + username + "?password=" + password);
         try {
             User loginUser = userDAO.login(username, password);
             if (loginUser != null) {
