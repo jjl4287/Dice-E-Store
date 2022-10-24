@@ -12,10 +12,10 @@
                 <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
                     formControlName="email" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="inputEmail4" #username>
-                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    [ngClass]="{ 'is-invalid': submitted}" id="inputEmail4" #username>
+                  <div *ngIf="submitted" class="invalid-feedback">
                     <div *ngIf="f.email.errors.required">Email is required</div>
-                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                    <!-- <div *ngIf="f.email.errors.email">Email must be a valid email address</div> -->
                   </div>
                   <label for="floatingInput">Email address</label>
                 </div>
@@ -36,9 +36,9 @@
                 </div>
                 <div class="d-grid">
                   <button (click)="login(username.value, password.value);"
-                    class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">Sign in</button>
+                    class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit" >Sign in</button>
                   <div class="text-center">
-                    <button (click)="add(username.value, password.value);" class="btn btn-sm btn-login" type="submit" routerLink="/" >Register as new user?</button>
+                    <button (click)="add(username.value, password.value);" class="btn btn-sm btn-login" type="submit" >Register as new user?</button>
                   </div>
                 </div>
               </form>

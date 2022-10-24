@@ -63,7 +63,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
       { path: 'admin/products', component: AdminProductsComponent},
       { path: 'admin/products/new', component: ProductFormComponent},
       { path: 'admin/orders', component: AdminOrdersComponent}
-    ]),
+    ],{ onSameUrlNavigation: 'reload' }),
     NgbModule
   ],
   providers: [

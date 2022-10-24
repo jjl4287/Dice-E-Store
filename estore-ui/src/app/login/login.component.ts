@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { UserService } from '../user.service';
 import { User } from '../user'
 import { Route, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,14 +11,16 @@ import { Route, Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   users: any;
+  currentUser!: User;
   router: Router;
+  constructor(private formBuilder: FormBuilder, private userService: UserService, router: Router) {
+    this.users = userService.getUsers();
+    this.router = router;
+  }
 
     ngOnInit() {
-      //Add User form validations
-      this.registerForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]]
-      });
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
     }
   
     // using the service from the backend to properly grab products
@@ -27,7 +30,11 @@ export class LoginComponent implements OnInit {
     }
   
     login(username: string, password: string): void {
-      this.userService.login(username, password).subscribe()
+      this.userService.login(username, password).subscribe();
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
+      this.router.navigate(['/'])
+      // window.location.reload();
     }
   
     // using service to add users
@@ -39,26 +46,16 @@ export class LoginComponent implements OnInit {
         .subscribe(user => {
           this.users.push(user);
         });
-        this.userService.login(username, password)
-    }
-  
-    // using service to delete products
-    delete(user: User): void {
-      this.users = this.users.filter((h: User) => h !== user);
-      this.userService.deleteUser(user.id).subscribe();
-    }
-
-    getCurrentUser(){
-      this.users = this.userService.getCurrentUser();
+      this.userService.login(username, password).subscribe();
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
+      this.router.navigate(['/'])
+      // window.location.reload();
     }
 
   //Form Validables
   registerForm: any = FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder, private userService: UserService, router: Router) {
-    //this.users = userService.getUsers();
-    this.router = router;
-  }
   //Add user form actions
   get f() { return this.registerForm.controls; }
   onSubmit() {
@@ -70,8 +67,9 @@ export class LoginComponent implements OnInit {
     }
     //True if all the fields are filled
     if (this.submitted) {
-      this.getCurrentUser();
-      this.router.navigateByUrl("http://localhost:4200/")
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
+      // this.router.navigate(['/'])
     }
 
   }

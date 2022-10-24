@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/product';
 import { ProductService } from 'src/app/product.service';
 import { Observable, Subject } from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { UserService } from '../user.service';
+import { User } from '../user';
 
 @Component({
   selector: 'bs-navbar',
@@ -13,14 +13,20 @@ import {
 })
 export class BsNavbarComponent implements OnInit {
   products: any;
+  currentUser: User | undefined;
   products$!: Observable<Product[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, public userService: UserService) {
     this.products = productService.getProducts();
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+    console.log(this.currentUser?.username)
   }
 
+
+
   ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.productService.getProducts()
       .subscribe(products => this.products = products);
     this.products$ = this.searchTerms.pipe(

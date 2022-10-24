@@ -97,14 +97,14 @@ export class UserService {
 
   // GET 
   login(username: string, password: string): Observable<User> {
-    const url = `${this.usersUrl}/login?username=${username}&password=${password}`;
+    const url = `${this.usersUrl}/login/?username=${username}&password=${password}`;
     return this.http.get<User>(url, this.httpOptions).pipe(
       tap(_ => this.log(`fetched user username=${username}`)),
       catchError(this.handleError<User>(`login username=${username} password=${password}`))
     );
   }
 
-  getCurrentUser() {
+  getCurrentUser(): Observable<User> {
     const url = `${this.usersUrl}/currentUser`;
     return this.http.get<User>(url).pipe(
       tap(_ => this.log(`fetched user`)),

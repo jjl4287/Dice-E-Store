@@ -30,11 +30,17 @@
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg></a>
                         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" routerLink="/login">Login</a>
+                            <div *ngIf="currentUser != undefined; then thenBlock else elseBlock"></div>
+                            <ng-template #thenBlock>
+                                <a class="dropdown-item" routerLink="/login">{{ currentUser?.username }}</a>
+                                <a class="dropdown-item">Logout</a>
+                            </ng-template>
+                            <ng-template #elseBlock>
+                                <a class="dropdown-item" routerLink="/login">Login</a>
+                            </ng-template>
                             <a class="dropdown-item" routerLink="/my/orders">My Orders</a>
                             <a class="dropdown-item" routerLink="admin/orders">Manage Orders</a>
                             <a class="dropdown-item" routerLink="admin/products">Manage Products</a>
-                            <a class="dropdown-item">Logout</a>
                         </div>
                     </li>
                 </ul>
