@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     }
 
     logout() {
-      this.userService.logout();
+      this.userService.logout().subscribe();
     }
   
     // using service to add users

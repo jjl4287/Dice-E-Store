@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { SelectMultipleControlValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'bs-navbar',
@@ -23,8 +24,8 @@ export class BsNavbarComponent implements OnInit {
     console.log(this.currentUser?.username)
   }
 
-  logout() {
-    this.userService.logout();
+  async logout() {
+    await this.userService.logout().subscribe();
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     window.location.reload();
   }
