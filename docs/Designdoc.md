@@ -36,18 +36,29 @@ This project is targeted towards making an easy to use e-shop that sells D&D rel
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+* The central design of the store includes a user and an admin
+* Both parties will have usernames and passwords which will allow them unique access to the store
+* the admin will be able to manage teh store by adding deleting and modifying products 
+* The user will be able to then borwse the store and add products to their shopping cart 
+* The user must then be able to place an order which will be relayed to the admin 
+* the admin will then be given the ability to send an automated email when the order is fulfilled 
+
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+* A minimum viable product includes a store which can be logged into with 2 rolls 
+* One which can add modify and delete products and teh other which can view them
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+* A user identification system with differing privilidges 
+* A user storage solution
+* A product model with an assosiated storage solution
+* A Robust front end with attractive design 
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
+* A check out page allowing the customer to purchase products 
+* An order to keep track of each individual purchase 
+* A way of displaying these orders for both users and the admin 
+* An email system to send automated emails
 
 
 ## Application Domain
@@ -110,6 +121,14 @@ with the e-store application.
 
 
 ### Model Tier
+
+* A product represents a single class of item on sale
+* it includes a name quantity and price as well as an unique ID 
+* An order consists of a list of products and a fulfillment status, the owner it belongs to and an unique ID
+* Orders are only equal if their IDs are the same as any two Orders might contain identical products but still be unique
+* The User represetns a single user split between the admin category and the customer category
+* The User contians an ID a Username and a Password. these all distinguish two users from each other 
+
 > _Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
 > Tier above._
@@ -118,6 +137,9 @@ with the e-store application.
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 
 ### Static Code Analysis/Design Improvements
+
+* I would like to revisit how our utility functions are implimented. I found the static email class inelligent. 
+
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
@@ -141,6 +163,8 @@ with the e-store application.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
+* Our testing results report 100% passing with 100% coverage
+
 > _Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your
