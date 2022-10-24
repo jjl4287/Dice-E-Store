@@ -33,8 +33,11 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
-      this.router.navigate(['/'])
-      // window.location.reload();
+      this.router.navigate([''])
+    }
+
+    logout() {
+      this.userService.logout();
     }
   
     // using service to add users
@@ -49,8 +52,7 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
-      this.router.navigate(['/'])
-      // window.location.reload();
+      this.router.navigate([''])
     }
 
   //Form Validables

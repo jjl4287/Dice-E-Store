@@ -15,7 +15,7 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
+                    <li *ngIf="currentUser?.username != 'admin'" class="nav-item">
                         <a class="nav-link" routerLink="/shopping-cart"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="20" height="20" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
                                 <path
@@ -33,14 +33,14 @@
                             <div *ngIf="currentUser != undefined; then thenBlock else elseBlock"></div>
                             <ng-template #thenBlock>
                                 <a class="dropdown-item" routerLink="/login">{{ currentUser?.username }}</a>
-                                <a class="dropdown-item">Logout</a>
+                                <button *ngIf="currentUser?.username != 'Guest'" (click)="logout()" class="dropdown-item">Logout</button>
                             </ng-template>
                             <ng-template #elseBlock>
                                 <a class="dropdown-item" routerLink="/login">Login</a>
                             </ng-template>
-                            <a class="dropdown-item" routerLink="/my/orders">My Orders</a>
-                            <a class="dropdown-item" routerLink="admin/orders">Manage Orders</a>
-                            <a class="dropdown-item" routerLink="admin/products">Manage Products</a>
+                            <a *ngIf="currentUser?.username != 'Guest'" class="dropdown-item" routerLink="/my/orders">My Orders</a>
+                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item" routerLink="admin/orders">Manage Orders</a>
+                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item" routerLink="admin/products">Manage Products</a>
                         </div>
                     </li>
                 </ul>

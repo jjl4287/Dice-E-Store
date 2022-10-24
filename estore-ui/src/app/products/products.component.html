@@ -12,7 +12,7 @@
                         <h4 class="card-title">{{ product.name }}</h4>
                         <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
                     </div>
-                    <div class="card-footer">
+                    <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
                         <a class="btn btn-primary" (click)="addToCart(product)">Add To Cart</a>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         <h4 class="card-title">{{ p.name }}</h4>
                         <p class="card-text">{{p.price | currency: 'USD' : true }}</p>
                     </div>
-                    <div class="card-footer">
+                    <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
                         <a class="btn btn-primary" (click)="addToCart(p)">Add To Cart</a>
                     </div>
                 </div>

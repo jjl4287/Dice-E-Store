@@ -4,9 +4,9 @@ import { Observable, Subject } from 'rxjs';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-products',
@@ -15,10 +15,12 @@ import {
 })
 export class ProductsComponent implements OnInit {
   products: any;
+  currentUser: User | undefined;
   products$!: Observable<Product[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private productService: ProductService) { 
+  constructor(private productService: ProductService, private userService: UserService) { 
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.products = productService.getProducts();
     this.productService.getProducts()
       .subscribe(products => this.products = products);
@@ -35,6 +37,7 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.getProducts();
   }
 

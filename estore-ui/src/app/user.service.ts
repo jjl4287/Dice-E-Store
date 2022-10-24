@@ -104,6 +104,14 @@ export class UserService {
     );
   }
 
+  logout() {
+    const url = `${this.usersUrl}/logout`;
+    return this.http.get<User>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`logged out user`)),
+      catchError(this.handleError<User>(`logout`))
+    );
+  }
+
   getCurrentUser(): Observable<User> {
     const url = `${this.usersUrl}/currentUser`;
     return this.http.get<User>(url).pipe(

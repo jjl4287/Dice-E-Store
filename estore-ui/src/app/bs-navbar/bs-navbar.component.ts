@@ -23,7 +23,11 @@ export class BsNavbarComponent implements OnInit {
     console.log(this.currentUser?.username)
   }
 
-
+  logout() {
+    this.userService.logout();
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+    window.location.reload();
+  }
 
   ngOnInit(): void {
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);

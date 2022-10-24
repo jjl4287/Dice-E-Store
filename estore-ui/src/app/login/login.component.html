@@ -6,7 +6,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-9 col-lg-8 mx-auto">
-              <h3 class="login-heading mb-4">Welcome back!</h3>
+              <h3 class="login-heading mb-4">Welcome!</h3>
               <!-- Sign In Form -->
               <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="form-floating mb-3">
@@ -14,10 +14,10 @@
                     formControlName="email" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted}" id="inputEmail4" #username>
                   <div *ngIf="submitted" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Email is required</div>
+                    <div *ngIf="f.email.errors.required">Username is required</div>
                     <!-- <div *ngIf="f.email.errors.email">Email must be a valid email address</div> -->
                   </div>
-                  <label for="floatingInput">Email address</label>
+                  <label for="floatingInput">Username</label>
                 </div>
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
@@ -38,7 +38,7 @@
                   <button (click)="login(username.value, password.value);"
                     class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit" >Sign in</button>
                   <div class="text-center">
-                    <button (click)="add(username.value, password.value);" class="btn btn-sm btn-login" type="submit" >Register as new user?</button>
+                    <button (click)="add(username.value, password.value);" class="btn btn-sm btn-login" type="submit">Register as new user?</button>
                   </div>
                 </div>
               </form>
