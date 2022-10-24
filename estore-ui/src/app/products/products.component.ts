@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
@@ -52,6 +53,17 @@ export class ProductsComponent implements OnInit {
         this.products.push(product);
       });
   }
+
+  addToCart(product: Product):void{
+    ShoppingCartComponent.prototype.addProduct(product);
+  }
+
+  // using service to delete products
+  delete(product: Product): void {
+    this.products = this.products.filter((h: Product) => h !== product);
+    this.productService.deleteProduct(product.id).subscribe();
+  }
+
 
 
   // Push a search term into the observable stream.
