@@ -19,6 +19,15 @@ public interface UserDAO {
     User[] getUsers() throws IOException;
 
     /**
+     * Retrieves guest account
+     * 
+     * @return guest account
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User getGuest() throws IOException;
+
+    /**
      * Finds all plain link user whose username contains the given text
      *
      * @param containsText The text to match against
@@ -100,4 +109,11 @@ public interface UserDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     User login(String username, String password) throws IOException;
+
+    /**
+     * logs out a user
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    void logout() throws IOException;
 }

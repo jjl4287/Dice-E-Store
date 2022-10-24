@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.User;
 
 import org.junit.jupiter.api.Tag;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 
@@ -41,7 +43,7 @@ public class UserControllerTests {
     @Test
     public void testGetUser() throws IOException {  // getuser may throw IOException
         // Setup
-        User user = new User(1, "testUserName", "testPassword");
+        User user = new User(1, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // When the same id is passed in, our mock user DAO will return the user object
         when(mockUserDAO.getUser(user.getId())).thenReturn(user);
 
@@ -90,7 +92,7 @@ public class UserControllerTests {
     @Test
     public void testCreateUser() throws IOException {  // createuser may throw IOException
         // Setup
-        User user = new User(1, "testUserName", "testPassword");
+        User user = new User(1, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // when createuser is called, return true simulating successful
         // creation and save
         when(mockUserDAO.createUser(user)).thenReturn(user);
@@ -106,7 +108,7 @@ public class UserControllerTests {
     @Test
     public void testCreateUserFailed() throws IOException {  // createuser may throw IOException
         // Setup
-        User user = new User(1, "testUserName", "testPassword");
+        User user = new User(1, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // when createuser is called, return false simulating failed
         // creation and save
         when(mockUserDAO.createUser(user)).thenReturn(null);
@@ -121,7 +123,7 @@ public class UserControllerTests {
     @Test
     public void testCreateUserHandleException() throws IOException {  // createuser may throw IOException
         // Setup
-        User user = new User(1, "testUserName4", "testPassword4");
+        User user = new User(1, "testUserName4", "testPassword4", new ArrayList<Order>(), "email");
 
         // When createuser is called on the Mock user DAO, throw an IOException
         doThrow(new IOException()).when(mockUserDAO).createUser(user);
@@ -136,7 +138,7 @@ public class UserControllerTests {
     @Test
     public void testUpdateUser() throws IOException { // updateuser may throw IOException
         // Setup
-        User user = new User(1, "TestingUSerName", "thisismypasswordnow");
+        User user = new User(1, "TestingUSerName", "thisismypasswordnow", new ArrayList<Order>(), "email");
         // when updateuser is called, return true simulating successful
         // update and save
         when(mockUserDAO.updateUser(user)).thenReturn(user);
@@ -154,7 +156,7 @@ public class UserControllerTests {
     @Test
     public void testUpdateUserFailed() throws IOException { // updateuser may throw IOException
         // Setup
-        User user = new User(1, "blehname", "thisispassword");
+        User user = new User(1, "blehname", "thisispassword", new ArrayList<Order>(), "email");
         // when updateuser is called, return null simulating unsuccessful
         // update and save
         when(mockUserDAO.updateUser(user)).thenReturn(null);
@@ -169,7 +171,7 @@ public class UserControllerTests {
     @Test
     public void testUpdateUserHandleException() throws IOException { // updateuser may throw IOException
         // Setup
-        User user = new User(1, "blehnameTwo", "thisispasswordtwo");
+        User user = new User(1, "blehnameTwo", "thisispasswordtwo", new ArrayList<Order>(), "email");
         // When updateuser is called on the Mock user DAO, throw an IOException
         doThrow(new IOException()).when(mockUserDAO).updateUser(user);
 
@@ -184,8 +186,8 @@ public class UserControllerTests {
     public void testGetUsers() throws IOException { // getusers may throw IOException
         // Setup
         User[] users = new User[2];
-        users[0] = new User(1, "InstaUser", "InstaPassword");
-        users[1] = new User(1, "CoolUser", "CoolPassword");
+        users[0] = new User(1, "InstaUser", "InstaPassword", new ArrayList<Order>(), "instaEmail");
+        users[1] = new User(1, "CoolUser", "CoolPassword", new ArrayList<Order>(), "coolEmail");
         // When getusers is called return the users created above
         when(mockUserDAO.getUsers()).thenReturn(users);
 
@@ -215,8 +217,8 @@ public class UserControllerTests {
         // Setup
         String searchString = "Us";
         User[] users = new User[2];
-        users[0] = new User(1, "InstaUser", "InstaPassword");
-        users[1] = new User(1, "CoolUser", "CoolPassword");
+        users[0] = new User(1, "InstaUser", "InstaPassword", new ArrayList<Order>(), "instaEmail");
+        users[1] = new User(1, "CoolUser", "CoolPassword", new ArrayList<Order>(), "coolEmail");
         // When findusers is called with the search string, return the two
         /// users above
         when(mockUserDAO.searchUsers(searchString)).thenReturn(users);
@@ -288,7 +290,7 @@ public class UserControllerTests {
     @Test
     public void testLogin() throws IOException {
         // Setup
-        User user = new User(69, "testUserName", "testPassword");
+        User user = new User(69, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // When login is called our mock user DAO will return the user object
         when(mockUserDAO.login(user.getUserName(), user.getPassword())).thenReturn(user);
 
@@ -303,7 +305,7 @@ public class UserControllerTests {
     @Test
     public void testLoginNotFound() throws IOException {
         // Setup
-        User user = new User(69, "testUserName2", "testPassword2");
+        User user = new User(69, "testUserName2", "testPassword2", new ArrayList<Order>(), "email");
         // simulate failure
         when(mockUserDAO.login(user.getUserName(), user.getPassword())).thenReturn(null);
 
@@ -317,7 +319,7 @@ public class UserControllerTests {
     @Test
     public void testLoginHandleException() throws IOException {
         // Setup
-        User user = new User(69, "testUserName3", "testPassword3");
+        User user = new User(69, "testUserName3", "testPassword3", new ArrayList<Order>(), "email");
         // simulate ioexception
         doThrow(new IOException()).when(mockUserDAO).login(user.getUserName(), user.getPassword());
 
@@ -331,7 +333,7 @@ public class UserControllerTests {
     @Test
     public void testGetCurrentUser() throws IOException {
         // Setup
-        User user = new User(69, "testUserName", "testPassword");
+        User user = new User(69, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // When we get current user, simulate the return of user
         when(mockUserDAO.getCurrentUser()).thenReturn(user);
 
@@ -339,7 +341,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getCurrentUser();
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+        assertEquals(HttpStatus.OK,response.getStatusCode());
         assertEquals(user,response.getBody());
     }
     @Test
@@ -352,5 +354,14 @@ public class UserControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+    @Test
+    public void testLogout() throws IOException {
+        //Invoke
+        userController.logout();
+        ResponseEntity<User> response = userController.getGuest();
+
+        //Analyze
+        assertEquals(userController.getCurrentUser(), response);
     }
 }

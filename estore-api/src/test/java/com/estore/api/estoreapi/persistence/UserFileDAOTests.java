@@ -10,6 +10,7 @@ import com.estore.api.estoreapi.persistence.UserDAO;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.User;
 
 import org.junit.jupiter.api.Tag;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -43,9 +45,9 @@ public class UserFileDAOTests {
     public void setupUserController() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testUsers = new User[3];
-        testUsers[0] = new User(1, "TestUser1", "testUser1Password");
-        testUsers[1] = new User(2, "TestUser2", "testUser2Password");
-        testUsers[2] = new User(3, "TestUser3", "testUser3Password");
+        testUsers[0] = new User(1, "TestUser1", "testUser1Password", new ArrayList<Order>(), "testEmail1");
+        testUsers[1] = new User(2, "TestUser2", "testUser2Password",  new ArrayList<Order>(), "testEmail2");
+        testUsers[2] = new User(3, "TestUser3", "testUser3Password",  new ArrayList<Order>(), "testEmail3");
 
         when(mockObjectMapper
             .readValue(new File("mockUsersFile.txt"),User[].class))
@@ -98,7 +100,7 @@ public class UserFileDAOTests {
     @Test
     public void testCreateUser() {
         //Setup
-        User user = new User(4, "TestCreateUser", "TestCreateUserPassword");
+        User user = new User(4, "TestCreateUser", "TestCreateUserPassword", new ArrayList<Order>(), "testCreateEmail");
 
         //Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.createUser(user));
@@ -112,7 +114,7 @@ public class UserFileDAOTests {
     @Test
     public void testUpdateUser() {
         //Setup
-        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword");
+        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword",  new ArrayList<Order>(), "testEmail");
 
         //Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(updateUser));
@@ -140,7 +142,7 @@ public class UserFileDAOTests {
         User user = assertDoesNotThrow(() -> testUserFileDAO.getCurrentUser());
 
         //Analyze
-        User expected = new User(0, "Guest", "guestPassword");
+        User expected = new User(0, "Guest", "guestPassword",  new ArrayList<Order>(), "guestEmail");
         assertEquals(user, expected);
     }
 
@@ -162,7 +164,7 @@ public class UserFileDAOTests {
             .when(mockObjectMapper)
                 .writeValue(any(File.class),any(User[].class));
 
-        User user = new User(4, testUsers[0].getUserName(), testUsers[0].getPassword());
+        User user = new User(testUsers[0]);
 
         assertThrows(IOException.class,
                         () -> testUserFileDAO.createUser(user),
@@ -192,7 +194,7 @@ public class UserFileDAOTests {
     @Test
     public void testUpdateUserNotFound() {
         // Setup
-        User user = new User(98, "newUser", "password");
+        User user = new User(98, "newUser", "password", new ArrayList<Order>(), "newEmail");
 
         // Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(user),

@@ -24,7 +24,9 @@ public class OrderTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User expected_usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User expected_usr= new User(id,userName,password,orders,email);
         Set<Product> expected_purchase = new HashSet<>();
         UUID expected_uuid= UUID.randomUUID();
         boolean expected_fulfillment=false;
@@ -56,7 +58,9 @@ public class OrderTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -80,7 +84,9 @@ public class OrderTests {
      int id = 1;
     String userName="test";
     String password= "test";
-    User usr= new User(id,userName,password);
+    ArrayList<Order> orders = new ArrayList<>();
+    String email = "test";
+    User usr= new User(id,userName,password,orders,email);
      Set<Product> purchase = new HashSet<>();
      for(int i =0;i<5;i++){
          purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -106,7 +112,9 @@ public class OrderTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
@@ -128,7 +136,9 @@ public class OrderTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
             purchase.add(new Product(i, "p"+i, 25-i, 25.99f));

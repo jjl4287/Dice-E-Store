@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -20,14 +22,19 @@ public class UserTests {
         int expected_id = 99;
         String expected_name = "UserName";
         String expected_password = "Password";
+        ArrayList<Order> expected_orders = new ArrayList<>();
+        String expected_email = "email";
+        
 
         // Invoke
-        User user = new User(expected_id, expected_name, expected_password);
+        User user = new User(expected_id, expected_name, expected_password, expected_orders, expected_email);
 
         // Analyze
         assertEquals(expected_id, user.getId());
         assertEquals(expected_name, user.getUserName());
         assertEquals(expected_password, user.getPassword());
+        assertEquals(expected_orders, user.getOrders());
+        assertEquals(expected_email, user.getEmail());
     }
 
     @Test
@@ -36,7 +43,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_email);
 
         String expected_name = "NewUserName";
 
@@ -53,7 +62,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_password);
 
         String expected_password = "NewPassword";
 
@@ -70,7 +81,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_email);
         String expected_string = String.format(User.STRING_FORMAT, init_id, init_name, init_password);
 
         // Invoke
@@ -85,7 +98,9 @@ public class UserTests {
         int id = 1;
         String userName="test";
         String password= "test";
-        User usr= new User(id,userName,password);
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
+        User usr= new User(id,userName,password,orders,email);
 
         // Analyze
         assertNotNull(usr.hashCode());
@@ -96,14 +111,16 @@ public class UserTests {
         int id = 1;
         String userName="test";
         String password= "test";
+        ArrayList<Order> orders = new ArrayList<>();
+        String email = "test";
 
 
-        User usr = new User(id,userName,password);
-        User usr2 = new User(id,userName,password);
-        User usr3 = new User(id+1,userName,password);
-        User usr4 = new User(id+1,userName+"1",password);
-        User usr5 = new User(id+1,userName+"1",password+"1");
-        User usr6 = new User(id+1,userName+"1",password+"1");
+        User usr = new User(id,userName,password,orders,email);
+        User usr2 = new User(id,userName,password,orders,email);
+        User usr3 = new User(id+1,userName,password,orders,email);
+        User usr4 = new User(id+1,userName+"1",password,orders,email);
+        User usr5 = new User(id+1,userName+"1",password+"1",orders,email);
+        User usr6 = new User(id+1,userName+"1",password+"1",orders,email);
         Object o = new Object();
 
         // Analyze
