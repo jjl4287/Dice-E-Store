@@ -233,7 +233,25 @@ public class UserController {
     }
 
     /**
-     * Returns currently loggen in user
+     * Logs out the current user
+     * 
+     * @return ResponseEntity with HTTP status of Accepted if the user successfully logged out
+     * <br>
+     * Response entity with INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("/logout")
+    public ResponseEntity logout(){
+        try {
+            userDAO.logout();
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Returns currently logged in user
      * 
      * @return ResponseEntity with current User and HTTP status of OK if there is a user logged in
      * <br>

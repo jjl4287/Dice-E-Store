@@ -1,8 +1,10 @@
 package com.estore.api.estoreapi.model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a User
@@ -18,6 +20,9 @@ public class User {
     @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
+    @JsonProperty("activeOrders") private ArrayList<Order> activeOrders;
+    @JsonProperty("email") private String email;
+    private boolean isAdmin;
 
 
     /**
@@ -25,16 +30,32 @@ public class User {
      * @param id The id of the User
      * @param username The username of the User
      * @param password the password of the User
-     *
+     * @param activeOrders the orders that have not yet been fulfilled for the user
+     * @param email the email address of the user; used for email notification
+     * 
      *
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If field
      * is not provided it will be set to default java value
      */
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
+    @JsonCreator
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password,
+                    @JsonProperty("activeOrders") ArrayList<Order> activeOrders, @JsonProperty("email") String email) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.activeOrders = activeOrders;
+        this.email = email;
+        this.isAdmin = username.equals("admin");
+    }
+
+    public User(User user) {
+        this.id = user.getId();
+        this.username = user.getUserName();
+        this.password = user.getPassword();
+        this.activeOrders = user.getOrders();
+        this.email = user.getEmail();
+        this.isAdmin = user.isAdmin();
     }
 
     /**
@@ -79,7 +100,6 @@ public class User {
         this.password = password;
     }
 
-
     /**
      * getter for the user id
      * @return The id of the user
@@ -88,7 +108,7 @@ public class User {
 
     /**
      * Sets the username of the user - necessary for JSON/JAVA deserialization
-     * @param username The username of the product
+     * @param username The username of the user
      */
     public void setUserName(String username) {this.username = username;}
 
@@ -97,6 +117,47 @@ public class User {
      * @return The username of the user
      */
     public String getUserName() {return username;}
+
+    /**
+     * Gets the email from the user
+     * @return the email of the user
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Sets the email of the uesr
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Gets the active orders of the user
+     * @return the active orders
+     */
+    public ArrayList<Order> getOrders() {
+        return activeOrders;
+    }
+
+    /**
+     * Adds the order to the active orders of the user
+     * @param order the order to add
+     */
+    public void addOrder(Order order) {
+        activeOrders.add(order);
+    }
+
+    /**
+     * Returns whether or not the user is an admin or not
+     * @return  true if user is admin; false otherwise
+     */
+    public boolean isAdmin() {
+        return this.isAdmin;
+    }
+
 
     /*
      * {@inheritDoc}

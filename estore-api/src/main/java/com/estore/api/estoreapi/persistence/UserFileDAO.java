@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -34,6 +35,7 @@ public class UserFileDAO implements UserDAO {
     private static int nextId;          // The next Id to assign to a new User
     private String filename;            // Filename to read from and write to
     private User currentUser;           // The user currently logged in
+    private final User GUEST_USER = new User(0, "Guest", "guestPassword", new ArrayList<Order>(), "guest@guest.com");
 
     /**
      * Creates a User File Data Access Object
@@ -46,7 +48,7 @@ public class UserFileDAO implements UserDAO {
     public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
-        this.currentUser = new User(0, "Guest", "guestPassword");
+        this.currentUser = GUEST_USER;
         load();  // load the users from the file
     }
 
@@ -181,7 +183,7 @@ public class UserFileDAO implements UserDAO {
         synchronized(users) {
             // We create a new User object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), user.getUserName(), user.getPassword());
+            User newUser = new User(user);
             users.put(newUser.getId(),newUser);
             save(); // may throw an IOException
             return newUser;
@@ -233,6 +235,14 @@ public class UserFileDAO implements UserDAO {
             }
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void logout() {
+        this.currentUser = GUEST_USER;
     }
 
     /**

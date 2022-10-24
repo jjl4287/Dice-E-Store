@@ -2,6 +2,8 @@ package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -18,14 +20,19 @@ public class UserTests {
         int expected_id = 99;
         String expected_name = "UserName";
         String expected_password = "Password";
+        ArrayList<Order> expected_orders = new ArrayList<>();
+        String expected_email = "email";
+        
 
         // Invoke
-        User user = new User(expected_id, expected_name, expected_password);
+        User user = new User(expected_id, expected_name, expected_password, expected_orders, expected_email);
 
         // Analyze
         assertEquals(expected_id, user.getId());
         assertEquals(expected_name, user.getUserName());
         assertEquals(expected_password, user.getPassword());
+        assertEquals(expected_orders, user.getOrders());
+        assertEquals(expected_email, user.getEmail());
     }
 
     @Test
@@ -34,7 +41,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_email);
 
         String expected_name = "NewUserName";
 
@@ -51,7 +60,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_password);
 
         String expected_password = "NewPassword";
 
@@ -68,7 +79,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        User user = new User(init_id, init_name, init_password);
+        ArrayList<Order> init_orders = new ArrayList<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_orders, init_email);
         String expected_string = String.format(User.STRING_FORMAT, init_id, init_name, init_password);
 
         // Invoke

@@ -100,4 +100,11 @@ public interface UserDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     User login(String username, String password) throws IOException;
+
+    /**
+     * logs out a user
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    void logout() throws IOException;
 }
