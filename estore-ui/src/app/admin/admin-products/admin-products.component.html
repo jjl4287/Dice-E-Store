@@ -12,6 +12,7 @@
                 <th>Quantity</th>
                 <th>Price</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,16 +25,19 @@
                     <th>
                         <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
                     </th>
+                    <!-- <td>
+                        <a [routerlink]="['/admin/products/new/', p.id]"></a>
+                    </td> -->
                 </tr>                
             </ng-template>
             <ng-template #elseBlock>
                 <tr *ngFor="let p of products$ | async">
-                    <th> {{p.name}} </th>
-                    <th> {{p.qty}} </th>
-                    <th> {{p.price}} </th>
-                    <th>
+                    <td> {{p.name}} </td>
+                    <td> {{p.qty}} </td>
+                    <td> {{p.price}} </td>
+                    <td>
                         <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
-                    </th>
+                    </td>
                 </tr>      
             </ng-template>
         </tbody>
