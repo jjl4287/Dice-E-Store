@@ -108,7 +108,7 @@ export class UserService {
     const url = `${this.usersUrl}/logout`;
     return this.http.get(url, this.httpOptions).pipe(
       tap(_ => this.log(`logged out user`)),
-      catchError(this.handleError<User>(`logout`))
+      catchError(this.handleError(`logout`))
     );
   }
 
