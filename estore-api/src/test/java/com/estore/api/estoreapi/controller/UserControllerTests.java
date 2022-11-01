@@ -143,7 +143,7 @@ public class UserControllerTests {
         // update and save
         when(mockUserDAO.updateUser(user)).thenReturn(user);
         ResponseEntity<User> response = userController.updateUser(user);
-        user.setUserName("Bolt");
+        user.setUsername("Bolt");
 
         // Invoke
         response = userController.updateUser(user);
@@ -292,10 +292,10 @@ public class UserControllerTests {
         // Setup
         User user = new User(69, "testUserName", "testPassword", new ArrayList<Order>(), "email");
         // When login is called our mock user DAO will return the user object
-        when(mockUserDAO.login(user.getUserName(), user.getPassword())).thenReturn(user);
+        when(mockUserDAO.login(user.getUsername(), user.getPassword())).thenReturn(user);
 
         // Invoke
-        ResponseEntity<User> response = userController.login(user.getUserName(), user.getPassword());
+        ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
@@ -307,10 +307,10 @@ public class UserControllerTests {
         // Setup
         User user = new User(69, "testUserName2", "testPassword2", new ArrayList<Order>(), "email");
         // simulate failure
-        when(mockUserDAO.login(user.getUserName(), user.getPassword())).thenReturn(null);
+        when(mockUserDAO.login(user.getUsername(), user.getPassword())).thenReturn(null);
 
         // Invoke
-        ResponseEntity<User> response = userController.login(user.getUserName(), user.getPassword());
+        ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
@@ -321,10 +321,10 @@ public class UserControllerTests {
         // Setup
         User user = new User(69, "testUserName3", "testPassword3", new ArrayList<Order>(), "email");
         // simulate ioexception
-        doThrow(new IOException()).when(mockUserDAO).login(user.getUserName(), user.getPassword());
+        doThrow(new IOException()).when(mockUserDAO).login(user.getUsername(), user.getPassword());
 
         // Invoke
-        ResponseEntity<User> response = userController.login(user.getUserName(), user.getPassword());
+        ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

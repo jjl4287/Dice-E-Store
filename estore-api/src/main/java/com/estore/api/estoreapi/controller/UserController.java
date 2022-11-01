@@ -240,7 +240,7 @@ public class UserController {
      * Response entity with INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/logout")
-    public ResponseEntity logout(){
+    public ResponseEntity<User> logout() {
         try {
             userDAO.logout();
             return new ResponseEntity<>(HttpStatus.ACCEPTED);

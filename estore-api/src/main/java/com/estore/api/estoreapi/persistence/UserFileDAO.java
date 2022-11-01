@@ -87,7 +87,7 @@ public class UserFileDAO implements UserDAO {
         ArrayList<User> userArrayList = new ArrayList<>();
 
         for (User user : users.values()) {
-            if (containsText == null || user.getUserName().contains(containsText)) {
+            if (containsText == null || user.getUsername().contains(containsText)) {
                 userArrayList.add(user);
             }
         }
@@ -227,7 +227,7 @@ public class UserFileDAO implements UserDAO {
     public User login( String username, String password) throws IOException{
         User[] userArray = getUsersArray(username);
         for (User user : userArray) {
-            if (user.getUserName().equals(username)) {
+            if (user.getUsername().equals(username)) {
                 if (user.getPassword().equals(password)) {
                     this.currentUser = user;
                     return user;

@@ -128,7 +128,7 @@ public class UserFileDAOTests {
     @Test
     public void testLogIn() throws IOException {
         //Invoke
-        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUserName(), testUsers[0].getPassword()));
+        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), testUsers[0].getPassword()));
         
         //Analyze
         assertNotNull(user);
@@ -149,9 +149,9 @@ public class UserFileDAOTests {
     @Test
     public void testLogInFailed() {
         //Invoke
-        assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUserName(), ""));
+        assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), ""));
         User user = assertDoesNotThrow(() -> testUserFileDAO.login("", ""));
-        User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUserName(), ""));
+        User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), ""));
 
         //Analyze
         assertNull(user);

@@ -51,7 +51,7 @@ public class User {
 
     public User(User user) {
         this.id = user.getId();
-        this.username = user.getUserName();
+        this.username = user.getUsername();
         this.password = user.getPassword();
         this.activeOrders = user.getOrders();
         this.email = user.getEmail();
@@ -110,13 +110,13 @@ public class User {
      * Sets the username of the user - necessary for JSON/JAVA deserialization
      * @param username The username of the user
      */
-    public void setUserName(String username) {this.username = username;}
+    public void setUsername(String username) {this.username = username;}
 
     /**
      * gets username of the user
      * @return The username of the user
      */
-    public String getUserName() {return username;}
+    public String getUsername() {return username;}
 
     /**
      * Gets the email from the user
