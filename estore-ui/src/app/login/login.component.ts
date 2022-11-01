@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
         .subscribe(users => this.users = users);
     }
   
-    login(username: string, password: string): void {
-      this.userService.login(username, password).subscribe();
+    async login(username: string, password: string): Promise<void> {
+      await this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
       window.location.replace("/");
