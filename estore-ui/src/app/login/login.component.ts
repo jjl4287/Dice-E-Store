@@ -30,10 +30,9 @@ export class LoginComponent implements OnInit {
     }
   
     async login(username: string, password: string){
-      await this.userService.login(username, password).subscribe();
-      await this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-      await this.router.navigate(['/']);
-      await window.location.reload();
+      this.userService.login(username, password).subscribe();
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      window.location.replace("/");
     }
 
     // using service to add users
@@ -48,7 +47,7 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
-      this.router.navigate([''])
+      window.location.replace("/")
     }
 
   //Form Validables
