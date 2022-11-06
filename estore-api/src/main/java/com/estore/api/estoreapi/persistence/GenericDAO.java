@@ -17,7 +17,7 @@ public interface GenericDAO <T,V> {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    T[] get() throws IOException;
+    T[] getall() throws IOException;
 
     /**
      * Finds all plain link products whose name contains the given text

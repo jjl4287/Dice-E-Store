@@ -127,7 +127,7 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
     ** {@inheritDoc}
      */
     @Override
-    public Order[] get() {
+    public Order[] getall() {
         synchronized(Orders) {
             return getOrderArray();
         }
