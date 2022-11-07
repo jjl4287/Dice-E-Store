@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.estore.api.estoreapi.model.Order;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
 
 import org.junit.jupiter.api.Tag;
@@ -27,6 +28,8 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -45,9 +48,9 @@ public class UserFileDAOTests {
     public void setupUserController() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testUsers = new User[3];
-        testUsers[0] = new User(1, "TestUser1", "testUser1Password", new ArrayList<Order>(), "testEmail1");
-        testUsers[1] = new User(2, "TestUser2", "testUser2Password",  new ArrayList<Order>(), "testEmail2");
-        testUsers[2] = new User(3, "TestUser3", "testUser3Password",  new ArrayList<Order>(), "testEmail3");
+        testUsers[0] = new User(1, "TestUser1", "testUser1Password", new HashSet<Product>(), "testEmail1");
+        testUsers[1] = new User(2, "TestUser2", "testUser2Password",  new HashSet<Product>(), "testEmail2");
+        testUsers[2] = new User(3, "TestUser3", "testUser3Password",  new HashSet<Product>(), "testEmail3");
 
         when(mockObjectMapper
             .readValue(new File("mockUsersFile.txt"),User[].class))
@@ -100,7 +103,7 @@ public class UserFileDAOTests {
     @Test
     public void testCreateUser() {
         //Setup
-        User user = new User(4, "TestCreateUser", "TestCreateUserPassword", new ArrayList<Order>(), "testCreateEmail");
+        User user = new User(4, "TestCreateUser", "TestCreateUserPassword", new HashSet<Product>(), "testCreateEmail");
 
         //Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.createUser(user));
@@ -114,7 +117,7 @@ public class UserFileDAOTests {
     @Test
     public void testUpdateUser() {
         //Setup
-        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword",  new ArrayList<Order>(), "testEmail");
+        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword",  new HashSet<Product>(), "testEmail");
 
         //Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(updateUser));
@@ -142,7 +145,7 @@ public class UserFileDAOTests {
         User user = assertDoesNotThrow(() -> testUserFileDAO.getCurrentUser());
 
         //Analyze
-        User expected = new User(0, "Guest", "guestPassword",  new ArrayList<Order>(), "guestEmail");
+        User expected = new User(0, "Guest", "guestPassword",  new HashSet<Product>(), "guestEmail");
         assertEquals(user, expected);
     }
 
@@ -194,7 +197,7 @@ public class UserFileDAOTests {
     @Test
     public void testUpdateUserNotFound() {
         // Setup
-        User user = new User(98, "newUser", "password", new ArrayList<Order>(), "newEmail");
+        User user = new User(98, "newUser", "password", new HashSet<Product>(), "newEmail");
 
         // Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(user),
@@ -216,5 +219,14 @@ public class UserFileDAOTests {
         assertThrows(IOException.class,
                         () -> new UserFileDAO("doesnt_matter.txt",mockObjectMapper),
                         "IOException not thrown");
+    }
+
+    @Test
+    public void testGetShoppingCart() throws IOException {
+        //Invoke
+        Set<Product> shoppingCart = assertDoesNotThrow(() -> testUserFileDAO.getShoppingCart());
+
+        //Analyze
+        assertEquals(shoppingCart, new HashSet<Product>());
     }
 }
