@@ -169,7 +169,7 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
         synchronized(Orders) {
             // We create a new Product object because the id field is immutable
             // and we need to assign the next unique id
-            Order newOrder = new Order(order.getProducts(), order.getUser(), UUID.randomUUID());
+            Order newOrder = new Order(order.getProducts(), order.getUser(), order.getUuid());
             Orders.put(newOrder.getUuid(),newOrder);
             save(); // may throw an IOException
             return newOrder;

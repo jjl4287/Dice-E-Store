@@ -37,7 +37,7 @@ public class OrderController {
      * <br>
      * This dependency is injected by the Spring Framework
      */
-    public OrderController(OrderFileDAO orderDAO) {
+    public OrderController(GenericDAO<Order,UUID> orderDAO) {
         this.orderDAO = orderDAO;
     }
 
