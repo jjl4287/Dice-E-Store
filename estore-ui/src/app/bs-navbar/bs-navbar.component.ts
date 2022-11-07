@@ -25,11 +25,9 @@ export class BsNavbarComponent implements OnInit {
   }
 
   async logout() {
-    this.userService.logout().subscribe();
+    const response = await this.userService.logout().toPromise();
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-    setTimeout(() => {
-      window.location.replace('/')
-    }, 100)
+    window.location.replace("/");
   }
 
   ngOnInit(): void {
@@ -45,9 +43,9 @@ export class BsNavbarComponent implements OnInit {
 
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.productService.searchProducts(term)),
-      );
+    );
   }
-  
+
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);
