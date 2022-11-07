@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.controller;
 
 import com.estore.api.estoreapi.persistence.GenericDAO;
 import com.estore.api.estoreapi.persistence.OrderFileDAO;
+import com.estore.util.sendEmail;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -136,6 +137,23 @@ public class OrderController {
                 return new ResponseEntity<Order>(created, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);        
+        }
+        catch(IOException e){
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/fulfill")
+    public ResponseEntity<Order> fulfillOrder(@RequestBody Order order) {
+        LOG.info("POST /fulfillorders " + order);
+        try {
+            orderDAO.getbyID(order.getUuid()).fulfillOrder();
+            if(sendEmail.sendmail(order.getUser().getEmail(), "Order Fulfilled", order.toString(), false)){
+                return new ResponseEntity<Order>(order,HttpStatus.OK);
+            }
+                
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);        
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
