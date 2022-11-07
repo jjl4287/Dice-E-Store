@@ -128,4 +128,11 @@ public interface UserDAO {
      * @throws IOException if an issue with underlying storage
      */
     Set<Product> getShoppingCart() throws IOException;
+
+    /**
+     * Adds the product to the users shopping cart
+     * 
+     * @throws IOException
+     */
+    void addToCart(Product product) throws IOException;
 }

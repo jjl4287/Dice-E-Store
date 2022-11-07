@@ -301,4 +301,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/shoppingCart/")
+    public ResponseEntity<String> addToCart(@RequestBody Product product) {
+        LOG.info("POST /shoppingCart/");
+        try {
+            userDAO.addToCart(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

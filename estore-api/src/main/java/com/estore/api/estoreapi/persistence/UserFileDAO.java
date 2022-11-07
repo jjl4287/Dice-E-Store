@@ -268,5 +268,12 @@ public class UserFileDAO implements UserDAO {
     public Set<Product> getShoppingCart() {
         return this.currentUser.getShoppingCart();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void addToCart(Product product) {
+        this.currentUser.addToCart(product);
+    }
 }
 
