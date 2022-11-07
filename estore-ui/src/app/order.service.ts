@@ -70,17 +70,18 @@ export class OrderService {
   //////// Save methods //////////
 
   /** POST: add a new order to the server */
-  addOrder(purchase: Set<Product>, user: User): Observable<Order> {
-    const id = uuid.v4() as string;
-    let order = {id,user,products:purchase} as Order;
+  addOrder(purchase: Array<Product>, user: User): Observable<Order> {
+    const UUID = uuid.v4() as string;
+    let order = {UUID,user,products:purchase} as Order;
     return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
-      tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
+      tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.UUID}`)),
       catchError(this.handleError<Order>('addOrder'))
     );
   }
+
   fulfillOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(`${this.ordersUrl}/fulfill`, order, this.httpOptions).pipe(
-      tap((newOrder: Order) => this.log(`fulfilled order w/ id=${newOrder.id}`)),
+      tap((newOrder: Order) => this.log(`fulfilled order w/ id=${newOrder.UUID}`)),
       catchError(this.handleError<Order>('addOrder'))
     );
   }

@@ -44,7 +44,7 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public OrderFileDAO(@Value("${order.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public OrderFileDAO(@Value("${orders.file}") String filename,ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();  // load the products from the file

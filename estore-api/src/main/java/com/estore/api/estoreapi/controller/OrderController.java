@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.controller;
 import com.estore.api.estoreapi.persistence.GenericDAO;
 import com.estore.api.estoreapi.persistence.OrderFileDAO;
 import com.estore.util.sendEmail;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.model.Order;
+import com.estore.api.estoreapi.model.OrderDTO;
 import com.estore.api.estoreapi.model.User;
 
 import java.util.*;
@@ -128,7 +130,8 @@ public class OrderController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO dto) {
+        Order order = new Order(dto);
         LOG.info("POST /orders " + order);
 
         try {

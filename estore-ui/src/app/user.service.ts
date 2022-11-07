@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from './user';
 import { MessageService } from './message.service';
+import { Product } from './product';
 
 
 @Injectable({ providedIn: 'root' })
@@ -117,6 +118,38 @@ export class UserService {
     return this.http.get<User>(url).pipe(
       tap(_ => this.log(`fetched user`)),
       catchError(this.handleError<User>(`getUser id`))
+    );
+  }
+
+  getShoppingCart(): Observable<Set<Product>> {
+    const url = `${this.usersUrl}/shoppingCart`;
+    return this.http.get<Set<Product>>(url).pipe(
+      tap(_ => this.log(`fetched Cart`)),
+      catchError(this.handleError<Set<Product>>('getcart'))
+    );
+  }
+
+  removeFromCart(product:Product): Observable<String> {
+    const url = `${this.usersUrl}/shoppingCart/remove`;
+    return this.http.post<String>(url, product, this.httpOptions).pipe(
+      tap(_ => this.log(`updated user cart`)),
+      catchError(this.handleError<any>('updateUser'))
+    );
+  }
+
+  reduceFromCart(product:Product): Observable<String> {
+    const url = `${this.usersUrl}/shoppingCart/reduce`;
+    return this.http.post<String>(url, product, this.httpOptions).pipe(
+      tap(_ => this.log(`updated user cart`)),
+      catchError(this.handleError<any>('updateUser'))
+    );
+  }
+
+  addToCart(product:Product): Observable<String> {
+    const url = `${this.usersUrl}/shoppingCart/add`;
+    return this.http.post<String>(url, product, this.httpOptions).pipe(
+      tap(_ => this.log(`updated user cart`)),
+      catchError(this.handleError<any>('updateUser'))
     );
   }
 

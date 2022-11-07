@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.model;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,7 +21,7 @@ public class User {
     @JsonProperty("id") private int id;
     @JsonProperty("username") private String username;
     @JsonProperty("password") private String password;
-    @JsonProperty("activeOrders") private ArrayList<Order> activeOrders;
+    @JsonProperty("shoppingCart") private Set<Product> shoppingCart;
     @JsonProperty("email") private String email;
     private boolean isAdmin;
 
@@ -30,7 +31,7 @@ public class User {
      * @param id The id of the User
      * @param username The username of the User
      * @param password the password of the User
-     * @param activeOrders the orders that have not yet been fulfilled for the user
+     * @param shoppingCart the orders that have not yet been fulfilled for the user
      * @param email the email address of the user; used for email notification
      * 
      *
@@ -40,20 +41,20 @@ public class User {
      */
     @JsonCreator
     public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password,
-                    @JsonProperty("activeOrders") ArrayList<Order> activeOrders, @JsonProperty("email") String email) {
+                    @JsonProperty("shoppingCart") Set<Product> shoppingCart, @JsonProperty("email") String email) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.activeOrders = activeOrders;
+        this.shoppingCart = shoppingCart;
         this.email = email;
         this.isAdmin = username.equals("admin");
     }
 
     public User(User user) {
         this.id = user.getId();
-        this.username = user.getUserName();
+        this.username = user.getUsername();
         this.password = user.getPassword();
-        this.activeOrders = user.getOrders();
+        this.shoppingCart = user.getShoppingCart();
         this.email = user.getEmail();
         this.isAdmin = user.isAdmin();
     }
@@ -110,13 +111,13 @@ public class User {
      * Sets the username of the user - necessary for JSON/JAVA deserialization
      * @param username The username of the user
      */
-    public void setUserName(String username) {this.username = username;}
+    public void setUsername(String username) {this.username = username;}
 
     /**
      * gets username of the user
      * @return The username of the user
      */
-    public String getUserName() {return username;}
+    public String getUsername() {return username;}
 
     /**
      * Gets the email from the user
@@ -138,16 +139,41 @@ public class User {
      * Gets the active orders of the user
      * @return the active orders
      */
-    public ArrayList<Order> getOrders() {
-        return activeOrders;
+    public Set<Product> getShoppingCart() {
+        return shoppingCart;
     }
 
     /**
-     * Adds the order to the active orders of the user
-     * @param order the order to add
+     * Adds an order to the cart
+     * 
+     * @param product product to add to shopping cart
      */
-    public void addOrder(Order order) {
-        activeOrders.add(order);
+    public void addToCart(Product product) {
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            product.setQty(product.getQty()+1);
+            this.shoppingCart.add(product);
+        }
+        else{
+            this.shoppingCart.add(product);
+        }
+    }
+
+    public void removeFromCart(Product product) {
+        this.shoppingCart.remove(product);
+    }
+
+    public void reduceFromCart(Product product) {
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            if(product.getQty()<=1){
+                return;
+            }
+            else{
+                product.setQty(product.getQty()-1);
+                this.shoppingCart.add(product);
+            }
+        }
     }
 
     /**

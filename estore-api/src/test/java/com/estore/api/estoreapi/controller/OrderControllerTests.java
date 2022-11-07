@@ -6,12 +6,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 import com.estore.api.estoreapi.persistence.GenericDAO;
 import com.estore.api.estoreapi.model.Order;
+import com.estore.api.estoreapi.model.OrderDTO;
 import com.estore.api.estoreapi.model.User;
 import com.estore.api.estoreapi.model.Product;
 
@@ -111,16 +113,17 @@ public class OrderControllerTests {
         Product p1 = new Product(1, "test", 2, 3);
 
 
-        Set<Product> s1 = new HashSet<>();
-        s1.add(p1);
+        ArrayList<Product> a1 = new ArrayList<>();
+        a1.add(p1);
 
-        Order order = new Order(s1, u1);
+        OrderDTO orderdto = new OrderDTO(a1, u1);
+        Order order = new Order(orderdto);
         // when createOrder is called, return true simulating successful
         // creation and save
         when(mockOrderDAO.createNew(order)).thenReturn(order);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(order);
+        ResponseEntity<Order> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
@@ -134,17 +137,17 @@ public class OrderControllerTests {
         
         Product p1 = new Product(1, "test", 2, 3);
 
+        ArrayList<Product> a1 = new ArrayList<>();
+        a1.add(p1);
 
-        Set<Product> s1 = new HashSet<>();
-        s1.add(p1);
-
-        Order order = new Order(s1, u1);
+        OrderDTO orderdto = new OrderDTO(a1, u1);
+        Order order = new Order(orderdto);
         // when createOrder is called, return false simulating failed
         // creation and save
         when(mockOrderDAO.createNew(order)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(order);
+        ResponseEntity<Order> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
@@ -158,16 +161,17 @@ public class OrderControllerTests {
         Product p1 = new Product(1, "test", 2, 3);
 
 
-        Set<Product> s1 = new HashSet<>();
-        s1.add(p1);
+        ArrayList<Product> a1 = new ArrayList<>();
+        a1.add(p1);
 
-        Order order = new Order(s1, u1);
+        OrderDTO orderdto = new OrderDTO(a1, u1);
+        Order order = new Order(orderdto);
 
         // When createOrder is called on the Mock Order DAO, throw an IOException
         doThrow(new IOException()).when(mockOrderDAO).createNew(order);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(order);
+        ResponseEntity<Order> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

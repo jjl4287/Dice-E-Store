@@ -55,6 +55,19 @@ public class Order {
         this.uuid = UUID.randomUUID();
         this.user=user;
     }
+    /**
+     * Create a new User with the given id, username, and password
+     * 
+     * @param orderDTO an orderDTO
+     *
+     *
+     * 
+     */
+    public Order(OrderDTO dto){
+        this.products= new HashSet<>(dto.getPurchase());
+        this.uuid = dto.getUuid()==null?UUID.randomUUID():dto.getUuid();
+        this.user=dto.getUser();
+    }
     
     /**
      * Getter for products

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,20 +22,20 @@ public class UserTests {
     public void testCtor() {
         // Setup
         int expected_id = 99;
-        String expected_name = "UserName";
+        String expected_name = "Username";
         String expected_password = "Password";
-        ArrayList<Order> expected_orders = new ArrayList<>();
+        Set<Product> expected_shoppingCart = new HashSet<>();
         String expected_email = "email";
         
 
         // Invoke
-        User user = new User(expected_id, expected_name, expected_password, expected_orders, expected_email);
+        User user = new User(expected_id, expected_name, expected_password, expected_shoppingCart, expected_email);
 
         // Analyze
         assertEquals(expected_id, user.getId());
-        assertEquals(expected_name, user.getUserName());
+        assertEquals(expected_name, user.getUsername());
         assertEquals(expected_password, user.getPassword());
-        assertEquals(expected_orders, user.getOrders());
+        assertEquals(expected_shoppingCart, user.getShoppingCart());
         assertEquals(expected_email, user.getEmail());
     }
 
@@ -41,19 +43,59 @@ public class UserTests {
     public void testName() {
         // Setup
         int init_id = 99;
-        String init_name = "UserName";
+        String init_name = "Username";
         String init_password = "Password";
-        ArrayList<Order> init_orders = new ArrayList<>();
+        Set<Product> init_shoppingCart = new HashSet<>();
         String init_email = "email";
-        User user = new User(init_id, init_name, init_password, init_orders, init_email);
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
 
         String expected_name = "NewUserName";
 
         // Invoke
-        user.setUserName(expected_name);
+        user.setUsername(expected_name);
 
         // Analyze
-        assertEquals(expected_name, user.getUserName());
+        assertEquals(expected_name, user.getUsername());
+    }
+
+    @Test
+    public void testAddToCart() {
+        //Setup
+        int init_id = 99;
+        String init_name = "Username";
+        String init_password = "Password";
+        Set<Product> init_shoppingCart = new HashSet<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
+        Product product = new Product(0, "testProduct", 1, 9.99f);
+
+        HashSet<Product> expected_products = new HashSet<>();
+        expected_products.add(product);
+
+        //Invoke
+        user.addToCart(product);
+
+        //Analyze
+        assertEquals(user.getShoppingCart(), expected_products);
+    }
+
+    @Test
+    public void testEmail() {
+        // Setup
+        int init_id = 99;
+        String init_name = "Username";
+        String init_password = "Password";
+        Set<Product> init_shoppingCart = new HashSet<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
+
+        String expected_email = "newEmail";
+
+        // Invoke
+        user.setEmail(expected_email);
+
+        // Analyze
+        assertEquals(expected_email, user.getEmail());
     }
 
     @Test
@@ -62,9 +104,9 @@ public class UserTests {
         int init_id = 99;
         String init_name = "UserName";
         String init_password = "Password";
-        ArrayList<Order> init_orders = new ArrayList<>();
+        Set<Product> init_shoppingCart = new HashSet<>();
         String init_email = "email";
-        User user = new User(init_id, init_name, init_password, init_orders, init_password);
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_password);
 
         String expected_password = "NewPassword";
 
@@ -79,11 +121,11 @@ public class UserTests {
     public void testToString() {
         // Setup
         int init_id = 99;
-        String init_name = "UserName";
+        String init_name = "Username";
         String init_password = "Password";
-        ArrayList<Order> init_orders = new ArrayList<>();
+        Set<Product> init_shoppingCart = new HashSet<>();
         String init_email = "email";
-        User user = new User(init_id, init_name, init_password, init_orders, init_email);
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
         String expected_string = String.format(User.STRING_FORMAT, init_id, init_name, init_password);
 
         // Invoke
@@ -96,11 +138,11 @@ public class UserTests {
     public void testHashCode() {
         // Setup
         int id = 1;
-        String userName="test";
+        String username="test";
         String password= "test";
-        ArrayList<Order> orders = new ArrayList<>();
+        Set<Product> shoppingCart = new HashSet<>();
         String email = "test";
-        User usr= new User(id,userName,password,orders,email);
+        User usr= new User(id,username,password,shoppingCart,email);
 
         // Analyze
         assertNotNull(usr.hashCode());
@@ -109,18 +151,18 @@ public class UserTests {
     public void testequals() {
         // Setup
         int id = 1;
-        String userName="test";
+        String username="test";
         String password= "test";
-        ArrayList<Order> orders = new ArrayList<>();
+        Set<Product> shoppingCart = new HashSet<>();
         String email = "test";
 
 
-        User usr = new User(id,userName,password,orders,email);
-        User usr2 = new User(id,userName,password,orders,email);
-        User usr3 = new User(id+1,userName,password,orders,email);
-        User usr4 = new User(id+1,userName+"1",password,orders,email);
-        User usr5 = new User(id+1,userName+"1",password+"1",orders,email);
-        User usr6 = new User(id+1,userName+"1",password+"1",orders,email);
+        User usr = new User(id,username,password,shoppingCart,email);
+        User usr2 = new User(id,username,password,shoppingCart,email);
+        User usr3 = new User(id+1,username,password,shoppingCart,email);
+        User usr4 = new User(id+1,username+"1",password,shoppingCart,email);
+        User usr5 = new User(id+1,username+"1",password+"1",shoppingCart,email);
+        User usr6 = new User(id+1,username+"1",password+"1",shoppingCart,email);
         Object o = new Object();
 
         // Analyze

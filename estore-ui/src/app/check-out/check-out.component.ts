@@ -18,12 +18,15 @@ export class CheckOutComponent implements OnInit {
   products: Map<number,Product>;
   
   constructor(private productService: ProductService, private userService: UserService, private orderService: OrderService) { 
-    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-    this.userService.getShoppingCart().subscribe(shoppingCart => this.shoppingCart = shoppingCart);
     this.products= new Map<number,Product>();
-    this.shoppingCart.forEach(product => {
-      this.productService.getProduct(product.id).subscribe(p => this.products.set(p.id,p));
-    }); 
+    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+    this.userService.getShoppingCart().subscribe(shoppingCart => {
+      this.shoppingCart = shoppingCart
+      this.shoppingCart.forEach((product:Product) => {
+        this.productService.getProduct(product.id).subscribe(p => this.products.set(p.id,p));
+      }); 
+    });
+    
     
   }
 
@@ -32,23 +35,32 @@ export class CheckOutComponent implements OnInit {
   }
 
   submitOrder():boolean{
-    
-    this.shoppingCart.forEach(product => {
+    console.log("hello");
+    let allowed=true;
+    this.shoppingCart.forEach((product: Product) => {
       let p = this.products.get(product.id);
         if(p==undefined || product.qty>p.qty){
+          allowed = false;
           return false;
         }
+        return true;
     });
-    let s = new Set<Product>();
-    this.shoppingCart.forEach(product => {
+
+    if(!allowed){
+      return false;
+    }
+
+    let s = new Array<Product>();
+    this.shoppingCart.forEach((product:Product) => {
       let p = this.products.get(product.id);
       if(p!=undefined){
-        this.productService.updateProduct(new product(p.id,p.name,p.price,p.qty-product.qty))
-        s.add(product);
+        this.productService.updateProduct({id:p.id,name:p.name,price:p.price,qty:(p.qty-product.qty)}).subscribe();
+        s.push(product);
       }
     });
+
     if(this.currentUser!=undefined){
-      this.orderService.addOrder(s,this.currentUser);
+      this.orderService.addOrder(s,this.currentUser).subscribe();
       return true;
     }
     return false;

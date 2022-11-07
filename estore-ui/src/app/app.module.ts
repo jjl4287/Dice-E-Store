@@ -25,6 +25,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { AboutComponent } from './about/about.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -56,10 +57,12 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
       { path: 'about', component: AboutComponent},
       { path: 'products', component: ProductsComponent},
       { path: 'shopping-cart', component: ShoppingCartComponent},
-      { path: 'check-out', component: CheckOutComponent},
-      { path: 'order-success', component: OrderSuccessComponent},
-      { path: 'my/orders', component: MyOrdersComponent},
       { path: 'login', component: LoginComponent},
+
+      { path: 'check-out', component: CheckOutComponent},
+      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard]},
+      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard]},
+
       { path: 'admin/products', component: AdminProductsComponent},
       { path: 'admin/products/new', component: ProductFormComponent},
       { path: 'admin/products/new/:id', component: ProductFormComponent},
@@ -70,7 +73,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
   providers: [
     MessageService,
     ProductService,
-    UserService
+    UserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

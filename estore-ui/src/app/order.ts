@@ -2,7 +2,7 @@ import { Product } from "./product";
 import { User } from "./user";
 
 export interface Order {
-    id: String;
+    UUID: String;
     user: User;
-    products: Set<Product>;
+    products: Array<Product>;
   }
