@@ -26,7 +26,7 @@ import com.estore.api.estoreapi.model.User;
 import java.util.*;
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("orders")
 public class OrderController {
     private static final Logger LOG = Logger.getLogger(StoreController.class.getName());
     private GenericDAO<Order,UUID> orderDAO;

@@ -6,6 +6,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Order } from './order';
 import { MessageService } from './message.service';
+import { User } from './user';
+import { Product } from './product';
+
+import * as uuid from 'uuid';
 
 
 @Injectable({ providedIn: 'root' })
@@ -54,11 +58,7 @@ export class OrderService {
   }
 
   /* GET orders whose name contains search term */
-  searchOrders(term: string): Observable<Order[]> {
-    if (!term.trim()) {
-      // if not search term, return empty order array.
-      return of([]);
-    }
+  searchOrders(term: User): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.ordersUrl}/?name=${term}`).pipe(
       tap(x => x.length ?
          this.log(`found orders matching "${term}"`) :
@@ -70,30 +70,21 @@ export class OrderService {
   //////// Save methods //////////
 
   /** POST: add a new order to the server */
-  addOrder(order: Order): Observable<Order> {
+  addOrder(purchase: Set<Product>, user: User): Observable<Order> {
+    const id = uuid.v4() as string;
+    let order = {id,user,products:purchase} as Order;
     return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.id}`)),
       catchError(this.handleError<Order>('addOrder'))
     );
   }
-
-  /** DELETE: delete the order from the server */
-  deleteOrder(id: number): Observable<Order> {
-    const url = `${this.ordersUrl}/${id}`;
-
-    return this.http.delete<Order>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted order id=${id}`)),
-      catchError(this.handleError<Order>('deleteOrder'))
+  fulfillOrder(order: Order): Observable<Order> {
+    return this.http.post<Order>(`${this.ordersUrl}/fulfill`, order, this.httpOptions).pipe(
+      tap((newOrder: Order) => this.log(`fulfilled order w/ id=${newOrder.id}`)),
+      catchError(this.handleError<Order>('addOrder'))
     );
   }
 
-  /** PUT: update the order on the server */
-  updateOrder(order: Order): Observable<any> {
-    return this.http.put(this.ordersUrl, order, this.httpOptions).pipe(
-      tap(_ => this.log(`updated order id=${order.id}`)),
-      catchError(this.handleError<any>('updateOrder'))
-    );
-  }
 
   /**
    * Handle Http operation that failed.
