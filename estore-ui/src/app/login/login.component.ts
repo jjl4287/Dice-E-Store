@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
       this.userService.getUsers()
         .subscribe(users => this.users = users);
     }
-  
+    
+    // use the user service to login and subscribe to current user, then reload page
     async login(username: string, password: string): Promise<void> {
       this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
@@ -55,25 +56,10 @@ export class LoginComponent implements OnInit {
       }, 100)
     }
 
-  //Form Validables
+  // Form Validables
   registerForm: any = FormGroup;
   submitted = false;
   //Add user form actions
   get f() { return this.registerForm.controls; }
-  onSubmit() {
-
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.registerForm.invalid) {
-      return;
-    }
-    //True if all the fields are filled
-    if (this.submitted) {
-      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-      console.log(this.currentUser);
-      // this.router.navigate(['/'])
-    }
-
-  }
 
 }
