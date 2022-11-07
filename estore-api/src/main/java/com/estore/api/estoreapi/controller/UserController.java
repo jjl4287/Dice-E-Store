@@ -302,11 +302,33 @@ public class UserController {
         }
     }
 
-    @PostMapping("/shoppingCart/")
+    @PostMapping("/shoppingCart/add")
     public ResponseEntity<String> addToCart(@RequestBody Product product) {
-        LOG.info("POST /shoppingCart/");
+        LOG.info("POST /shoppingCart/add");
         try {
             userDAO.addToCart(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/shoppingCart/reduce")
+    public ResponseEntity<String> reduceFromCart(@RequestBody Product product) {
+        LOG.info("POST /shoppingCart/reduce");
+        try {
+            userDAO.reduceFromCart(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/shoppingCart/remove")
+    public ResponseEntity<String> removeFromCart(@RequestBody Product product) {
+        LOG.info("POST /shoppingCart/remove");
+        try {
+            userDAO.removeFromCart(product);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());

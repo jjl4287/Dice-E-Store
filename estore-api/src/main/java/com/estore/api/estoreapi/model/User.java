@@ -149,7 +149,31 @@ public class User {
      * @param product product to add to shopping cart
      */
     public void addToCart(Product product) {
-        this.shoppingCart.add(product);
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            product.setQty(product.getQty()+1);
+            this.shoppingCart.add(product);
+        }
+        else{
+            this.shoppingCart.add(product);
+        }
+    }
+
+    public void removeFromCart(Product product) {
+        this.shoppingCart.remove(product);
+    }
+
+    public void reduceFromCart(Product product) {
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            if(product.getQty()<=1){
+                return;
+            }
+            else{
+                product.setQty(product.getQty()-1);
+                this.shoppingCart.add(product);
+            }
+        }
     }
 
     /**

@@ -58,7 +58,7 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(product: Product):void{
-    ShoppingCartComponent.prototype.addProduct(product);
+    this.userService.addToCart({id:product.id,name:product.name,price:product.price,qty:1}).subscribe();
   }
 
   // using service to delete products

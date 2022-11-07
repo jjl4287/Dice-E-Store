@@ -1,0 +1,47 @@
+[{
+        "products": [{
+            "id": 11,
+            "name": "Mr. Dice",
+            "qty": 1,
+            "price": 29.99
+        }],
+        "user": {
+            "id": 0,
+            "username": "Guest",
+            "password": "guestPassword",
+            "shoppingCart": [{
+                "id": 11,
+                "name": "Mr. Dice",
+                "qty": 1,
+                "price": 29.99
+            }],
+            "email": "guest@guest.com",
+            "admin": false
+        },
+        "uuid": "26b2d394-3240-4bb2-b074-e3147cd7d70b",
+        "fulfillment": false
+    },
+    {
+        "products": [{
+            "id": 11,
+            "name": "Mr. Dice",
+            "qty": 1,
+            "price": 29.99
+        }],
+        "user": {
+            "id": 0,
+            "username": "Guest",
+            "password": "guestPassword",
+            "shoppingCart": [{
+                "id": 11,
+                "name": "Mr. Dice",
+                "qty": 1,
+                "price": 29.99
+            }],
+            "email": "guest@guest.com",
+            "admin": false
+        },
+        "uuid": "2d0666b2-e28d-4fcd-b213-989df6a0c679",
+        "fulfillment": false
+    }
+]
