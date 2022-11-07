@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -45,7 +46,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.shoppingCart = shoppingCart;
+        this.shoppingCart = shoppingCart==null?new HashSet<Product>():shoppingCart;
         this.email = email;
         this.isAdmin = username.equals("admin");
     }

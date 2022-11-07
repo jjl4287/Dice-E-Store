@@ -54,7 +54,7 @@ export class CheckOutComponent implements OnInit {
     this.shoppingCart.forEach((product:Product) => {
       let p = this.products.get(product.id);
       if(p!=undefined){
-        this.productService.updateProduct({id:p.id,name:p.name,price:p.price,qty:(p.qty-product.qty)}).subscribe();
+        this.productService.updateProduct({id:p.id,name:p.name,price:p.price,qty:(p.qty-product.qty),url:p.url,description:p.description}).subscribe();
         s.push(product);
       }
     });

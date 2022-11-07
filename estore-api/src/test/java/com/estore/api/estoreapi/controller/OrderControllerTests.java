@@ -51,7 +51,7 @@ public class OrderControllerTests {
 
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         
-        Product p1 = new Product(1, "test", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
 
         Set<Product> s1 = new HashSet<>();
@@ -59,15 +59,16 @@ public class OrderControllerTests {
 
 
         Order order = new Order(s1,u1,testUUID);
+        OrderDTO orderdto = new OrderDTO(order);
         // When the same id is passed in, our mock Order DAO will return the Order object
         when(mockOrderDAO.getbyID(order.getUuid())).thenReturn(order);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.getOrder(order.getUuid());
+        ResponseEntity<OrderDTO> response = orderController.getOrder(order.getUuid());
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(order,response.getBody());
+        assertEquals(orderdto,response.getBody());
     }
 
     @Test
@@ -79,7 +80,7 @@ public class OrderControllerTests {
         when(mockOrderDAO.getbyID(orderId)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.getOrder(orderId);
+        ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -93,7 +94,7 @@ public class OrderControllerTests {
         doThrow(new IOException()).when(mockOrderDAO).getbyID(orderId);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.getOrder(orderId);
+        ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -110,7 +111,7 @@ public class OrderControllerTests {
 
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         
-        Product p1 = new Product(1, "test", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
 
         ArrayList<Product> a1 = new ArrayList<>();
@@ -123,7 +124,7 @@ public class OrderControllerTests {
         when(mockOrderDAO.createNew(order)).thenReturn(order);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(orderdto);
+        ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
@@ -135,7 +136,7 @@ public class OrderControllerTests {
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         
-        Product p1 = new Product(1, "test", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
         ArrayList<Product> a1 = new ArrayList<>();
         a1.add(p1);
@@ -147,7 +148,7 @@ public class OrderControllerTests {
         when(mockOrderDAO.createNew(order)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(orderdto);
+        ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
@@ -158,7 +159,7 @@ public class OrderControllerTests {
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         
-        Product p1 = new Product(1, "test", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
 
         ArrayList<Product> a1 = new ArrayList<>();
@@ -171,7 +172,7 @@ public class OrderControllerTests {
         doThrow(new IOException()).when(mockOrderDAO).createNew(order);
 
         // Invoke
-        ResponseEntity<Order> response = orderController.createOrder(orderdto);
+        ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -183,8 +184,8 @@ public class OrderControllerTests {
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         User u2 = new User(2, "u2", "u2", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3);
-        Product p2 = new Product(2, "test2", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
+        Product p2 = new Product(2, "test2", 2, 3,"url","desc");
 
 
         Set<Product> s1 = new HashSet<>();
@@ -196,15 +197,18 @@ public class OrderControllerTests {
         Order[] testOrders = new Order[2];
         testOrders[0] = new Order(s1,u1);
         testOrders[1] = new Order(s2,u2);
+        OrderDTO[] testdto = new OrderDTO[2];
+        testdto[0] = new OrderDTO(testOrders[0]);
+        testdto[1] = new OrderDTO(testOrders[1]);
         // When getOrders is called return the orders created above
         when(mockOrderDAO.getall()).thenReturn(testOrders);
 
         // Invoke
-        ResponseEntity<Order[]> response = orderController.getOrders();
+        ResponseEntity<OrderDTO[]> response = orderController.getOrders();
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(testOrders,response.getBody());
+        assertEquals(testdto,response.getBody());
     }
 
     @Test
@@ -214,7 +218,7 @@ public class OrderControllerTests {
         doThrow(new IOException()).when(mockOrderDAO).getall();
 
         // Invoke
-        ResponseEntity<Order[]> response = orderController.getOrders();
+        ResponseEntity<OrderDTO[]> response = orderController.getOrders();
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
@@ -225,8 +229,8 @@ public class OrderControllerTests {
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3);
-        Product p2 = new Product(2, "test2", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
+        Product p2 = new Product(2, "test2", 2, 3,"url","desc");
 
 
         Set<Product> s1 = new HashSet<>();
@@ -238,16 +242,19 @@ public class OrderControllerTests {
         Order[] testOrders = new Order[2];
         testOrders[0] = new Order(s1,u1);
         testOrders[1] = new Order(s2,u1);
+        OrderDTO[] testdto = new OrderDTO[2];
+        testdto[0] = new OrderDTO(testOrders[0]);
+        testdto[1] = new OrderDTO(testOrders[1]);
         // When findOrders is called with the search string, return the two
         /// orders above
         when(mockOrderDAO.search(u1)).thenReturn(testOrders);
 
         // Invoke
-        ResponseEntity<Order[]> response = orderController.searchOrders(u1);
+        ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(testOrders,response.getBody());
+        assertEquals(testdto,response.getBody());
     }
 
 
@@ -259,7 +266,7 @@ public class OrderControllerTests {
         doThrow(new IOException()).when(mockOrderDAO).search(u1);
 
         // Invoke
-        ResponseEntity<Order[]> response = orderController.searchOrders(u1);
+        ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

@@ -41,8 +41,8 @@ public class OrderFileDAOTests {
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         User u2 = new User(2, "u2", "u2", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3);
-        Product p2 = new Product(2, "test2", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
+        Product p2 = new Product(2, "test2", 2, 3,"Url","desc");
 
 
         Set<Product> s1 = new HashSet<>();
@@ -108,8 +108,8 @@ public class OrderFileDAOTests {
 
         User u1 = new User(1, "u1", "u1", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3);
-        Product p2 = new Product(2, "test2", 2, 3);
+        Product p1 = new Product(1, "test", 2, 3,"url","desc");
+        Product p2 = new Product(2, "test2", 2, 3,"url","desc");
 
 
         Set<Product> s1 = new HashSet<>();
