@@ -67,7 +67,7 @@ public class UserTests {
         Set<Product> init_shoppingCart = new HashSet<>();
         String init_email = "email";
         User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
-        Product product = new Product(0, "testProduct", 1, 9.99f);
+        Product product = new Product(0, "testProduct", 1, 9.99f, "url", "description");
 
         HashSet<Product> expected_products = new HashSet<>();
         expected_products.add(product);
