@@ -34,7 +34,9 @@ export class ProductFormComponent implements OnInit {
       .subscribe(product => {
         this.products.push(product);
       });
-    this.router.navigate(['/admin/products'])
+    setTimeout(() => {
+      window.location.replace('/admin/products')
+    }, 100)
   }
 
   // using service to delete products
