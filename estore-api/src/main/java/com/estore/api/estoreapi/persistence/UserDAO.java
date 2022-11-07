@@ -1,6 +1,9 @@
 package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
+import java.util.Set;
+
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -116,4 +119,13 @@ public interface UserDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     void logout() throws IOException;
+
+    /**
+     * Retrieves the current users shopping cart
+     *
+     * @return the current users shopping cart (could be guest)
+     *
+     * @throws IOException if an issue with underlying storage
+     */
+    Set<Product> getShoppingCart() throws IOException;
 }
