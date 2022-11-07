@@ -35,10 +35,9 @@ public class ProductFileDAOTests {
     public void setupProductFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
-        testProducts[0] = new Product(1, "TestProduct1", 10, 10);
-        testProducts[1] = new Product(2,"TestProduct2", 20, 20);
-        testProducts[2] = new Product(3, "TestProduct3", 30, 30);
-
+        testProducts[0] = new Product(1, "TestProduct1", 10, 10, "url", "Description");
+        testProducts[1] = new Product(2,"TestProduct2", 20, 20, "url", "Description");
+        testProducts[2] = new Product(3, "TestProduct3", 30, 30, "url", "Description");
         when(mockObjectMapper
             .readValue(new File("mockProductsFile.txt"),Product[].class))
                 .thenReturn(testProducts);
@@ -79,7 +78,7 @@ public class ProductFileDAOTests {
     @Test
     public void testCreateProduct() throws IOException { //createProduct may throw IOException
         //Setup
-        Product product = new Product(4, "TestProduct4", 40, 40);
+        Product product = new Product(4, "TestProduct4", 40, 40, "url", "Description");
 
         //Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.createProduct(product));
@@ -93,7 +92,7 @@ public class ProductFileDAOTests {
     @Test
     public void testUpdateProduct() throws IOException {
         //Setup
-        Product updateProduct = new Product(1, "TestUpdateProduct", 99, 99);
+        Product updateProduct = new Product(1, "TestUpdateProduct", 99, 99, "url", "Description");
 
         //Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.updateProduct(updateProduct));
@@ -136,7 +135,7 @@ public class ProductFileDAOTests {
     @Test
     public void testUpdateProductNotFound() {
         // Setup
-        Product product = new Product(69, "newProduct", 69, 69);
+        Product product = new Product(69, "newProduct", 69, 69, "url", "Description");
 
         // Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.updateProduct(product),

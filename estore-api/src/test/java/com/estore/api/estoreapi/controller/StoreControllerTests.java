@@ -39,7 +39,7 @@ public class StoreControllerTests {
     @Test
     public void testGetProduct() throws IOException {  // getProduct may throw IOException
         // Setup
-        Product product = new Product(1, "D10", 20, 9.99f);
+        Product product = new Product(1, "D10", 20, 9.99f, "url", "Description");
         // When the same id is passed in, our mock Product DAO will return the Product object
         when(mockProductDAO.getProduct(product.getId())).thenReturn(product);
 
@@ -88,7 +88,7 @@ public class StoreControllerTests {
     @Test
     public void testCreateProduct() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(1, "D20", 10, 19.99f);
+        Product product = new Product(1, "D10", 20, 9.99f, "url", "Description");
         // when createProduct is called, return true simulating successful
         // creation and save
         when(mockProductDAO.createProduct(product)).thenReturn(product);
@@ -104,7 +104,7 @@ public class StoreControllerTests {
     @Test
     public void testCreateProductFailed() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(1, "D12", 15, 14.99f);
+        Product product = new Product(1, "D12", 15, 14.99f, "url", "Description");
         // when createProduct is called, return false simulating failed
         // creation and save
         when(mockProductDAO.createProduct(product)).thenReturn(null);
@@ -119,7 +119,7 @@ public class StoreControllerTests {
     @Test
     public void testCreateProductHandleException() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(1, "D6", 25, 6.99f);
+        Product product = new Product(1, "D6", 25, 6.99f, "url", "Description");
 
         // When createProduct is called on the Mock Product DAO, throw an IOException
         doThrow(new IOException()).when(mockProductDAO).createProduct(product);
@@ -134,7 +134,7 @@ public class StoreControllerTests {
     @Test
     public void testUpdateProduct() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(1, "D4", 30, 3.99f);
+        Product product = new Product(1, "D4", 30, 3.99f, "url", "Description");
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockProductDAO.updateProduct(product)).thenReturn(product);
@@ -152,7 +152,7 @@ public class StoreControllerTests {
     @Test
     public void testUpdateProductFailed() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(1, "Super Dice", 5, 29.99f);
+        Product product = new Product(1, "Super Dice", 5, 29.99f, "url", "Description");
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockProductDAO.updateProduct(product)).thenReturn(null);
@@ -167,7 +167,7 @@ public class StoreControllerTests {
     @Test
     public void testUpdateProductHandleException() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(1, "Ultra Dice", 3, 34.99f);
+        Product product = new Product(1, "Ultra Dice", 3, 34.99f, "url", "Description");
         // When updateProduct is called on the Mock Product DAO, throw an IOException
         doThrow(new IOException()).when(mockProductDAO).updateProduct(product);
 
@@ -182,8 +182,8 @@ public class StoreControllerTests {
     public void testGetProducts() throws IOException { // getProducts may throw IOException
         // Setup
         Product[] products = new Product[2];
-        products[0] = new Product(1, "Insta-Dice", 10, 17.99f);
-        products[1] = new Product(1, "Cool Dice", 9, 12.99f);
+        products[0] = new Product(1, "Insta-Dice", 10, 17.99f, "url", "Description");
+        products[1] = new Product(1, "Cool Dice", 9, 12.99f, "url", "Description");
         // When getProducts is called return the products created above
         when(mockProductDAO.getProducts()).thenReturn(products);
 
@@ -213,8 +213,8 @@ public class StoreControllerTests {
         // Setup
         String searchString = "la";
         Product[] products = new Product[2];
-        products[0] = new Product(1, "Insta-Dice", 10, 17.99f);
-        products[1] = new Product(1, "Cool Dice", 9, 12.99f);
+        products[0] = new Product(1, "Insta-Dice", 10, 17.99f, "url", "Description");
+        products[1] = new Product(1, "Cool Dice", 9, 12.99f, "url", "Description");
         // When findProducts is called with the search string, return the two
         /// products above
         when(mockProductDAO.searchProducts(searchString)).thenReturn(products);

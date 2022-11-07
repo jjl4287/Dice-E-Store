@@ -1,39 +1,46 @@
-<div style="position:relative; top:70px;">
+<div class="padding">
     <input #query type="text" class="form-control" placeholder="Search..." (input)="search(query.value)">
-</div>
-
-<div *ngIf="query.value === ''; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-    <div class="container text-left">
-        <div class="row row-cols-4">
-            <div *ngFor="let product of products" class="col">
-                <div class="card" style="width: 15rem;">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ product.name }}</h4>
-                        <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
-                    </div>
-                    <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
-                        <a class="btn btn-primary" (click)="addToCart(product)">Add To Cart</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #elseBlock>
-    <tr *ngFor="let p of products$ | async">
+    <div *ngIf="query.value === ''; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
         <div class="container text-left">
             <div class="row row-cols-4">
-                <div class="card" style="width: 15rem;">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ p.name }}</h4>
-                        <p class="card-text">{{p.price | currency: 'USD' : true }}</p>
-                    </div>
-                    <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
-                        <a class="btn btn-primary" (click)="addToCart(p)">Add To Cart</a>
+                <div *ngFor="let product of products" class="col">
+                    <div class="card h-100" style="width: 18rem;">
+                        <div class="wrapper">
+                            <img [src]="product.url" class="card-img-top ">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ product.name }}</h4>
+                            <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                        <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
+                            <a class="btn btn-primary" (click)="addToCart(product)">Add To Cart</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </tr>
-</ng-template>
+    </ng-template>
+    <ng-template #elseBlock>
+        <div class="container text-left">
+            <div class="row row-cols-4">
+                <tr *ngFor="let p of products$ | async" class="col">
+                    <div class="card h-100" style="width: 18rem;">
+                        <div class="wrapper">
+                            <img [src]="p.url" class="card-img-top ">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ p.name }}</h4>
+                            <p class="card-text">{{p.price | currency: 'USD' : true }}</p>
+                            <p class="card-text">{{ p.description }}</p>
+                        </div>
+                        <div *ngIf="currentUser?.username != 'admin'" class="card-footer">
+                            <a class="btn btn-primary" (click)="addToCart(p)">Add To Cart</a>
+                        </div>
+                    </div>
+                </tr>
+            </div>
+        </div>
+    </ng-template>
+</div>

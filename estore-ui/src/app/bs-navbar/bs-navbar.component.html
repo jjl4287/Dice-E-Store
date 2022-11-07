@@ -1,5 +1,5 @@
 <!-- using bootstraps navbar example, but using svg's for icon support -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sticky-top" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
         <a class="navbar-brand" routerLink="/">Bovines Divine D&D Diceria</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
@@ -44,17 +44,20 @@
                         </div>
                     </li>
                 </ul>
-                <div id="search-component">
-                    <input #searchBox id="search-box" placeholder="Search" (input)="search(searchBox.value)" />
-                    <ul class="search-result">
-                        <li *ngFor="let product of products$ | async">
-                            <a routerLink="/detail/{{product.id}}">
-                                {{product.name}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>
+    <div class="dropdown-menu d-block position-static pt-0 mx-0 rounded-3 shadow overflow-hidden w-280px" id="search-component">
+        <form class="p-1 mb bg-light ">
+            <input #searchBox type="search" class="form-control" autocomplete="false" placeholder="Search..." (input)="search(searchBox.value)">
+        </form>
+        <ul class="list-unstyled mb-0">
+            <li *ngFor="let product of products$ | async">
+                <a class="dropdown-item d-flex align-items-center gap-2 py-2" routerLink="/detail/{{product.id}}">
+                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                    {{product.name}}
+                </a>
+            </li>
+        </ul>
+      </div>
 </nav>

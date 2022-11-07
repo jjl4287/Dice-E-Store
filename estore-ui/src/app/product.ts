@@ -5,4 +5,6 @@ export interface Product {
     name: string;
     price: GLfloat;
     qty: number;
+    url: string;
+    description: string;
   }

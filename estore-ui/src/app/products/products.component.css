@@ -1,7 +1,30 @@
-.container { padding-top: 80px;}
+.container {
+  padding-top: 80px;
+}
 .card {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 .card-footer {
-    padding: 10;
+  padding: 10;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper:after {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.wrapper img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
 }
