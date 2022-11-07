@@ -31,7 +31,7 @@ public class OrderTests {
         UUID expected_uuid= UUID.randomUUID();
         boolean expected_fulfillment=false;
         for(int i =0;i<5;i++){
-            expected_purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+            expected_purchase.add(new Product(i, "p"+i, 25-i, 25.99f, "url", "desc"));
         }
 
 
@@ -63,7 +63,7 @@ public class OrderTests {
         User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
-            purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+            purchase.add(new Product(i, "p"+i, 25-i, 25.99f, "url", "desc"));
         }
 
         Order order  = new Order(purchase,usr);
@@ -89,14 +89,14 @@ public class OrderTests {
     User usr= new User(id,userName,password,orders,email);
      Set<Product> purchase = new HashSet<>();
      for(int i =0;i<5;i++){
-         purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+         purchase.add(new Product(i, "p"+i, 25-i, 25.99f, "url", "desc"));
      }
 
     //create
     Order order  = new Order(purchase,usr);
     Order order2 = new Order(purchase, usr);
     Order order3 = new Order(purchase, usr,order.getUuid());
-    Product p = new Product(1, "test", 1, 1);
+    Product p = new Product(1, "test", 1, 1, "url", "desc");
     
     // Analyze
     assertEquals(order,order);
@@ -117,7 +117,7 @@ public class OrderTests {
         User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
-            purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+            purchase.add(new Product(i, "p"+i, 25-i, 25.99f, "url", "desc"));
         }
         UUID uuid = UUID.randomUUID();
         String expected_string = String.format(Order.STRING_FORMAT,purchase,usr,uuid);
@@ -141,7 +141,7 @@ public class OrderTests {
         User usr= new User(id,userName,password,orders,email);
         Set<Product> purchase = new HashSet<>();
         for(int i =0;i<5;i++){
-            purchase.add(new Product(i, "p"+i, 25-i, 25.99f));
+            purchase.add(new Product(i, "p"+i, 25-i, 25.99f, "url", "desc"));
         }
 
         Order order = new Order(purchase,usr);

@@ -8,6 +8,7 @@
         <div class="row row-cols-4">
             <div *ngFor="let product of products" class="col">
                 <div class="card" style="width: 15rem;">
+                    <img [src]="product.url" class="card-img-top">
                     <div class="card-body">
                         <h4 class="card-title">{{ product.name }}</h4>
                         <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
@@ -25,6 +26,7 @@
         <div class="container text-left">
             <div class="row row-cols-4">
                 <div class="card" style="width: 15rem;">
+                    <img [src]="p.url" class="card-img-top">
                     <div class="card-body">
                         <h4 class="card-title">{{ p.name }}</h4>
                         <p class="card-text">{{p.price | currency: 'USD' : true }}</p>

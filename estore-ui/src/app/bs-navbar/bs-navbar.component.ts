@@ -25,9 +25,11 @@ export class BsNavbarComponent implements OnInit {
   }
 
   async logout() {
-    await this.userService.logout().subscribe();
+    this.userService.logout().subscribe();
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-    window.location.replace("/");
+    setTimeout(() => {
+      window.location.replace('/')
+    }, 100)
   }
 
   ngOnInit(): void {

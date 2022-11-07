@@ -30,10 +30,12 @@ export class LoginComponent implements OnInit {
     }
   
     async login(username: string, password: string): Promise<void> {
-      await this.userService.login(username, password).subscribe();
+      this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
-      window.location.replace("/");
+      setTimeout(() => {
+        window.location.replace('/')
+      }, 100)
     }
 
     // using service to add users
@@ -48,7 +50,9 @@ export class LoginComponent implements OnInit {
       this.userService.login(username, password).subscribe();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
-      window.location.replace("/")
+      setTimeout(() => {
+        window.location.replace('/')
+      }, 100)
     }
 
   //Form Validables

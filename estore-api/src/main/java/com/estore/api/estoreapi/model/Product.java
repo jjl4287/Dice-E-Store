@@ -13,7 +13,7 @@ public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
-    public static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f]";
+    public static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f, url=%s, description=%s]";
 
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
@@ -38,8 +38,8 @@ public class Product {
      * is not provided it will be set to default java value
      */
     public Product(@JsonProperty("id") int id, @JsonProperty("name") String name,
-     @JsonProperty("qty") int qty, @JsonProperty("price") float price, @JsonProperty("price") String url,
-     @JsonProperty("price") String description) {
+     @JsonProperty("qty") int qty, @JsonProperty("price") float price, @JsonProperty("url") String url,
+     @JsonProperty("description") String description) {
         this.id = id;
         this.name = name;
         this.qty = qty;
