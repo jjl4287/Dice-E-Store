@@ -22,6 +22,11 @@ public class OrderDTO {
         this.uuid=UUID.randomUUID();
         this.user=user;
     }
+    public OrderDTO(Order order){
+        this.purchase = new ArrayList<Product>(order.getProducts());
+        this.uuid=order.getUuid();
+        this.user=order.getUser();
+    }
     public ArrayList<Product> getPurchase() {
         return purchase;
     }
