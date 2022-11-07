@@ -56,12 +56,12 @@ public class OrderController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrder(@PathVariable UUID id) {
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable UUID id) {
         LOG.info("GET /orders/" + id);
         try {
             Order order = orderDAO.getbyID(id);
             if (order != null)
-                return new ResponseEntity<Order>(order,HttpStatus.OK);
+                return new ResponseEntity<OrderDTO>(new OrderDTO(order),HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -80,10 +80,15 @@ public class OrderController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
-    public ResponseEntity<Order[]> getOrders() {
+    public ResponseEntity<OrderDTO[]> getOrders() {
         LOG.info("GET /orders");
         try {
-            return new ResponseEntity<Order[]>(orderDAO.getall(), HttpStatus.OK);
+            Order[] array = orderDAO.getall();
+            OrderDTO[] dto = new OrderDTO[array.length];
+            for (int i =0;i<array.length;i++) {
+                dto[i]=new OrderDTO(array[i]);
+            }
+            return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
@@ -106,11 +111,16 @@ public class OrderController {
      * GET http://localhost:8080/orders/?name=nameHere
      */
     @GetMapping("/")
-    public ResponseEntity<Order[]> searchOrders(@RequestParam User user) {
+    public ResponseEntity<OrderDTO[]> searchOrders(@RequestParam User user) {
         LOG.info("GET /orders/?name="+user);
 
         try {
-            return new ResponseEntity<Order[]>(orderDAO.search(user), HttpStatus.OK);
+            Order[] array = orderDAO.search(user);
+            OrderDTO[] dto = new OrderDTO[array.length];
+            for (int i =0;i<array.length;i++) {
+                dto[i]=new OrderDTO(array[i]);
+            }
+            return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
         }
         catch(IOException e){
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
@@ -130,14 +140,14 @@ public class OrderController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDTO dto) {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO dto) {
         Order order = new Order(dto);
         LOG.info("POST /orders " + order);
 
         try {
             Order created = orderDAO.createNew(order);
             if(created != null) {
-                return new ResponseEntity<Order>(created, HttpStatus.CREATED);
+                return new ResponseEntity<OrderDTO>(new OrderDTO(created), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);        
         }
@@ -148,12 +158,12 @@ public class OrderController {
     }
 
     @PostMapping("/fulfill")
-    public ResponseEntity<Order> fulfillOrder(@RequestBody Order order) {
+    public ResponseEntity<OrderDTO> fulfillOrder(@RequestBody OrderDTO order) {
         LOG.info("POST /fulfillorders " + order);
         try {
             orderDAO.getbyID(order.getUuid()).fulfillOrder();
             if(sendEmail.sendmail(order.getUser().getEmail(), "Order Fulfilled", order.toString(), false)){
-                return new ResponseEntity<Order>(order,HttpStatus.OK);
+                return new ResponseEntity<OrderDTO>(order,HttpStatus.OK);
             }
                 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);        
