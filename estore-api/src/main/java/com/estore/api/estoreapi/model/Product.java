@@ -13,12 +13,15 @@ public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
-    public static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f]";
+    public static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f, url=%s, description=%s]";
 
     @JsonProperty("id") private int id;
     @JsonProperty("name") private String name;
     @JsonProperty("price") private float price;
     @JsonProperty("qty") private int qty;
+    @JsonProperty("url") private String url;
+    @JsonProperty("description") private String description;
+
 
     /**
      * Create a product with the given id and name
@@ -26,6 +29,8 @@ public class Product {
      * @param name The name of the product
      * @param qty the qty of products
      * @param price the price of product
+     * @param url the image url of the product
+     * @param description the description of the product
      * 
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
@@ -33,11 +38,14 @@ public class Product {
      * is not provided it will be set to default java value
      */
     public Product(@JsonProperty("id") int id, @JsonProperty("name") String name,
-     @JsonProperty("qty") int qty, @JsonProperty("price") float price) {
+     @JsonProperty("qty") int qty, @JsonProperty("price") float price, @JsonProperty("url") String url,
+     @JsonProperty("description") String description) {
         this.id = id;
         this.name = name;
         this.qty = qty;
         this.price = price;
+        this.url = url;
+        this.description = description;
     }
 
     /**
@@ -105,22 +113,46 @@ public class Product {
     public int getId() {return id;}
 
     /**
+     * gets name of the product
+     * @return The name of the product
+     */
+    public String getName() {return name;}
+
+    /**
      * Sets the name of the product - necessary for JSON/JAVA deserialization
      * @param name The name of the product
      */
     public void setName(String name) {this.name = name;}
 
     /**
-     * gets name of the product
-     * @return The name of the product
+     * gets image url of the product
+     * @return The image url of the product
      */
-    public String getName() {return name;}
+    public String getUrl() {return url;}
+
+    /**
+     * Sets the image url of the product
+     * @param url The image url of the product
+     */
+    public void setUrl(String url) {this.url = url;}
+
+    /**
+     * gets the descritpion of the product
+     * @return The description of the product
+     */
+    public String getDescription() {return description;}
+
+    /**
+     * Sets the description of the product
+     * @param description The description of the product
+     */
+    public void setDescription(String description) {this.description = description;}
 
     /* 
      * {@inheritDoc}
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, id, name, qty, price);
+        return String.format(STRING_FORMAT, id, name, qty, price, url, description);
     }
 }

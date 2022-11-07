@@ -43,9 +43,9 @@ export class BsNavbarComponent implements OnInit {
 
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.productService.searchProducts(term)),
-      );
+    );
   }
-  
+
   // Push a search term into the observable stream.
   search(term: string): void {
     this.searchTerms.next(term);
