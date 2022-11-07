@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     }
   
     async login(username: string, password: string): Promise<void> {
-      await this.userService.login(username, password).subscribe();
+      const response = await this.userService.login(username, password).toPromise();
       this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
       console.log(this.currentUser);
       window.location.replace("/");

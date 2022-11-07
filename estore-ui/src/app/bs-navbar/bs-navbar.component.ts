@@ -25,7 +25,7 @@ export class BsNavbarComponent implements OnInit {
   }
 
   async logout() {
-    await this.userService.logout().subscribe();
+    const response = await this.userService.logout().toPromise();
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     window.location.replace("/");
   }
