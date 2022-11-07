@@ -36,6 +36,23 @@ export class LoginComponent implements OnInit {
     console.log(this.currentUser);
     window.location.replace("/");
   }
+    ngOnInit() {
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
+    }
+  
+    // using the service from the backend to properly grab products
+    getUsers(): void {
+      this.userService.getUsers()
+        .subscribe(users => this.users = users);
+    }
+  
+    async login(username: string, password: string): Promise<void> {
+      const response = await this.userService.login(username, password).toPromise();
+      this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
+      console.log(this.currentUser);
+      window.location.replace("/");
+    }
 
 
   // using service to add users

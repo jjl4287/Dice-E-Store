@@ -3,7 +3,10 @@ package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.estore.api.estoreapi.model.Order;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -35,7 +39,7 @@ public class UserFileDAO implements UserDAO {
     private static int nextId;          // The next Id to assign to a new User
     private String filename;            // Filename to read from and write to
     private User currentUser;           // The user currently logged in
-    private final User GUEST_USER = new User(0, "Guest", "guestPassword", new ArrayList<Order>(), "guest@guest.com");
+    private final User GUEST_USER = new User(0, "Guest", "guestPassword", new HashSet<Product>(), "guest@guest.com");
 
     /**
      * Creates a User File Data Access Object
@@ -225,11 +229,19 @@ public class UserFileDAO implements UserDAO {
      */
     @Override
     public User login( String username, String password) throws IOException{
-        User[] userArray = getUsersArray(username);
+        byte[] decodedUsernameBytes = Base64.getDecoder().decode(username);
+        byte[] decodedPasswordBytes = Base64.getDecoder().decode(password);
+        String decodedUsername = new String(decodedUsernameBytes);
+        String decodedPassword = new String(decodedPasswordBytes);
+        LOG.info(decodedPassword);
+        LOG.info(decodedPassword);
+
+        User[] userArray = getUsersArray(decodedUsername);
         for (User user : userArray) {
-            if (user.getUsername().equals(username)) {
-                if (user.getPassword().equals(password)) {
+            if (user.getUsername().equals(decodedUsername)) {
+                if (user.getPassword().equals(decodedPassword)) {
                     this.currentUser = user;
+                    LOG.info(user.getUsername());
                     return user;
                 }
             }
@@ -257,6 +269,20 @@ public class UserFileDAO implements UserDAO {
      */
     public User getGuest() throws IOException {
         return GUEST_USER;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Set<Product> getShoppingCart() {
+        return this.currentUser.getShoppingCart();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void addToCart(Product product) {
+        this.currentUser.addToCart(product);
     }
 }
 

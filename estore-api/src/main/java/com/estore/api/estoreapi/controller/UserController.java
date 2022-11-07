@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -283,6 +285,29 @@ public class UserController {
         LOG.info("GET /users/guest");
         try {
             return new ResponseEntity<>(userDAO.getGuest(), HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/shoppingCart")
+    public ResponseEntity<Set<Product>> getShoppingCart() {
+        LOG.info("GET /shoppingCart");
+        try {
+            return new ResponseEntity<>(userDAO.getShoppingCart(), HttpStatus.OK);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/shoppingCart/")
+    public ResponseEntity<String> addToCart(@RequestBody Product product) {
+        LOG.info("POST /shoppingCart/");
+        try {
+            userDAO.addToCart(product);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
