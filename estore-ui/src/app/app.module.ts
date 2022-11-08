@@ -26,6 +26,7 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
 import { AboutComponent } from './about/about.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { AuthGuard } from './auth-guard.service';
+import { AdminAuthGuard } from './admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -56,25 +57,26 @@ import { AuthGuard } from './auth-guard.service';
       { path: 'contact-us', component: ContactUsComponent},
       { path: 'about', component: AboutComponent},
       { path: 'products', component: ProductsComponent},
-      { path: 'shopping-cart', component: ShoppingCartComponent},
       { path: 'login', component: LoginComponent},
-
-      { path: 'check-out', component: CheckOutComponent},
+      
+      { path: 'shopping-cart', component: ShoppingCartComponent,canActivate: [AuthGuard]},
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard]},
       { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard]},
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard]},
 
-      { path: 'admin/products', component: AdminProductsComponent},
-      { path: 'admin/products/new', component: ProductFormComponent},
-      { path: 'admin/products/new/:id', component: ProductFormComponent},
-      { path: 'admin/orders', component: AdminOrdersComponent}
-    ],{ onSameUrlNavigation: 'reload' }),
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AdminAuthGuard]},
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AdminAuthGuard]},
+      { path: 'admin/products/new/:id', component: ProductFormComponent, canActivate: [AdminAuthGuard]},
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AdminAuthGuard]}
+    ], { onSameUrlNavigation: 'reload' }),
     NgbModule
   ],
   providers: [
     MessageService,
     ProductService,
     UserService,
-    AuthGuard
+    AuthGuard,
+    AdminAuthGuard
   ],
   bootstrap: [AppComponent]
 })

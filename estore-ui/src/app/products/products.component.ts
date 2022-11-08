@@ -57,8 +57,14 @@ export class ProductsComponent implements OnInit {
       });
   }
 
-  addToCart(product: Product):void{
-    this.userService.addToCart({id:product.id,name:product.name,price:product.price,qty:1,url:product.url,description:product.description}).subscribe();
+  // if user is not guest, add item to cart, else redirect to login page
+  addToCart(product: Product): void {
+    if (this.currentUser?.username != "Guest"){
+      this.userService.addToCart({id:product.id,name:product.name,price:product.price,qty:1,url:product.url,description:product.description}).subscribe();
+    }
+    else {
+      window.location.replace('/login')
+    }
   }
 
   // using service to delete products
