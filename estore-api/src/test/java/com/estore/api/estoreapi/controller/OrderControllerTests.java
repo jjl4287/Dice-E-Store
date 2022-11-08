@@ -58,7 +58,7 @@ public class OrderControllerTests {
         s1.add(p1);
 
 
-        Order order = new Order(s1,u1,testUUID);
+        Order order = new Order(s1,u1,testUUID,false);
         OrderDTO orderdto = new OrderDTO(order);
         // When the same id is passed in, our mock Order DAO will return the Order object
         when(mockOrderDAO.getbyID(order.getUuid())).thenReturn(order);

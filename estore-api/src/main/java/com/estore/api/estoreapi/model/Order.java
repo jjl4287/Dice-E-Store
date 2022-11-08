@@ -35,10 +35,11 @@ public class Order {
      * is not provided it will be set to default java value
      */
     @JsonCreator
-    public Order(@JsonProperty("products") Set<Product> purchase, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid){
-        this.products= new HashSet<>(purchase);
+    public Order(@JsonProperty("products") Set<Product> products, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid, @JsonProperty("fulfilled") boolean fulfilled){
+        this.products= new HashSet<>(products);
         this.uuid=uuid;
         this.user=user;
+        this.fulfilled=fulfilled;
     }
 
     /**
@@ -50,8 +51,8 @@ public class Order {
      *
      * 
      */
-    public Order(Set<Product> purchase,User user){
-        this.products= new HashSet<>(purchase);
+    public Order(Set<Product> products,User user){
+        this.products= new HashSet<>(products);
         this.uuid = UUID.randomUUID();
         this.user=user;
     }
@@ -64,7 +65,7 @@ public class Order {
      * 
      */
     public Order(OrderDTO dto){
-        this.products= new HashSet<>(dto.getPurchase());
+        this.products= new HashSet<>(dto.getProducts());
         this.uuid = dto.getUuid()==null?UUID.randomUUID():dto.getUuid();
         this.user=dto.getUser();
     }
