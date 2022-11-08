@@ -150,14 +150,14 @@ public class User {
      * @param product product to add to shopping cart
      */
     public void addToCart(Product product) {
-        if(this.shoppingCart.contains(product)){
-            this.shoppingCart.remove(product);
-            product.setQty(product.getQty()+1);
-            this.shoppingCart.add(product);
+        for (Product p : shoppingCart) {
+            if(p.equals(product)){
+                p.setQty(p.getQty()+1);
+                return;
+            }
         }
-        else{
-            this.shoppingCart.add(product);
-        }
+        product.setQty(1);
+        this.shoppingCart.add(product);
     }
 
     public void removeFromCart(Product product) {
@@ -165,14 +165,17 @@ public class User {
     }
 
     public void reduceFromCart(Product product) {
-        if(this.shoppingCart.contains(product)){
-            this.shoppingCart.remove(product);
-            if(product.getQty()<=1){
-                return;
-            }
-            else{
-                product.setQty(product.getQty()-1);
-                this.shoppingCart.add(product);
+        for (Product p : shoppingCart) {
+            if(p.equals(product)){
+                if(p.getQty()<=1){
+                    removeFromCart(product);
+                    return;
+                }
+                else{
+                    p.setQty(p.getQty()-1);
+                    return;
+                }
+                
             }
         }
     }
