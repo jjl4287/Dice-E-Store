@@ -1,1 +1,35 @@
-<p>my-orders works!</p>
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h2> My Orders</h2>
+
+    <table>
+        <tr>
+            <th>order</th>
+            <th>qty</th>
+            <th>price</th>
+            <th>fulfilled</th>
+        </tr>
+
+        <tr *ngFor="let order of orders" #refEl (click)='toggleRow(refEl)'>
+            <td>{{order.uuid}}</td>
+            <td>{{order.size}}</td>
+            <td>{{order.price | number: '1.1' }}</td>
+            <td>{{order.fulfilled?true:false}}</td>
+            <td class='expanded-row-content hide-row'>
+                <table class="table-inner">
+                    <tr *ngFor="let p of order.products">
+                        <td>{{p.name}}</td>
+                        <td>{{p.qty}}</td>
+                        <td>{{p.price | number: '1.1' }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</body>
+
+</html>

@@ -87,6 +87,7 @@ public class OrderController {
             OrderDTO[] dto = new OrderDTO[array.length];
             for (int i =0;i<array.length;i++) {
                 dto[i]=new OrderDTO(array[i]);
+                
             }
             return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
         }
@@ -110,8 +111,8 @@ public class OrderController {
      * Example: Find all orders that contain the text "nameHere"
      * GET http://localhost:8080/orders/?name=nameHere
      */
-    @GetMapping("/")
-    public ResponseEntity<OrderDTO[]> searchOrders(@RequestParam User user) {
+    @PostMapping("/")
+    public ResponseEntity<OrderDTO[]> searchOrders(@RequestBody User user) {
         LOG.info("GET /orders/?name="+user);
 
         try {
@@ -119,6 +120,7 @@ public class OrderController {
             OrderDTO[] dto = new OrderDTO[array.length];
             for (int i =0;i<array.length;i++) {
                 dto[i]=new OrderDTO(array[i]);
+                System.out.println(dto[i]);
             }
             return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
         }

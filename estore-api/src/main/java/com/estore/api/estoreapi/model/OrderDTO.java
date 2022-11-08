@@ -7,33 +7,63 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class OrderDTO {
-    private ArrayList<Product> purchase;
+    private ArrayList<Product> products;
     private User user;
     private UUID uuid;
+    private boolean fulfilled = false;
+    private int size;
+    private double price;
+    public static final String STRING_FORMAT = "Product [products=%s, user=%s, uuid=%s, fulfilled=%b, size=%d, price=%f]";
 
     @JsonCreator
-    public OrderDTO(@JsonProperty("products") ArrayList<Product> purchase, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid){
-        this.purchase = new ArrayList<Product>(purchase);
+    public OrderDTO(@JsonProperty("products") ArrayList<Product> products, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid, 
+        @JsonProperty("fulfilled") boolean fulfilled, @JsonProperty("size") int size, @JsonProperty("price") double price){
+        this.products = new ArrayList<Product>(products);
         this.uuid=uuid;
         this.user=user;
+        this.fulfilled = fulfilled;
+        this.size=size;
+        this.price=price;
     }
-    public OrderDTO(ArrayList<Product> purchase,User user){
-        this.purchase = new ArrayList<Product>(purchase);
+    public OrderDTO(ArrayList<Product> products,User user){
+        this.products = new ArrayList<Product>(products);
         this.uuid=UUID.randomUUID();
         this.user=user;
     }
     public OrderDTO(Order order){
-        this.purchase = new ArrayList<Product>(order.getProducts());
+        this.products = new ArrayList<Product>(order.getProducts());
         this.uuid=order.getUuid();
         this.user=order.getUser();
+        this.fulfilled = order.getFulfillment();
+
+        this.size = this.products.size();
+        this.price = 0; 
+        for(Product p:this.products){
+            this.price +=p.getQty()*p.getPrice();
+        }
     }
-    public ArrayList<Product> getPurchase() {
-        return purchase;
+    public ArrayList<Product> getProducts() {
+        return products;
     }
     public UUID getUuid() {
         return uuid;
     }
     public User getUser() {
         return user;
+    }
+    public boolean getFulfillment() {
+        return fulfilled;
+    }
+    public int getSize() {
+        return size;
+    }
+    public double getPrice() {
+        return price;
+    }
+    
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return String.format(STRING_FORMAT, products, user,uuid,fulfilled,size,price);
     }
 }

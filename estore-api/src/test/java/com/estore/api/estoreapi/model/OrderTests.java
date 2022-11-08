@@ -38,7 +38,7 @@ public class OrderTests {
 
         // Invoke
         Order order1  = new Order(expected_purchase,expected_usr);
-        Order order2  = new Order(expected_purchase,expected_usr,expected_uuid);
+        Order order2  = new Order(expected_purchase,expected_usr,expected_uuid,false);
 
         // Analyze
         assertEquals(expected_purchase,order1.getProducts());
@@ -95,7 +95,7 @@ public class OrderTests {
     //create
     Order order  = new Order(purchase,usr);
     Order order2 = new Order(purchase, usr);
-    Order order3 = new Order(purchase, usr,order.getUuid());
+    Order order3 = new Order(purchase, usr,order.getUuid(),false);
     Product p = new Product(1, "test", 1, 1, "url", "desc");
     
     // Analyze
@@ -122,7 +122,7 @@ public class OrderTests {
         UUID uuid = UUID.randomUUID();
         String expected_string = String.format(Order.STRING_FORMAT,purchase,usr,uuid);
 
-        Order order = new Order(purchase,usr,uuid);
+        Order order = new Order(purchase,usr,uuid,false);
 
         // Invoke
         String actual_string = order.toString();
