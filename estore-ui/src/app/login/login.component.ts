@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
     window.location.replace("/");
   }
 
+
   // using service to add users
   async add(username: string, password: string): Promise<void> {
     username = username.trim();

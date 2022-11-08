@@ -19,7 +19,7 @@ export class BsNavbarComponent implements OnInit {
   private searchTerms = new Subject<string>();
 
   constructor(private productService: ProductService, public userService: UserService) {
-    this.products = productService.getProducts();
+    this.products = productService.getProducts().toPromise();
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     console.log(this.currentUser?.username)
   }
