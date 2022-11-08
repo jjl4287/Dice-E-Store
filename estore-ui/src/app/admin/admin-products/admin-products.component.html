@@ -25,9 +25,9 @@
                     <th>
                         <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
                     </th>
-                    <!-- <td>
-                        <a [routerlink]="['/admin/products/new/', p.id]"></a>
-                    </td> -->
+                    <td>
+                        <a [routerLink]="['new/',p.id]" class="btn btn-secondary">Edit Product</a>
+                    </td> 
                 </tr>                
             </ng-template>
             <ng-template #elseBlock>

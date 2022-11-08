@@ -26,7 +26,7 @@ import com.estore.api.estoreapi.model.Product;
 @Component
 public class ProductFileDAO implements ProductDAO {
     private static final Logger LOG = Logger.getLogger(ProductFileDAO.class.getName());
-    Map<Integer,Product> Products;      // Provides a local copy of products so that
+    Map<Integer,Product> products;      // Provides a local copy of products so that
                                         // we don't need to read from the file each time
     private ObjectMapper objectMapper;  // Provides conversion between Product
                                         // objects and JSON text format written
@@ -82,7 +82,7 @@ public class ProductFileDAO implements ProductDAO {
     private Product[] getProductsArray(String containsText) {
         ArrayList<Product> ProductArrayList = new ArrayList<>();
 
-        for (Product Product : Products.values()) {
+        for (Product Product : products.values()) {
             if (containsText == null || Product.getName().contains(containsText)) {
                 ProductArrayList.add(Product);
             }
@@ -111,7 +111,7 @@ public class ProductFileDAO implements ProductDAO {
     }
 
     /**
-     * Loads Products from the JSON file into the map
+     * Loads products from the JSON file into the map
      * <br>
      * Also sets next id to one more than the greatest id found in the file
      * 
@@ -120,7 +120,7 @@ public class ProductFileDAO implements ProductDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
-        Products = new TreeMap<>();
+        products = new TreeMap<>();
         nextId = 0;
 
         // Reads JSON objects from file into array of Products
@@ -129,7 +129,7 @@ public class ProductFileDAO implements ProductDAO {
 
         // Add each Product to the tree map and keep track of the greatest id
         for (Product Product : ProductArray) {
-            Products.put(Product.getId(),Product);
+            products.put(Product.getId(),Product);
             if (Product.getId() > nextId)
                 nextId = Product.getId();
         }
@@ -143,7 +143,7 @@ public class ProductFileDAO implements ProductDAO {
      */
     @Override
     public Product[] getProducts() {
-        synchronized(Products) {
+        synchronized(products) {
             return getProductsArray();
         }
     }
@@ -153,7 +153,7 @@ public class ProductFileDAO implements ProductDAO {
      */
     @Override
     public Product[] searchProducts(String containsText) {
-        synchronized(Products) {
+        synchronized(products) {
             return getProductsArray(containsText);
         }
     }
@@ -163,9 +163,9 @@ public class ProductFileDAO implements ProductDAO {
      */
     @Override
     public Product getProduct(int id) {
-        synchronized(Products) {
-            if (Products.containsKey(id))
-                return Products.get(id);
+        synchronized(products) {
+            if (products.containsKey(id))
+                return products.get(id);
             else
                 return null;
         }
@@ -176,12 +176,12 @@ public class ProductFileDAO implements ProductDAO {
      */
     @Override
     public Product createProduct(Product Product) throws IOException {
-        synchronized(Products) {
+        synchronized(products) {
             // We create a new Product object because the id field is immutable
             // and we need to assign the next unique id
             Product newProduct = new Product(nextId(),Product.getName(), Product.getQty(), 
             Product.getPrice(), Product.getUrl(), Product.getDescription());
-            Products.put(newProduct.getId(),newProduct);
+            products.put(newProduct.getId(),newProduct);
             save(); // may throw an IOException
             return newProduct;
         }
@@ -191,14 +191,15 @@ public class ProductFileDAO implements ProductDAO {
     ** {@inheritDoc}
      */
     @Override
-    public Product updateProduct(Product Product) throws IOException {
-        synchronized(Products) {
-            if (Products.containsKey(Product.getId()) == false)
+    public Product updateProduct(Product product) throws IOException {
+        synchronized(products) {
+            if (products.containsKey(product.getId()) == false)
                 return null;  // Product does not exist
+            LOG.info(product.toString());
 
-            Products.put(Product.getId(),Product);
+            products.put(product.getId(), product);
             save(); // may throw an IOException
-            return Product;
+            return product;
         }
     }
 
@@ -207,9 +208,9 @@ public class ProductFileDAO implements ProductDAO {
      */
     @Override
     public boolean deleteProduct(int id) throws IOException {
-        synchronized(Products) {
-            if (Products.containsKey(id)) {
-                Products.remove(id);
+        synchronized(products) {
+            if (products.containsKey(id)) {
+                products.remove(id);
                 return save();
             }
             else
