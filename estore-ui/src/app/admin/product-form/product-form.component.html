@@ -54,6 +54,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">{{ name.value }}</h4>
                                 <p class="card-text">{{ price.value | currency: 'USD' : true }}</p>
+                                <p class="card-text">{{ description.value }}</p>
                             </div>
                             <div class="card-footer">
                                 <a href="#" class="btn btn-primary">Add To Cart</a>
@@ -65,24 +66,3 @@
         </div>
     </div>
 </div>
-
-
-<!--<div>
-    <div>
-        <label for="new-product">Product name: </label>
-        <input id="new-product" #productName />
-    </div>
-    <div>
-        <label for="new-product">Product quantity: </label>
-        <input id="new-product" #productQty />
-    </div>
-    <div>
-        <label for="new-product">Product price: </label>
-        <input id="new-product" #productPrice />
-    </div>
-  
-    (click) passes input value to add() and then clears the input
-    <button type="button" class="add-button" (click)="Save(productName.value, productQty.value, productPrice.value);">
-      Add product
-    </button>
-</div>-->
