@@ -135,4 +135,18 @@ public interface UserDAO {
      * @throws IOException
      */
     void addToCart(Product product) throws IOException;
+
+    /**
+     * Adds the product to the users shopping cart
+     * 
+     * @throws IOException
+     */
+    void reduceFromCart(Product product) throws IOException;
+
+    /**
+     * Adds the product to the users shopping cart
+     * 
+     * @throws IOException
+     */
+    void removeFromCart(Product product) throws IOException;
 }

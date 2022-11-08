@@ -33,31 +33,35 @@
                             <div *ngIf="currentUser != undefined; then thenBlock else elseBlock"></div>
                             <ng-template #thenBlock>
                                 <a class="dropdown-item" routerLink="/login">{{ currentUser?.username }}</a>
-                                <button *ngIf="currentUser?.username != 'Guest'" (click)="logout()" class="dropdown-item">Logout</button>
+                                <button *ngIf="currentUser?.username != 'Guest'" (click)="logout()"
+                                    class="dropdown-item">Logout</button>
                             </ng-template>
                             <ng-template #elseBlock>
                                 <a class="dropdown-item" routerLink="/login">Login</a>
                             </ng-template>
-                            <a *ngIf="currentUser?.username != 'Guest'" class="dropdown-item" routerLink="/my/orders">My Orders</a>
-                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item" routerLink="admin/orders">Manage Orders</a>
-                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item" routerLink="admin/products">Manage Products</a>
+                            <a *ngIf="currentUser?.username != 'Guest'" class="dropdown-item" routerLink="/my/orders">My
+                                Orders</a>
+                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item"
+                                routerLink="admin/orders">Manage Orders</a>
+                            <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item"
+                                routerLink="admin/products">Manage Products</a>
                         </div>
                     </li>
+                    <div ngbDropdown class="nav-item dropdown" id="search-component">
+                        <input ngbDropdownToggle #searchBox type="search" class="form-control" placeholder="Search..."
+                            (input)="search(searchBox.value)">
+                        <ul class="list-unstyled mb-0">
+                            <li ngbDropdownMenu *ngFor="let product of products$ | async">
+                                <a class="dropdown-item d-flex align-items-center gap-2 py-2"
+                                    routerLink="/detail/{{product.id}}">
+                                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
+                                    {{product.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="dropdown-menu d-block position-static pt-0 mx-0 rounded-3 shadow overflow-hidden w-280px" id="search-component">
-        <form class="p-1 mb bg-light ">
-            <input #searchBox type="search" class="form-control" autocomplete="false" placeholder="Search..." (input)="search(searchBox.value)">
-        </form>
-        <ul class="list-unstyled mb-0">
-            <li *ngFor="let product of products$ | async">
-                <a class="dropdown-item d-flex align-items-center gap-2 py-2" routerLink="/detail/{{product.id}}">
-                    <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                    {{product.name}}
-                </a>
-            </li>
-        </ul>
-      </div>
 </nav>

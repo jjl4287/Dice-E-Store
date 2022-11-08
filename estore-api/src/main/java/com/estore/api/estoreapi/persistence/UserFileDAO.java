@@ -284,5 +284,16 @@ public class UserFileDAO implements UserDAO {
     public void addToCart(Product product) {
         this.currentUser.addToCart(product);
     }
+
+    public void reduceFromCart(Product product) {
+        this.currentUser.reduceFromCart(product);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void removeFromCart(Product product) {
+        this.currentUser.removeFromCart(product);
+    }
 }
 

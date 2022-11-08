@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -45,7 +46,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.shoppingCart = shoppingCart;
+        this.shoppingCart = shoppingCart==null?new HashSet<Product>():shoppingCart;
         this.email = email;
         this.isAdmin = username.equals("admin");
     }
@@ -149,7 +150,31 @@ public class User {
      * @param product product to add to shopping cart
      */
     public void addToCart(Product product) {
-        this.shoppingCart.add(product);
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            product.setQty(product.getQty()+1);
+            this.shoppingCart.add(product);
+        }
+        else{
+            this.shoppingCart.add(product);
+        }
+    }
+
+    public void removeFromCart(Product product) {
+        this.shoppingCart.remove(product);
+    }
+
+    public void reduceFromCart(Product product) {
+        if(this.shoppingCart.contains(product)){
+            this.shoppingCart.remove(product);
+            if(product.getQty()<=1){
+                return;
+            }
+            else{
+                product.setQty(product.getQty()-1);
+                this.shoppingCart.add(product);
+            }
+        }
     }
 
     /**

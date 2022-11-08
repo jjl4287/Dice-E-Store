@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { User } from './user';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminAuthGuard implements CanActivate {
   user: User | undefined;
   bool: boolean;
 
@@ -16,11 +17,11 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(): Promise<boolean> {
     this.user = await this.userService.getCurrentUser().toPromise();
-    if (this.user?.username != "Guest") {
+    if (this.user?.admin == true) {
       this.bool = true;
     }
     else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
       this.bool = false;
     }
     return this.bool;
