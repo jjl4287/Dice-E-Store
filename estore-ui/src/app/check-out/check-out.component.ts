@@ -34,7 +34,7 @@ export class CheckOutComponent implements OnInit {
     
   }
 
-  submitOrder():boolean{
+  async submitOrder(): Promise<boolean>{
     console.log("hello");
     let allowed=true;
     this.shoppingCart.forEach((product: Product) => {
@@ -51,11 +51,12 @@ export class CheckOutComponent implements OnInit {
     }
 
     let s = new Array<Product>();
-    this.shoppingCart.forEach((product:Product) => {
+    this.shoppingCart.forEach(async (product:Product) => {
       let p = this.products.get(product.id);
       if(p!=undefined){
         this.productService.updateProduct({id:p.id,name:p.name,price:p.price,qty:(p.qty-product.qty),url:p.url,description:p.description}).subscribe();
         s.push(product);
+        const respones = await this.userService.removeFromCart(p).toPromise();
       }
     });
 
