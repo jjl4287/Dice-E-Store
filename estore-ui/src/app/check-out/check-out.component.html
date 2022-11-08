@@ -1,9 +1,10 @@
 <!-- This uses bootstraps card system, and their column row alignment system
      for the ideal level of prettyness -->
+
 <h3 class="padding">Check-out</h3>
 <div class="container text-left">
-    <div class="row row-cols-4">
-        <div *ngFor="let product of shoppingCart" class="col">
+    <div class="card-columns">
+        <div *ngFor="let product of shoppingCart;" class="col-md-6">
             <div class="card" style="width: 15rem;">
                 <div class="card-body">
                     <h4 class="card-title">{{ product.name }}</h4>
@@ -12,6 +13,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">My Order</h4>
+                    <!-- <p class="card-text">Total: {{ totalprice | currency: 'USD' : true }}</p> -->
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" (click)="submitOrder()" routerLink="/order-success">Submit Order</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<a class="btn btn-primary" (click)="submitOrder()">Submit Order</a>

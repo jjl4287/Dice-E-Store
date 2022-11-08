@@ -1,17 +1,20 @@
 .container {
-    padding-top: 80px;
+  padding-top: 80px;
 }
 
 .card {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .card-footer {
-    padding: 10;
+  padding: 10;
 }
 
 .divider {
-    width: 5px;
-    height: auto;
-    display: inline-block;
+  width: 5px;
+  height: auto;
+  display: inline-block;
+}
+.card-columns {
+    column-count: 2;
 }
