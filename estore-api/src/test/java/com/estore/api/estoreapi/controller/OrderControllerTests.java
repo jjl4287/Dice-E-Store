@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.estore.api.estoreapi.persistence.GenericDAO;
+import com.estore.api.estoreapi.persistence.OrderFileDAO;
 import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.OrderDTO;
 import com.estore.api.estoreapi.model.User;
@@ -268,6 +269,58 @@ public class OrderControllerTests {
 
         // Invoke
         ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
+    public void testFulfillOrder() throws IOException {
+        //Setup
+        boolean testIsFulfilled = true;
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "swen261.bovine@gmail.com"), new UUID(0, 0), false);
+        OrderDTO testOrderDTO = new OrderDTO(testOrder);
+        Order expectedOrder = new Order(testOrderDTO);
+        expectedOrder.fulfillOrder();
+
+        when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
+
+        //Invoke
+        ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
+
+        //Analyze
+        assertEquals(response.getBody().getFulfilled(), testIsFulfilled);
+    }
+
+    @Test
+    public void testFulfillOrderNotFound() throws IOException {
+        //Setup
+        boolean testIsFulfilled = true;
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0), false);
+        OrderDTO testOrderDTO = new OrderDTO(testOrder);
+        Order expectedOrder = new Order(testOrderDTO);
+        expectedOrder.fulfillOrder();
+
+        when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
+
+        //Invoke
+        ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Test
+    public void testFulfillOrderIOException() throws IOException { // findOrders may throw IOException
+        // Setup
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0), false);
+        OrderDTO testOrderDTO = new OrderDTO(testOrder);
+
+        // When createOrder is called on the Mock Order DAO, throw an IOException
+        doThrow(new IOException()).when(mockOrderDAO).updateValue(new Order(testOrderDTO));
+
+        // Invoke
+        ResponseEntity<OrderDTO> response = orderController.fulfillOrder(testOrderDTO);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
