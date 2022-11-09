@@ -187,7 +187,7 @@ public class UserFileDAO implements UserDAO {
         synchronized(users) {
             // We create a new User object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(user);
+            User newUser = new User(nextId(), user.getUsername(), user.getPassword(), user.getShoppingCart(), user.getEmail());
             users.put(newUser.getId(),newUser);
             save(); // may throw an IOException
             return newUser;
