@@ -32,9 +32,15 @@ export class LoginComponent implements OnInit {
   // use the user service to login and subscribe to current user, then reload page
   async login(username: string, password: string): Promise<void> {
     const response = await this.userService.login(username, password).toPromise();
-    this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
-    console.log(this.currentUser);
-    window.location.replace("/");
+    this.userService.getCurrentUser().subscribe(user => {
+      this.currentUser = user
+      if (this.currentUser.username != "Guest") {
+        window.location.replace("/");
+      }
+      else {
+        window.alert("Login Failed: incorrect username or password")
+      }
+    });
   }
 
 
@@ -43,7 +49,7 @@ export class LoginComponent implements OnInit {
     username = username.trim();
     if (!username) { return; }
     if (!password) { return; }
-    this.userService.addUser({ username, password } as User)
+    this.userService.addUser({ username, password, email: username } as User)
       .subscribe(user => {
         this.users.push(user);
       });

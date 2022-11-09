@@ -163,9 +163,10 @@ public class OrderController {
     public ResponseEntity<OrderDTO> fulfillOrder(@RequestBody OrderDTO order) {
         LOG.info("POST /fulfillorders " + order);
         try {
-            orderDAO.getbyID(order.getUuid()).fulfillOrder();
-            if(sendEmail.sendmail(order.getUser().getEmail(), "Order Fulfilled", order.toString(), false)){
-                return new ResponseEntity<OrderDTO>(order,HttpStatus.OK);
+            Order updatedOrder = orderDAO.updateValue(new Order(order));
+            OrderDTO updatedDTO = new OrderDTO(updatedOrder);
+            if(sendEmail.sendmail(updatedDTO.getUser().getEmail(), "Order Fulfilled", updatedDTO.toString(), false)){
+                return new ResponseEntity<OrderDTO>(updatedDTO,HttpStatus.OK);
             }
                 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);        

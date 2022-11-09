@@ -34,13 +34,16 @@ public class OrderDTO {
         this.products = new ArrayList<Product>(order.getProducts());
         this.uuid=order.getUuid();
         this.user=order.getUser();
-        this.fulfilled = order.getFulfillment();
+        this.fulfilled = order.getFulfilled();
 
         this.size = this.products.size();
         this.price = 0; 
         for(Product p:this.products){
             this.price +=p.getQty()*p.getPrice();
         }
+    }
+    public void fulfillOrder() {
+        this.fulfilled = true;
     }
     public ArrayList<Product> getProducts() {
         return products;
@@ -51,7 +54,7 @@ public class OrderDTO {
     public User getUser() {
         return user;
     }
-    public boolean getFulfillment() {
+    public boolean getFulfilled() {
         return fulfilled;
     }
     public int getSize() {

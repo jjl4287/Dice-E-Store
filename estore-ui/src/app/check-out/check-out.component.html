@@ -17,10 +17,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">My Order</h4>
-                    <!-- <p class="card-text">Total: {{ totalprice | currency: 'USD' : true }}</p> -->
+                    <p class="card-text">Total: {{ totalprice | currency: 'USD' : true }}</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" (click)="submitOrder()" routerLink="/order-success">Submit Order</a>
+                    <a class="btn btn-primary" (click)="submitOrder()">Submit Order</a>
                 </div>
             </div>
         </div>
