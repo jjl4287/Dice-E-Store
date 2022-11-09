@@ -63,7 +63,14 @@ public class OrderDTO {
     public double getPrice() {
         return price;
     }
-    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof OrderDTO){
+            OrderDTO order = (OrderDTO)obj;
+            return this.uuid.equals(order.uuid);
+        }
+        return false;
+    }
     @Override
     public String toString() {
         // TODO Auto-generated method stub

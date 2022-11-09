@@ -28,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -131,7 +132,9 @@ public class UserFileDAOTests {
     @Test
     public void testLogIn() throws IOException {
         //Invoke
-        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), testUsers[0].getPassword()));
+        String testUsername = Base64.getEncoder().encodeToString(testUsers[0].getUsername().getBytes());
+        String testPassword = Base64.getEncoder().encodeToString(testUsers[0].getPassword().getBytes());
+        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsername,testPassword));
         
         //Analyze
         assertNotNull(user);
@@ -152,9 +155,10 @@ public class UserFileDAOTests {
     @Test
     public void testLogInFailed() {
         //Invoke
-        assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), ""));
+        String testUsername = Base64.getEncoder().encodeToString(testUsers[0].getUsername().getBytes());
+        assertDoesNotThrow(() -> testUserFileDAO.login(testUsername, ""));
         User user = assertDoesNotThrow(() -> testUserFileDAO.login("", ""));
-        User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsers[0].getUsername(), ""));
+        User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsername, ""));
 
         //Analyze
         assertNull(user);

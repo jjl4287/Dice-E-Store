@@ -43,12 +43,12 @@ public class OrderTests {
         // Analyze
         assertEquals(expected_purchase,order1.getProducts());
         assertEquals(expected_usr,order1.getUser());
-        assertEquals(expected_fulfillment,order1.getFulfillment());
+        assertEquals(expected_fulfillment,order1.getFulfilled());
         assertNotNull(order1.getUuid());
 
         assertEquals(expected_purchase,order2.getProducts());
         assertEquals(expected_usr,order2.getUser());
-        assertEquals(expected_fulfillment,order2.getFulfillment());
+        assertEquals(expected_fulfillment,order2.getFulfilled());
         assertEquals(expected_uuid,order2.getUuid());
     }
 
@@ -74,7 +74,7 @@ public class OrderTests {
         order.fulfillOrder();
         
         // Analyze
-        assertEquals(expected_fulfillment,order.getFulfillment());
+        assertEquals(expected_fulfillment,order.getFulfilled());
     }
 
 

@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -128,7 +129,7 @@ public class OrderControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(order,response.getBody());
+        assertEquals(orderdto,response.getBody());
     }
 
     @Test
@@ -208,7 +209,7 @@ public class OrderControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(testdto,response.getBody());
+        assertArrayEquals(testdto,response.getBody());
     }
 
     @Test
@@ -254,7 +255,7 @@ public class OrderControllerTests {
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(testdto,response.getBody());
+        assertArrayEquals(testdto,response.getBody());
     }
 
 
