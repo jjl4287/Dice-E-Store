@@ -67,17 +67,83 @@ public class UserTests {
         Set<Product> init_shoppingCart = new HashSet<>();
         String init_email = "email";
         User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
-        Product product = new Product(0, "testProduct", 1, 9.99f, "url", "description");
+        Product product1 = new Product(0, "testProduct1", 1, 9.99f, "url", "description");
+        Product product2 = new Product(0, "testProduct2", 2, 19.99f, "url", "description");
+
 
         HashSet<Product> expected_products = new HashSet<>();
-        expected_products.add(product);
+        expected_products.add(product1);
+        expected_products.add(product2);
+        expected_products.add(product2);
+
 
         //Invoke
-        user.addToCart(product);
+        user.addToCart(product1);
+        user.addToCart(product2);
+        user.addToCart(product2);
+
 
         //Analyze
         assertEquals(user.getShoppingCart(), expected_products);
     }
+
+    @Test
+    public void testRemoveFromCart() {
+        //Setup
+        int init_id = 99;
+        String init_name = "Username";
+        String init_password = "Password";
+        Set<Product> init_shoppingCart = new HashSet<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
+        Product product1 = new Product(0, "testProduct1", 1, 9.99f, "url", "description");
+        Product product2 = new Product(0, "testProduct2", 2, 19.99f, "url", "description");
+
+
+        HashSet<Product> expected_products = new HashSet<>();
+        expected_products.add(product1);
+        expected_products.add(product2);
+        expected_products.remove(product1);
+
+
+        //Invoke
+        user.addToCart(product1);
+        user.addToCart(product2);
+        user.removeFromCart(product1);
+
+        //Analyze
+        assertEquals(user.getShoppingCart(), expected_products);
+    }
+
+    @Test
+    public void testReduceFromCart() {
+        //Setup
+        int init_id = 99;
+        String init_name = "Username";
+        String init_password = "Password";
+        Set<Product> init_shoppingCart = new HashSet<>();
+        String init_email = "email";
+        User user = new User(init_id, init_name, init_password, init_shoppingCart, init_email);
+        Product product1 = new Product(0, "testProduct1", 2, 9.99f, "url", "description");
+        Product product2 = new Product(0, "testProduct2", 1, 19.99f, "url", "description");
+        Product product = new Product(0, "testProduct1", 1, 9.99f, "url", "description");
+
+
+        HashSet<Product> expected_products = new HashSet<>();
+        expected_products.add(product);
+
+
+
+        //Invoke
+        // user.addToCart(product1);
+        user.addToCart(product2);
+        // user.reduceFromCart(product1);
+        user.reduceFromCart(product2);
+
+        //Analyze
+        assertEquals(user.getShoppingCart(), expected_products);
+    }
+
 
     @Test
     public void testEmail() {
