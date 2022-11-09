@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -85,12 +86,34 @@ public class OrderFileDAOTests {
         // Invoke
 
         User u2 = new User(2, "u2", "u2", null, "Email.com");
-
         Order[] orders = testOrderFileDAO.search(u2);
+        Order[] failedSearch = testOrderFileDAO.search(new Object());
 
         // Analyze
         assertEquals(orders.length,1);
         assertEquals(orders[0],orders[0]);
+        assertNull(failedSearch);
+    }
+    @Test
+    public void deleteOrder() throws IOException { //searchOrders may throw IOException
+        // Invoke
+        boolean remove = testOrderFileDAO.deleteValue(UUID.randomUUID());
+
+        // Analyze
+        assertFalse(remove);
+    }
+
+    @Test
+    public void updateOrder() throws IOException { //searchOrders may throw IOException
+        // Invoke
+        testOrders[0].fulfillOrder();
+        Order update = testOrderFileDAO.updateValue(testOrders[0]);
+        Order newOrder = new Order(testOrders[0].getProducts(),testOrders[0].getUser());
+        Order failedUpdate = testOrderFileDAO.updateValue(newOrder);
+
+        // Analyze
+        assertEquals(update,testOrders[0]);
+        assertNull(failedUpdate);
     }
 
     @Test

@@ -185,10 +185,10 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
             if (Orders.containsKey(order.getUuid()) == false)
                 return null;  // Product does not exist
 
-            Order updatedOrder = Orders.get(order.getUuid());
-            updatedOrder.fulfillOrder();
+            order.fulfillOrder();
+            Orders.put(order.getUuid(),order);
             save(); // may throw an IOException
-            return updatedOrder;
+            return order;
         }
     }
 
@@ -197,13 +197,6 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
      */
     @Override
     public boolean deleteValue(UUID id) throws IOException {
-        synchronized(Orders) {
-            if (Orders.containsKey(id)) {
-                Orders.remove(id);
-                return save();
-            }
-            else
-                return false;
-        }
+        return false;
     }
 }
