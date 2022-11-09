@@ -365,6 +365,20 @@ public class UserControllerTests {
         //Analyze
         assertEquals(userController.getCurrentUser(), response);
     }
+    @Test
+    public void testLogoutError() throws IOException {
+        //Invoke
+        doThrow(new IOException()).when(mockUserDAO).logout();
+        ResponseEntity<User> logoutResponse = userController.logout();
+
+        doThrow(new IOException()).when(mockUserDAO).getGuest();
+        ResponseEntity<User> response = userController.getGuest();
+
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(logoutResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @Test
     public void testGetShoppingCart() throws IOException {
@@ -373,5 +387,74 @@ public class UserControllerTests {
 
         //Analyze
         assertEquals(new HashSet<Product>(), shoppingCartResponse.getBody());
+    }
+    @Test
+    public void testGetShoppingCartError() throws IOException {
+        //Invoke
+        doThrow(new IOException()).when(mockUserDAO).getShoppingCart();
+        ResponseEntity<Set<Product>> shoppingCartResponse = userController.getShoppingCart();
+
+        //Analyze
+        assertEquals(shoppingCartResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @Test
+    public void testaddShoppingCart() {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+        ResponseEntity<String> response = userController.addToCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+    @Test
+    public void testaddShoppingCartError() throws IOException {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+
+        doThrow(new IOException()).when(mockUserDAO).addToCart(p);
+        ResponseEntity<String> response = userController.addToCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @Test
+    public void testremoveShoppingCart() {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+        ResponseEntity<String> response = userController.removeFromCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+    @Test
+    public void testremoveShoppingCartError() throws IOException {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+
+        doThrow(new IOException()).when(mockUserDAO).removeFromCart(p);
+        ResponseEntity<String> response = userController.removeFromCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @Test
+    public void testreduceShoppingCart() {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+        ResponseEntity<String> response = userController.reduceFromCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+    @Test
+    public void testreduceShoppingCartError() throws IOException {
+        Product p = new Product(1, "test", 1, 1, "url", "desc");
+
+        doThrow(new IOException()).when(mockUserDAO).reduceFromCart(p);
+        ResponseEntity<String> response = userController.reduceFromCart(p);
+        //Invoke
+
+        //Analyze
+        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
