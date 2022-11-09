@@ -140,6 +140,11 @@ public class UserFileDAOTests {
         assertNotNull(user);
         User actual = testUserFileDAO.getCurrentUser();
         assertEquals(user, actual);
+
+        testUserFileDAO.logout();
+        User actualAfterLogout = testUserFileDAO.getCurrentUser();
+        User expected = new User(0, "Guest", "guestPassword",  new HashSet<Product>(), "guestEmail");
+        assertEquals(actualAfterLogout, expected);
     }
 
     @Test
