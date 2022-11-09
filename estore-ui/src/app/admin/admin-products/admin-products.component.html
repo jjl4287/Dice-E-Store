@@ -19,12 +19,12 @@
             <div *ngIf="query.value === ''; then thenBlock else elseBlock"></div>
             <ng-template #thenBlock>
                 <tr *ngFor="let p of products">
-                    <th> {{p.name}} </th>
-                    <th> {{p.qty}} </th>
-                    <th> {{p.price}} </th>
-                    <th>
-                        <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
-                    </th>
+                    <td> {{p.name}} </td>
+                    <td> {{p.qty}} </td>
+                    <td> {{p.price}} </td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" title="delete product" (click)="delete(p)">Delete</button>
+                    </td>
                     <td>
                         <a [routerLink]="['new/',p.id]" class="btn btn-secondary">Edit Product</a>
                     </td> 

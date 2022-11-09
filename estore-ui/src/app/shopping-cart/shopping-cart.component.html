@@ -4,11 +4,15 @@
 <div class="container text-left">
     <div class="row row-cols-4">
         <div *ngFor="let product of cart" class="col">
-            <div class="card" style="width: 15rem;">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
+                    <div class="wrapper">
+                        <img [src]="product.url" class="card-img-top">
+                    </div>
                     <h4 class="card-title">{{ product.name }}</h4>
                     <p class="card-text">{{product.price | currency: 'USD' : true }}</p>
                     <p class="card-text">{{product.qty}}</p>
+                    <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" (click)="reduceProduct(product)">-</a>

@@ -1,7 +1,17 @@
 <!-- using bootstraps navbar example, but using svg's for icon support -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sticky-top" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/">Bovines Divine D&D Diceria</a>
+        <a class="navbar-brand" routerLink="/">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="20.000000pt" height="20.000000pt"
+                viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                    <path
+                        d="M1804 4699 c-401 -232 -890 -514 -1087 -628 -264 -151 -362 -213 -373 -233 -21 -41 -21 -2516 0 -2556 11 -21 270 -175 1088 -646 590 -341 1085 -624 1101 -630 19 -7 36 -7 56 0 16 6 511 290 1101 630 818 473 1075 625 1086 646 21 40 21 2516 0 2556 -11 21 -233 153 -932 557 -1277 737 -1255 725 -1284 725 -16 0 -307 -162 -756 -421z m656 -124 c0 -146 -1 -265 -3 -265 -2 0 -320 -65 -707 -145 -386 -80 -704 -144 -706 -142 -4 4 1396 816 1409 816 4 1 7 -118 7 -264z m916 -141 c387 -224 703 -409 701 -410 -2 -2 -320 61 -706 141 -386 80 -704 145 -706 145 -3 0 -5 119 -5 265 0 146 3 265 6 265 3 0 323 -183 710 -406z m-1212 -690 c-107 -185 -197 -347 -200 -360 -22 -88 100 -153 164 -86 15 15 117 183 227 375 109 191 202 347 205 347 3 0 289 -492 636 -1092 l631 -1093 -633 -3 c-349 -1 -919 -1 -1268 0 l-634 3 209 360 c129 223 209 370 209 387 1 87 -100 137 -162 81 -10 -9 -104 -166 -210 -349 -106 -184 -195 -334 -198 -334 -3 0 -134 386 -289 858 -156 471 -285 862 -287 867 -3 6 118 35 283 69 378 77 1106 228 1308 270 88 19 170 35 182 35 18 1 -7 -47 -173 -335z m1509 154 c518 -107 886 -187 883 -193 -2 -5 -131 -396 -287 -867 -155 -472 -286 -858 -289 -858 -3 0 -90 145 -192 323 -102 177 -375 649 -606 1050 -231 400 -415 727 -409 727 7 0 411 -82 900 -182z m-2687 -2124 c-3 -9 -438 -264 -451 -264 -3 0 -5 370 -4 823 l1 822 229 -685 c126 -377 227 -690 225 -696z m3600 -261 c-4 -5 -434 241 -450 257 -4 4 93 312 220 694 l229 686 3 -816 c1 -450 0 -819 -2 -821z m-813 104 c-17 -28 -1205 -1357 -1213 -1357 -8 0 -1196 1329 -1213 1357 -7 11 204 13 1213 13 1009 0 1220 -2 1213 -13z m-1996 -787 c154 -173 279 -316 278 -318 -4 -4 -1415 811 -1415 818 0 3 102 64 227 136 l226 131 202 -226 c111 -124 328 -368 482 -541z m2506 620 c108 -63 197 -117 197 -120 0 -7 -1411 -823 -1415 -818 -1 2 214 247 479 544 l481 542 30 -17 c17 -9 119 -68 228 -131z" />
+                    <path
+                        d="M1800 3069 c-65 -26 -81 -110 -31 -160 77 -77 207 13 157 109 -16 31 -62 63 -88 61 -7 0 -24 -5 -38 -10z" />
+                </g>
+            </svg>
+            Bovines Divine D&D Diceria</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2"
             aria-controls="offcanvasNavbar2">
             <span class="navbar-toggler-icon"></span>
@@ -16,7 +26,8 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li *ngIf="currentUser?.username != 'admin'" class="nav-item">
-                        <a class="nav-link" routerLink="/shopping-cart"><svg xmlns="http://www.w3.org/2000/svg"
+                        <a class="nav-link" routerLink="/shopping-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg"
                                 width="20" height="20" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
                                 <path
                                     d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z" />
@@ -24,7 +35,8 @@
                     </li>
                     <li ngbDropdown class="nav-item dropdown">
                         <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
+                            aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg"
                                 width="20" height="20" fill="currentColor" class="bi bi-person-fill"
                                 viewBox="0 0 16 16">
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
