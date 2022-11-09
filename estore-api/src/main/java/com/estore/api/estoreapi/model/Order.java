@@ -107,7 +107,7 @@ public class Order {
      * Getter for fulfuillment
      * @return fulfillment status of order
      */
-    public boolean getFulfillment(){
+    public boolean getFulfilled(){
         return fulfilled;
     }
 

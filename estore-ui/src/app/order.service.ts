@@ -72,6 +72,7 @@ export class OrderService {
 
   /** POST: add a new order to the server */
   addOrder(purchase: Array<Product>, user: User): Observable<Order> {
+    console.log("true")
     const UUID = uuid.v4() as string;
     let price =0;
     purchase.forEach(p => {
