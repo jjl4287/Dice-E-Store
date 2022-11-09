@@ -1,0 +1,45 @@
+[{
+    "products": [{
+            "id": 10,
+            "name": "Mr. Dice",
+            "qty": 1,
+            "price": 29.99,
+            "url": "https://i.etsystatic.com/20577495/r/il/9c2121/2101726846/il_fullxfull.2101726846_daf2.jpg",
+            "description": "This is Mr. Dice. It's our original set. We are proud of it and think you will be too."
+        },
+        {
+            "id": 17,
+            "name": "Mrs. Dice",
+            "qty": 1,
+            "price": 19.99,
+            "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.LRSVrz4SyA5PQ374rIYu5wHaHa%26pid%3DApi&f=1&ipt=c8ffb09751c8b2af542373291c27f9562428c53a95ca96790dea2d1031480627&ipo=images",
+            "description": "Nearly the same as our Mr. Dice, but it looks different, and is cheaper."
+        }
+    ],
+    "user": {
+        "id": 11,
+        "username": "Test",
+        "password": "testPassword",
+        "shoppingCart": [{
+                "id": 10,
+                "name": "Mr. Dice",
+                "qty": 1,
+                "price": 29.99,
+                "url": "https://i.etsystatic.com/20577495/r/il/9c2121/2101726846/il_fullxfull.2101726846_daf2.jpg",
+                "description": "This is Mr. Dice. It's our original set. We are proud of it and think you will be too."
+            },
+            {
+                "id": 17,
+                "name": "Mrs. Dice",
+                "qty": 1,
+                "price": 19.99,
+                "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.LRSVrz4SyA5PQ374rIYu5wHaHa%26pid%3DApi&f=1&ipt=c8ffb09751c8b2af542373291c27f9562428c53a95ca96790dea2d1031480627&ipo=images",
+                "description": "Nearly the same as our Mr. Dice, but it looks different, and is cheaper."
+            }
+        ],
+        "email": "mkb6559@rit.edu",
+        "admin": false
+    },
+    "UUID": "f7318c8d-ea1d-431a-a685-1ee8e9344d1c",
+    "fulfilled": false
+}]

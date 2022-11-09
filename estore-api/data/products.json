@@ -1,0 +1,82 @@
+[
+  {
+    "id": 10,
+    "name": "Mr. Dice",
+    "qty": 400,
+    "price": 29.99,
+    "url": "https://i.etsystatic.com/20577495/r/il/9c2121/2101726846/il_fullxfull.2101726846_daf2.jpg",
+    "description": "This is Mr. Dice. It's our original set. We are proud of it and think you will be too."
+  },
+  {
+    "id": 17,
+    "name": "Mrs. Dice",
+    "qty": 400,
+    "price": 19.99,
+    "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.LRSVrz4SyA5PQ374rIYu5wHaHa%26pid%3DApi&f=1&ipt=c8ffb09751c8b2af542373291c27f9562428c53a95ca96790dea2d1031480627&ipo=images",
+    "description": "Nearly the same as our Mr. Dice, but it looks different, and is cheaper."
+  },
+  {
+    "id": 23,
+    "name": "D20",
+    "qty": 1200,
+    "price": 5.99,
+    "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.QQ-Exwiwnm8bIIXjn3neGAHaHa%26pid%3DApi&f=1&ipt=be0042e90fb7e7dadd0bfcef019444bba7970aadb11175aa0a4c861510a03c41&ipo=images",
+    "description": "This is a D20. Please buy it from us."
+  },
+  {
+    "id": 28,
+    "name": "D12",
+    "qty": 1100,
+    "price": 5.99,
+    "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.nf0__QWLmdHJzwb3gk3maQHaHa%26pid%3DApi&f=1&ipt=05d6e6fa35674ef132b03550f3c5a2fd34988c85d04227d3d069b3775a35acd7&ipo=images",
+    "description": "It's not a D20. It's not a D10. It's a D12. For D12 things, we presume."
+  },
+  {
+    "id": 29,
+    "name": "D10",
+    "qty": 800,
+    "price": 5.99,
+    "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.5jBAqVAlROwGNGnS-fH7zQHaHa%26pid%3DApi&f=1&ipt=bd1e5fa7dd24b478d5fc179a795fea0940a832e79d3e1aac56d803d0a60c2bdf&ipo=images",
+    "description": "Perhaps our least controversial die. Its twitter feed is clean. If it ran for office, it would win."
+  },
+  {
+    "id": 30,
+    "name": "D8",
+    "qty": 700,
+    "price": 5.99,
+    "url": "https://i.etsystatic.com/22540833/r/il/562649/2490353347/il_1588xN.2490353347_1ba1.jpg",
+    "description": "This die is so much die, that if you don't buy it, you might actually die. Also, we know the picture has a whole set, but you will only get the D8. You are welcome."
+  },
+  {
+    "id": 31,
+    "name": "D6",
+    "qty": 600,
+    "price": 5.99,
+    "url": "https://i.etsystatic.com/25322667/r/il/6f1986/4217179221/il_1588xN.4217179221_i8yv.jpg",
+    "description": "Have you ever considered getting a life? No? Cool. Neither have I."
+  },
+  {
+    "id": 32,
+    "name": "D4",
+    "qty": 417,
+    "price": 5.99,
+    "url": "https://i.etsystatic.com/8542370/r/il/835057/2697614563/il_680x540.2697614563_4egy.jpg",
+    "description": "This one is triangle shaped. Illuminati? Pyramids? Aliens? Yes. That."
+  },
+  {
+    "id": 33,
+    "name": "Broken Dice :(",
+    "qty": 1,
+    "price": 0.01,
+    "url": "https://i.imgur.com/73iJuKu.jpeg",
+    "description": "Oh no! Our dice! It's broken!"
+  },
+  {
+    "id": 34,
+    "name": "Software Engineer's Tears",
+    "qty": 9999,
+    "price": 69.99,
+    "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fregmedia.co.uk%2F2016%2F01%2F27%2Fshutterstock_sad_laptop_man.jpg%3Fx%3D442%26y%3D293%26crop%3D1&f=1&nofb=1&ipt=807ee327d356f495d6fbd5e5c10d46de1c46d5b74a3f81e98c6de2b9c98c6ca2&ipo=images",
+    "description": "Plentiful. Unshowered. Salty. Foodsafe. Somehow green in color."
+  }
+]
