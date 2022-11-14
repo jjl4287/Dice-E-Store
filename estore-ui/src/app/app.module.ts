@@ -17,7 +17,6 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AdminComponent } from './admin/admin.component';
 import { MessageService } from './message.service';
 import { ProductService } from './product.service';
 import { UserService } from './user.service';
@@ -41,7 +40,6 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
-    AdminComponent,
     ProductFormComponent,
     AboutComponent,
     ContactUsComponent
@@ -53,21 +51,21 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent},
-      { path: 'contact-us', component: ContactUsComponent},
-      { path: 'about', component: AboutComponent},
-      { path: 'products', component: ProductsComponent},
-      { path: 'login', component: LoginComponent},
-      
-      { path: 'shopping-cart', component: ShoppingCartComponent,canActivate: [AuthGuard]},
-      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard]},
-      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard]},
-      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard]},
+      { path: '', component: HomeComponent },
+      { path: 'contact-us', component: ContactUsComponent },
+      { path: 'about', component: AboutComponent },
+      { path: 'products', component: ProductsComponent },
+      { path: 'login', component: LoginComponent },
 
-      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AdminAuthGuard]},
-      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AdminAuthGuard]},
-      { path: 'admin/products/new/:id', component: ProductFormComponent, canActivate: [AdminAuthGuard]},
-      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AdminAuthGuard]}
+      { path: 'shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+
+      { path: 'admin/products', component: AdminProductsComponent, canActivate: [AdminAuthGuard] },
+      { path: 'admin/products/new', component: ProductFormComponent, canActivate: [AdminAuthGuard] },
+      { path: 'admin/products/new/:id', component: ProductFormComponent, canActivate: [AdminAuthGuard] },
+      { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AdminAuthGuard] }
     ], { onSameUrlNavigation: 'reload' }),
     NgbModule
   ],

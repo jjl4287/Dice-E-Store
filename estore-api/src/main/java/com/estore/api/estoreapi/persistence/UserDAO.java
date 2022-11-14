@@ -35,7 +35,8 @@ public interface UserDAO {
      *
      * @param containsText The text to match against
      *
-     * @return An array of users whose usernames contains the given text, may be empty
+     * @return An array of users whose usernames contains the given text, may be
+     *         empty
      *
      * @throws IOException if an issue with underlying storage
      */
@@ -47,8 +48,8 @@ public interface UserDAO {
      * @param id The id of the User to get
      *
      * @return a User object with the matching id
-     * <br>
-     * null if no Product with a matching id is found
+     *         <br>
+     *         null if no Product with a matching id is found
      *
      * @throws IOException if an issue with underlying storage
      */
@@ -67,8 +68,9 @@ public interface UserDAO {
      * Creates and saves a User
      *
      * @param User User object to be created and saved
-     * <br>
-     * The id of the User object is ignored and a new unique id is assigned
+     *             <br>
+     *             The id of the User object is ignored and a new unique id is
+     *             assigned
      *
      * @return new User if successful, on error false
      *
@@ -82,7 +84,7 @@ public interface UserDAO {
      * @param User user to be updated and saved
      *
      * @return updated User if successful, null if
-     * User not found
+     *         User not found
      *
      * @throws IOException if underlying storage cannot be accessed
      */
@@ -94,8 +96,8 @@ public interface UserDAO {
      * @param id The id of the {@link User User}
      *
      * @return true if the User was deleted
-     * <br>
-     * false if User with the given id does not exist
+     *         <br>
+     *         false if User with the given id does not exist
      *
      * @throws IOException if underlying storage cannot be accessed
      */

@@ -23,12 +23,13 @@
                     <td> {{p.qty}} </td>
                     <td> {{p.price}} </td>
                     <td>
-                        <button type="button" class="btn btn-secondary" title="delete product" (click)="delete(p)">Delete</button>
+                        <button type="button" class="btn btn-secondary" title="delete product"
+                            (click)="delete(p)">Delete</button>
                     </td>
                     <td>
                         <a [routerLink]="['new/',p.id]" class="btn btn-secondary">Edit Product</a>
-                    </td> 
-                </tr>                
+                    </td>
+                </tr>
             </ng-template>
             <ng-template #elseBlock>
                 <tr *ngFor="let p of products$ | async">
@@ -38,7 +39,7 @@
                     <td>
                         <button type="button" class="Delete" title="delete product" (click)="delete(p)">Delete</button>
                     </td>
-                </tr>      
+                </tr>
             </ng-template>
         </tbody>
     </table>

@@ -9,7 +9,7 @@ import java.util.*;
  * 
  * @author Team A - Bovines
  */
-public interface GenericDAO <T,V> {
+public interface GenericDAO<T, V> {
     /**
      * Retrieves all plain link products
      * 
@@ -33,23 +33,23 @@ public interface GenericDAO <T,V> {
     /**
      * Retrieves a product with the given id
      * 
-     * @param id The id of  T to get
+     * @param id The id of T to get
      * 
      * @return a T object with the matching id
-     * <br>
-     * null if no T with a matching id is found
+     *         <br>
+     *         null if no T with a matching id is found
      * 
      * @throws IOException if an issue with underlying storage
      */
     T getbyID(V id) throws IOException;
 
-
     /**
      * Creates and saves a product
      * 
      * @param value T object to be created and saved
-     * <br>
-     * The id of the T object is ignored and a new unique id is assigned
+     *              <br>
+     *              The id of the T object is ignored and a new unique id is
+     *              assigned
      *
      * @return new Product if successful, on error false
      * 
@@ -63,7 +63,7 @@ public interface GenericDAO <T,V> {
      * @param Value object to be updated and saved
      * 
      * @return updated T if successful, null if
-     * T not found
+     *         T not found
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
@@ -75,8 +75,8 @@ public interface GenericDAO <T,V> {
      * @param id The id of the {@link T Product}
      * 
      * @return true if the T was deleted
-     * <br>
-     * false if T with the given id does not exist
+     *         <br>
+     *         false if T with the given id does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */

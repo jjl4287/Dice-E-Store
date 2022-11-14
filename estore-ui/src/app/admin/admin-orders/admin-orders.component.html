@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <h2 class="padding">All Orders</h2>
-        <table>
-            <tr>
-                <th>Order</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>User</th>
-                <th>Fulfilled</th>
-            </tr>
-    
-            <tr *ngFor="let order of orders" #refEl (click)='toggleRow(refEl)'>
-                <td>{{order.uuid}}</td>
-                <td>{{order.size}}</td>
-                <td>{{order.price | number: '1.1' }}</td>
-                <td>{{order.user.username}}</td>
-                <div *ngIf="order.fulfilled === true; then thenblock else elseblock" ></div>
-                <ng-template #thenblock>
-                    <td>True</td>
-                </ng-template>
-                <ng-template #elseblock>
-                    <td><button class="btn btn-secondary" (click)="fulfillOrder(order)">Fulfill Order</button></td>
-                </ng-template>
-                <td class='expanded-row-content hide-row'>
-                    <table class="table-inner">
-                        <tr *ngFor="let p of order.products">
-                            <td>{{p.name}}</td>
-                            <td>{{p.qty}}</td>
-                            <td>{{p.price | number: '1.1' }}</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-    
-        </table>
-    </body>
+
+<body>
+    <h2 class="padding">All Orders</h2>
+    <table>
+        <tr>
+            <th>Order</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>User</th>
+            <th>Fulfilled</th>
+        </tr>
+
+        <tr *ngFor="let order of orders" #refEl (click)='toggleRow(refEl)'>
+            <td>{{order.uuid}}</td>
+            <td>{{order.size}}</td>
+            <td>{{order.price | number: '1.1' }}</td>
+            <td>{{order.user.username}}</td>
+            <div *ngIf="order.fulfilled === true; then thenblock else elseblock"></div>
+            <ng-template #thenblock>
+                <td>True</td>
+            </ng-template>
+            <ng-template #elseblock>
+                <td><button class="btn btn-secondary" (click)="fulfillOrder(order)">Fulfill Order</button></td>
+            </ng-template>
+            <td class='expanded-row-content hide-row'>
+                <table class="table-inner">
+                    <tr *ngFor="let p of order.products">
+                        <td>{{p.name}}</td>
+                        <td>{{p.qty}}</td>
+                        <td>{{p.price | number: '1.1' }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</body>
+
 </html>

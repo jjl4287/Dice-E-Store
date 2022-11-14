@@ -11,32 +11,32 @@ import { UserService } from '../user.service';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent{
+export class ShoppingCartComponent {
   currentUser: User | undefined;
   cart: any;
-  products: Map<number,Product>;
-  
-  constructor(private userService: UserService, private orderService: OrderService) { 
+  products: Map<number, Product>;
+
+  constructor(private userService: UserService, private orderService: OrderService) {
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.userService.getShoppingCart().subscribe(shoppingCart => this.cart = shoppingCart);
-    this.products= new Map<number,Product>();
-    
+    this.products = new Map<number, Product>();
+
   }
-  refresh():void{
+  refresh(): void {
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.userService.getShoppingCart().subscribe(shoppingCart => this.cart = shoppingCart);
   }
 
-  addProduct(product: Product):void{
+  addProduct(product: Product): void {
     this.userService.addToCart(product).subscribe();
     this.refresh();
   }
-  removeProduct(product: Product):void{
+  removeProduct(product: Product): void {
     this.userService.removeFromCart(product).subscribe();
     this.refresh();
   }
 
-  reduceProduct(product: Product):void{
+  reduceProduct(product: Product): void {
     this.userService.reduceFromCart(product).subscribe();
     this.refresh();
   }

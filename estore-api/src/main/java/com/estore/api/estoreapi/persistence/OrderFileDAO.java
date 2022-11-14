@@ -21,20 +21,20 @@ import java.util.*;
  * Provides for JSON File based persistence
  * 
  * {@literal @} Creates single instance of class and injects into others
- *              as needed.
+ * as needed.
  * 
  * @author Team A - Bovines
  */
 
 @Component
-public class OrderFileDAO implements GenericDAO<Order,UUID> {
+public class OrderFileDAO implements GenericDAO<Order, UUID> {
     private static final Logger LOG = Logger.getLogger(OrderFileDAO.class.getName());
-    Map<UUID,Order> Orders;      // Provides a local copy of products so that
-                                        // we don't need to read from the file each time
-    private ObjectMapper objectMapper;  // Provides conversion between Product
-                                        // objects and JSON text format written
-                                        // to the file
-    private String filename;            // Filename to read from and write to
+    Map<UUID, Order> Orders; // Provides a local copy of products so that
+                             // we don't need to read from the file each time
+    private ObjectMapper objectMapper; // Provides conversion between Product
+                                       // objects and JSON text format written
+                                       // to the file
+    private String filename; // Filename to read from and write to
 
     /**
      * Creates a Product File Data Access Object
@@ -44,16 +44,16 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public OrderFileDAO(@Value("${orders.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public OrderFileDAO(@Value("${orders.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
-        load();  // load the products from the file
+        load(); // load the products from the file
     }
 
     /**
      * Generates an array of Products from the tree map
      * 
-     * @return  The array of Products, may be empty
+     * @return The array of Products, may be empty
      */
     private Order[] getOrderArray() {
         return getOrderArray(null);
@@ -65,10 +65,10 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
      * <br>
      * If containsText is null, the array contains all of the Products
      * in the tree map
-     * <br> 
+     * <br>
      * if containsText is null there is no filter
      * 
-     * @return  The array of Products, may be empty
+     * @return The array of Products, may be empty
      */
     private Order[] getOrderArray(Object user) {
         ArrayList<Order> OrderArrayList = new ArrayList<>();
@@ -97,7 +97,7 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
         // Translates the Java Objects to JSON objects, then to the file
         // writeValue will throw IOException if error
         // with file or reading from file
-        objectMapper.writeValue(new File(filename),OrderArray);
+        objectMapper.writeValue(new File(filename), OrderArray);
         return true;
     }
 
@@ -115,8 +115,8 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
 
         // Reads JSON objects from file into array of Products
         // readValue will throw IOException on error
-        Order[] OrderArray = objectMapper.readValue(new File(filename),Order[].class);
-        for (Order order: OrderArray){
+        Order[] OrderArray = objectMapper.readValue(new File(filename), Order[].class);
+        for (Order order : OrderArray) {
             Orders.put(order.getUuid(), order);
         }
 
@@ -124,36 +124,35 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order[] getall() {
-        synchronized(Orders) {
+        synchronized (Orders) {
             return getOrderArray();
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order[] search(Object deliniator) {
-        if(deliniator instanceof User){
-            synchronized(Orders) {
+        if (deliniator instanceof User) {
+            synchronized (Orders) {
                 return getOrderArray(deliniator);
             }
-        }
-        else{
+        } else {
             return null;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order getbyID(UUID id) {
-        synchronized(Orders) {
+        synchronized (Orders) {
             if (Orders.containsKey(id))
                 return Orders.get(id);
             else
@@ -162,38 +161,38 @@ public class OrderFileDAO implements GenericDAO<Order,UUID> {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order createNew(Order order) throws IOException {
-        synchronized(Orders) {
+        synchronized (Orders) {
             // We create a new Product object because the id field is immutable
             // and we need to assign the next unique id
-            Order newOrder = new Order(order.getProducts(), order.getUser(), order.getUuid(),order.getFulfilled());
-            Orders.put(newOrder.getUuid(),newOrder);
+            Order newOrder = new Order(order.getProducts(), order.getUser(), order.getUuid(), order.getFulfilled());
+            Orders.put(newOrder.getUuid(), newOrder);
             save(); // may throw an IOException
             return newOrder;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order updateValue(Order order) throws IOException {
-        synchronized(Orders) {
+        synchronized (Orders) {
             if (Orders.containsKey(order.getUuid()) == false)
-                return null;  // Product does not exist
+                return null; // Product does not exist
 
             order.fulfillOrder();
-            Orders.put(order.getUuid(),order);
+            Orders.put(order.getUuid(), order);
             save(); // may throw an IOException
             return order;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public boolean deleteValue(UUID id) throws IOException {

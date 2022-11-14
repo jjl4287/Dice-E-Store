@@ -37,25 +37,27 @@ public class StoreControllerTests {
     }
 
     @Test
-    public void testGetProduct() throws IOException {  // getProduct may throw IOException
+    public void testGetProduct() throws IOException { // getProduct may throw IOException
         // Setup
         Product product = new Product(1, "D10", 20, 9.99f, "url", "Description");
-        // When the same id is passed in, our mock Product DAO will return the Product object
+        // When the same id is passed in, our mock Product DAO will return the Product
+        // object
         when(mockProductDAO.getProduct(product.getId())).thenReturn(product);
 
         // Invoke
         ResponseEntity<Product> response = storeController.getProduct(product.getId());
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(product,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(product, response.getBody());
     }
 
     @Test
     public void testGetProductNotFound() throws Exception { // createProduct may throw IOException
         // Setup
         int productId = 99;
-        // When the same id is passed in, our mock Product DAO will return null, simulating
+        // When the same id is passed in, our mock Product DAO will return null,
+        // simulating
         // no product found
         when(mockProductDAO.getProduct(productId)).thenReturn(null);
 
@@ -63,7 +65,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.getProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -77,7 +79,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.getProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     /*****************************************************************
@@ -86,7 +88,7 @@ public class StoreControllerTests {
      ****************************************************************/
 
     @Test
-    public void testCreateProduct() throws IOException {  // createProduct may throw IOException
+    public void testCreateProduct() throws IOException { // createProduct may throw IOException
         // Setup
         Product product = new Product(1, "D10", 20, 9.99f, "url", "Description");
         // when createProduct is called, return true simulating successful
@@ -97,12 +99,12 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.createProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(product,response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(product, response.getBody());
     }
 
     @Test
-    public void testCreateProductFailed() throws IOException {  // createProduct may throw IOException
+    public void testCreateProductFailed() throws IOException { // createProduct may throw IOException
         // Setup
         Product product = new Product(1, "D12", 15, 14.99f, "url", "Description");
         // when createProduct is called, return false simulating failed
@@ -113,11 +115,11 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.createProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
     @Test
-    public void testCreateProductHandleException() throws IOException {  // createProduct may throw IOException
+    public void testCreateProductHandleException() throws IOException { // createProduct may throw IOException
         // Setup
         Product product = new Product(1, "D6", 25, 6.99f, "url", "Description");
 
@@ -128,7 +130,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.createProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -145,8 +147,8 @@ public class StoreControllerTests {
         response = storeController.updateProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(product,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(product, response.getBody());
     }
 
     @Test
@@ -161,7 +163,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.updateProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -175,7 +177,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.updateProduct(product);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -191,8 +193,8 @@ public class StoreControllerTests {
         ResponseEntity<Product[]> response = storeController.getProducts();
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(products,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(products, response.getBody());
     }
 
     @Test
@@ -205,7 +207,7 @@ public class StoreControllerTests {
         ResponseEntity<Product[]> response = storeController.getProducts();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -223,8 +225,8 @@ public class StoreControllerTests {
         ResponseEntity<Product[]> response = storeController.searchProducts(searchString);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(products,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(products, response.getBody());
     }
 
     @Test
@@ -238,7 +240,7 @@ public class StoreControllerTests {
         ResponseEntity<Product[]> response = storeController.searchProducts(searchString);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -252,7 +254,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.deleteProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -266,7 +268,7 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.deleteProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -280,6 +282,6 @@ public class StoreControllerTests {
         ResponseEntity<Product> response = storeController.deleteProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 }

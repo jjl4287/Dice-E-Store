@@ -19,7 +19,7 @@ export class ProductsComponent implements OnInit {
   products$!: Observable<Product[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private productService: ProductService, private userService: UserService) { 
+  constructor(private productService: ProductService, private userService: UserService) {
     this.userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.products = productService.getProducts();
     this.productService.getProducts()
@@ -44,13 +44,13 @@ export class ProductsComponent implements OnInit {
   // using the service from the backend to properly grab products
   getProducts(): void {
     this.productService.getProducts()
-    .subscribe(products => this.products = products);
+      .subscribe(products => this.products = products);
   }
 
   // using service to add products
   add(name: string): void {
     name = name.trim();
-    if (!name)  { return; }
+    if (!name) { return; }
     this.productService.addProduct({ name } as Product)
       .subscribe(product => {
         this.products.push(product);
@@ -59,8 +59,8 @@ export class ProductsComponent implements OnInit {
 
   // if user is not guest, add item to cart, else redirect to login page
   addToCart(product: Product): void {
-    if (this.currentUser?.username != "Guest"){
-      this.userService.addToCart({id:product.id,name:product.name,price:product.price,qty:1,url:product.url,description:product.description}).subscribe();
+    if (this.currentUser?.username != "Guest") {
+      this.userService.addToCart({ id: product.id, name: product.name, price: product.price, qty: 1, url: product.url, description: product.description }).subscribe();
     }
     else {
       window.location.replace('/login')

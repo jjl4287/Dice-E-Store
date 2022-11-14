@@ -33,9 +33,8 @@ import org.springframework.http.ResponseEntity;
 @Tag("Controller-tier")
 public class OrderControllerTests {
     private OrderController orderController;
-    private GenericDAO<Order,UUID> mockOrderDAO;
+    private GenericDAO<Order, UUID> mockOrderDAO;
     private UUID testUUID = UUID.randomUUID();
-    
 
     /**
      * Before each test, create a new OrderController object and inject
@@ -48,36 +47,36 @@ public class OrderControllerTests {
     }
 
     @Test
-    public void testGetOrder() throws IOException {  // getOrder may throw IOException
+    public void testGetOrder() throws IOException { // getOrder may throw IOException
         // Setup
 
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
 
         Set<Product> s1 = new HashSet<>();
         s1.add(p1);
 
-
-        Order order = new Order(s1,u1,testUUID,false);
+        Order order = new Order(s1, u1, testUUID, false);
         OrderDTO orderdto = new OrderDTO(order);
-        // When the same id is passed in, our mock Order DAO will return the Order object
+        // When the same id is passed in, our mock Order DAO will return the Order
+        // object
         when(mockOrderDAO.getbyID(order.getUuid())).thenReturn(order);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.getOrder(order.getUuid());
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(orderdto,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(orderdto, response.getBody());
     }
 
     @Test
     public void testGetOrderNotFound() throws Exception { // createOrder may throw IOException
         // Setup
         UUID orderId = UUID.randomUUID();
-        // When the same id is passed in, our mock Order DAO will return null, simulating
+        // When the same id is passed in, our mock Order DAO will return null,
+        // simulating
         // no order found
         when(mockOrderDAO.getbyID(orderId)).thenReturn(null);
 
@@ -85,7 +84,7 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -99,7 +98,7 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     /*****************************************************************
@@ -108,13 +107,12 @@ public class OrderControllerTests {
      ****************************************************************/
 
     @Test
-    public void testCreateOrder() throws IOException {  // createOrder may throw IOException
+    public void testCreateOrder() throws IOException { // createOrder may throw IOException
         // Setup
 
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
 
         ArrayList<Product> a1 = new ArrayList<>();
         a1.add(p1);
@@ -129,16 +127,16 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(orderdto,response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(orderdto, response.getBody());
     }
 
     @Test
-    public void testCreateOrderFailed() throws IOException {  // createOrder may throw IOException
+    public void testCreateOrderFailed() throws IOException { // createOrder may throw IOException
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
+
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
 
         ArrayList<Product> a1 = new ArrayList<>();
         a1.add(p1);
@@ -153,16 +151,15 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
     @Test
-    public void testCreateOrderHandleException() throws IOException {  // createOrder may throw IOException
+    public void testCreateOrderHandleException() throws IOException { // createOrder may throw IOException
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
 
         ArrayList<Product> a1 = new ArrayList<>();
         a1.add(p1);
@@ -177,7 +174,7 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -186,9 +183,8 @@ public class OrderControllerTests {
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         User u2 = new User(2, "u2", "u2", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
-        Product p2 = new Product(2, "test2", 2, 3,"url","desc");
-
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
+        Product p2 = new Product(2, "test2", 2, 3, "url", "desc");
 
         Set<Product> s1 = new HashSet<>();
         s1.add(p2);
@@ -197,8 +193,8 @@ public class OrderControllerTests {
         s2.add(p1);
 
         Order[] testOrders = new Order[2];
-        testOrders[0] = new Order(s1,u1);
-        testOrders[1] = new Order(s2,u2);
+        testOrders[0] = new Order(s1, u1);
+        testOrders[1] = new Order(s2, u2);
         OrderDTO[] testdto = new OrderDTO[2];
         testdto[0] = new OrderDTO(testOrders[0]);
         testdto[1] = new OrderDTO(testOrders[1]);
@@ -209,8 +205,8 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO[]> response = orderController.getOrders();
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertArrayEquals(testdto,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertArrayEquals(testdto, response.getBody());
     }
 
     @Test
@@ -223,7 +219,7 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO[]> response = orderController.getOrders();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -231,9 +227,8 @@ public class OrderControllerTests {
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
 
-        Product p1 = new Product(1, "test", 2, 3,"url","desc");
-        Product p2 = new Product(2, "test2", 2, 3,"url","desc");
-
+        Product p1 = new Product(1, "test", 2, 3, "url", "desc");
+        Product p2 = new Product(2, "test2", 2, 3, "url", "desc");
 
         Set<Product> s1 = new HashSet<>();
         s1.add(p2);
@@ -242,8 +237,8 @@ public class OrderControllerTests {
         s2.add(p1);
 
         Order[] testOrders = new Order[2];
-        testOrders[0] = new Order(s1,u1);
-        testOrders[1] = new Order(s2,u1);
+        testOrders[0] = new Order(s1, u1);
+        testOrders[1] = new Order(s2, u1);
         OrderDTO[] testdto = new OrderDTO[2];
         testdto[0] = new OrderDTO(testOrders[0]);
         testdto[1] = new OrderDTO(testOrders[1]);
@@ -255,10 +250,9 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertArrayEquals(testdto,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertArrayEquals(testdto, response.getBody());
     }
-
 
     @Test
     public void testSearchOrdersHandleException() throws IOException { // findOrders may throw IOException
@@ -271,49 +265,52 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
     public void testFulfillOrder() throws IOException {
-        //Setup
+        // Setup
         boolean testIsFulfilled = true;
-        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "swen261.bovine@gmail.com"), new UUID(0, 0), false);
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "swen261.bovine@gmail.com"),
+                new UUID(0, 0), false);
         OrderDTO testOrderDTO = new OrderDTO(testOrder);
         Order expectedOrder = new Order(testOrderDTO);
         expectedOrder.fulfillOrder();
 
         when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
 
-        //Invoke
+        // Invoke
         ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
 
-        //Analyze
+        // Analyze
         assertEquals(response.getBody().getFulfilled(), testIsFulfilled);
     }
 
     @Test
     public void testFulfillOrderNotFound() throws IOException {
-        //Setup
+        // Setup
         boolean testIsFulfilled = true;
-        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0), false);
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0),
+                false);
         OrderDTO testOrderDTO = new OrderDTO(testOrder);
         Order expectedOrder = new Order(testOrderDTO);
         expectedOrder.fulfillOrder();
 
         when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
 
-        //Invoke
+        // Invoke
         ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testFulfillOrderIOException() throws IOException { // findOrders may throw IOException
         // Setup
-        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0), false);
+        Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0),
+                false);
         OrderDTO testOrderDTO = new OrderDTO(testOrder);
 
         // When createOrder is called on the Mock Order DAO, throw an IOException
@@ -323,7 +320,7 @@ public class OrderControllerTests {
         ResponseEntity<OrderDTO> response = orderController.fulfillOrder(testOrderDTO);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
 }

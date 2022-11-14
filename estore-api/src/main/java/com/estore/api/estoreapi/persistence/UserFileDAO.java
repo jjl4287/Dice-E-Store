@@ -23,7 +23,7 @@ import com.estore.api.estoreapi.model.User;
  * Provides for JSON File based persistence
  * 
  * {@literal @} Creates single instance of class and injects into others
- *              as needed.
+ * as needed.
  * 
  * @author Team A - Bovines - Brady Self
  */
@@ -31,14 +31,14 @@ import com.estore.api.estoreapi.model.User;
 @Component
 public class UserFileDAO implements UserDAO {
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
-    Map<Integer,User> users;            // Provides a local copy of users so that
-                                        // we don't need to read from the file each time
-    private ObjectMapper objectMapper;  // Provides conversion between User
-                                        // objects and JSON text format written
-                                        // to the file
-    private static int nextId;          // The next Id to assign to a new User
-    private String filename;            // Filename to read from and write to
-    private User currentUser;           // The user currently logged in
+    Map<Integer, User> users; // Provides a local copy of users so that
+                              // we don't need to read from the file each time
+    private ObjectMapper objectMapper; // Provides conversion between User
+                                       // objects and JSON text format written
+                                       // to the file
+    private static int nextId; // The next Id to assign to a new User
+    private String filename; // Filename to read from and write to
+    private User currentUser; // The user currently logged in
     private final User GUEST_USER = new User(0, "Guest", "guestPassword", new HashSet<Product>(), "guest@guest.com");
 
     /**
@@ -49,15 +49,15 @@ public class UserFileDAO implements UserDAO {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public UserFileDAO(@Value("${users.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         this.currentUser = GUEST_USER;
-        load();  // load the users from the file
+        load(); // load the users from the file
     }
 
     /**
-     * Generates the next id 
+     * Generates the next id
      * 
      * @return The next id
      */
@@ -70,7 +70,7 @@ public class UserFileDAO implements UserDAO {
     /**
      * Generates an array of Users from the tree map
      * 
-     * @return  The array of Users, may be empty
+     * @return The array of Users, may be empty
      */
     private User[] getUsersArray() {
         return getUsersArray(null);
@@ -82,10 +82,10 @@ public class UserFileDAO implements UserDAO {
      * <br>
      * If containsText is null, the array contains all of the Users
      * in the tree map
-     * <br> 
+     * <br>
      * if containsText is null there is no filter
      * 
-     * @return  The array of Users, may be empty
+     * @return The array of Users, may be empty
      */
     private User[] getUsersArray(String containsText) {
         ArrayList<User> userArrayList = new ArrayList<>();
@@ -114,7 +114,7 @@ public class UserFileDAO implements UserDAO {
         // Translates the Java Objects to JSON objects, then to the file
         // writeValue will throw IOException if error
         // with file or reading from file
-        objectMapper.writeValue(new File(filename),userArray);
+        objectMapper.writeValue(new File(filename), userArray);
         return true;
     }
 
@@ -133,7 +133,7 @@ public class UserFileDAO implements UserDAO {
 
         // Reads JSON objects from file into array of Users
         // readValue will throw IOException on error
-        User[] userArray = objectMapper.readValue(new File(filename),User[].class);
+        User[] userArray = objectMapper.readValue(new File(filename), User[].class);
 
         // Add each User to the tree map and keep track of the greatest id
         for (User user : userArray) {
@@ -147,31 +147,31 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User[] getUsers() {
-        synchronized(users) {
+        synchronized (users) {
             return getUsersArray();
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User[] searchUsers(String containsText) {
-        synchronized(users) {
+        synchronized (users) {
             return getUsersArray(containsText);
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User getUser(int id) {
-        synchronized(users) {
+        synchronized (users) {
             if (users.containsKey(id))
                 return users.get(id);
             else
@@ -180,55 +180,55 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User createUser(User user) throws IOException {
-        synchronized(users) {
+        synchronized (users) {
             // We create a new User object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), user.getUsername(), user.getPassword(), user.getShoppingCart(), user.getEmail());
-            users.put(newUser.getId(),newUser);
+            User newUser = new User(nextId(), user.getUsername(), user.getPassword(), user.getShoppingCart(),
+                    user.getEmail());
+            users.put(newUser.getId(), newUser);
             save(); // may throw an IOException
             return newUser;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User updateUser(User user) throws IOException {
-        synchronized(users) {
+        synchronized (users) {
             if (users.containsKey(user.getId()) == false)
-                return null;  // User does not exist
+                return null; // User does not exist
 
-            users.put(user.getId(),user);
+            users.put(user.getId(), user);
             save(); // may throw an IOException
             return user;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public boolean deleteUser(int id) throws IOException {
-        synchronized(users) {
+        synchronized (users) {
             if (users.containsKey(id)) {
                 users.remove(id);
                 return save();
-            }
-            else
+            } else
                 return false;
         }
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public User login( String username, String password) throws IOException{
+    public User login(String username, String password) throws IOException {
         byte[] decodedUsernameBytes = Base64.getDecoder().decode(username);
         byte[] decodedPasswordBytes = Base64.getDecoder().decode(password);
         String decodedUsername = new String(decodedUsernameBytes);
@@ -296,4 +296,3 @@ public class UserFileDAO implements UserDAO {
         this.currentUser.removeFromCart(product);
     }
 }
-
