@@ -12,8 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import com.estore.api.estoreapi.persistence.GenericDAO;
-import com.estore.api.estoreapi.persistence.OrderFileDAO;
+import com.estore.api.estoreapi.persistence.OrderDAO;
 import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.OrderDTO;
 import com.estore.api.estoreapi.model.User;
@@ -28,12 +27,12 @@ import org.springframework.http.ResponseEntity;
 /**
  * Test the Order Controller class
  * 
- * @author Team A Bovines - Chris Ferioli, Vincent Sarubbi
+ * @author Team A - Bovines - Maximo Bustillo, Vincent Sarubbi
  */
 @Tag("Controller-tier")
 public class OrderControllerTests {
     private OrderController orderController;
-    private GenericDAO<Order,UUID> mockOrderDAO;
+    private OrderDAO mockOrderDAO;
     private UUID testUUID = UUID.randomUUID();
     
 
@@ -43,27 +42,22 @@ public class OrderControllerTests {
      */
     @BeforeEach
     public void setupOrderController() {
-        mockOrderDAO = mock(GenericDAO.class);
+        mockOrderDAO = mock(OrderDAO.class);
         orderController = new OrderController(mockOrderDAO);
     }
 
     @Test
     public void testGetOrder() throws IOException {  // getOrder may throw IOException
         // Setup
-
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
         Product p1 = new Product(1, "test", 2, 3,"url","desc");
-
-
         Set<Product> s1 = new HashSet<>();
         s1.add(p1);
-
-
         Order order = new Order(s1,u1,testUUID,false);
         OrderDTO orderdto = new OrderDTO(order);
+
         // When the same id is passed in, our mock Order DAO will return the Order object
-        when(mockOrderDAO.getbyID(order.getUuid())).thenReturn(order);
+        when(mockOrderDAO.getOrderbyID(order.getUuid())).thenReturn(order);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.getOrder(order.getUuid());
@@ -79,7 +73,7 @@ public class OrderControllerTests {
         UUID orderId = UUID.randomUUID();
         // When the same id is passed in, our mock Order DAO will return null, simulating
         // no order found
-        when(mockOrderDAO.getbyID(orderId)).thenReturn(null);
+        when(mockOrderDAO.getOrderbyID(orderId)).thenReturn(null);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
@@ -93,7 +87,7 @@ public class OrderControllerTests {
         // Setup
         UUID orderId = UUID.randomUUID();
         // When getOrder is called on the Mock Order DAO, throw an IOException
-        doThrow(new IOException()).when(mockOrderDAO).getbyID(orderId);
+        doThrow(new IOException()).when(mockOrderDAO).getOrderbyID(orderId);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.getOrder(orderId);
@@ -110,20 +104,18 @@ public class OrderControllerTests {
     @Test
     public void testCreateOrder() throws IOException {  // createOrder may throw IOException
         // Setup
-
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
         Product p1 = new Product(1, "test", 2, 3,"url","desc");
-
 
         ArrayList<Product> a1 = new ArrayList<>();
         a1.add(p1);
 
         OrderDTO orderdto = new OrderDTO(a1, u1);
         Order order = new Order(orderdto);
+
         // when createOrder is called, return true simulating successful
         // creation and save
-        when(mockOrderDAO.createNew(order)).thenReturn(order);
+        when(mockOrderDAO.createNewOrder(order)).thenReturn(order);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
@@ -137,7 +129,6 @@ public class OrderControllerTests {
     public void testCreateOrderFailed() throws IOException {  // createOrder may throw IOException
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
         Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
         ArrayList<Product> a1 = new ArrayList<>();
@@ -147,7 +138,7 @@ public class OrderControllerTests {
         Order order = new Order(orderdto);
         // when createOrder is called, return false simulating failed
         // creation and save
-        when(mockOrderDAO.createNew(order)).thenReturn(null);
+        when(mockOrderDAO.createNewOrder(order)).thenReturn(null);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
@@ -160,7 +151,6 @@ public class OrderControllerTests {
     public void testCreateOrderHandleException() throws IOException {  // createOrder may throw IOException
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
-        
         Product p1 = new Product(1, "test", 2, 3,"url","desc");
 
 
@@ -171,7 +161,7 @@ public class OrderControllerTests {
         Order order = new Order(orderdto);
 
         // When createOrder is called on the Mock Order DAO, throw an IOException
-        doThrow(new IOException()).when(mockOrderDAO).createNew(order);
+        doThrow(new IOException()).when(mockOrderDAO).createNewOrder(order);
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.createOrder(orderdto);
@@ -202,8 +192,9 @@ public class OrderControllerTests {
         OrderDTO[] testdto = new OrderDTO[2];
         testdto[0] = new OrderDTO(testOrders[0]);
         testdto[1] = new OrderDTO(testOrders[1]);
+
         // When getOrders is called return the orders created above
-        when(mockOrderDAO.getall()).thenReturn(testOrders);
+        when(mockOrderDAO.getallOrders()).thenReturn(testOrders);
 
         // Invoke
         ResponseEntity<OrderDTO[]> response = orderController.getOrders();
@@ -217,7 +208,7 @@ public class OrderControllerTests {
     public void testGetOrdersHandleException() throws IOException { // getOrders may throw IOException
         // Setup
         // When getOrders is called on the Mock Order DAO, throw an IOException
-        doThrow(new IOException()).when(mockOrderDAO).getall();
+        doThrow(new IOException()).when(mockOrderDAO).getallOrders();
 
         // Invoke
         ResponseEntity<OrderDTO[]> response = orderController.getOrders();
@@ -249,7 +240,7 @@ public class OrderControllerTests {
         testdto[1] = new OrderDTO(testOrders[1]);
         // When findOrders is called with the search string, return the two
         /// orders above
-        when(mockOrderDAO.search(u1)).thenReturn(testOrders);
+        when(mockOrderDAO.findOrders(u1)).thenReturn(testOrders);
 
         // Invoke
         ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
@@ -265,7 +256,7 @@ public class OrderControllerTests {
         // Setup
         User u1 = new User(1, "u1", "u1", null, "Email.com");
         // When createOrder is called on the Mock Order DAO, throw an IOException
-        doThrow(new IOException()).when(mockOrderDAO).search(u1);
+        doThrow(new IOException()).when(mockOrderDAO).findOrders(u1);
 
         // Invoke
         ResponseEntity<OrderDTO[]> response = orderController.searchOrders(u1);
@@ -283,7 +274,8 @@ public class OrderControllerTests {
         Order expectedOrder = new Order(testOrderDTO);
         expectedOrder.fulfillOrder();
 
-        when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
+        //When updateOrder is called return the fullfillment value updated above 
+        when(mockOrderDAO.updateOrder(new Order(testOrderDTO))).thenReturn(expectedOrder);
 
         //Invoke
         ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
@@ -295,13 +287,13 @@ public class OrderControllerTests {
     @Test
     public void testFulfillOrderNotFound() throws IOException {
         //Setup
-        boolean testIsFulfilled = true;
         Order testOrder = new Order(new HashSet<Product>(), new User(1, "u1", "u1", null, "email.com"), new UUID(0, 0), false);
         OrderDTO testOrderDTO = new OrderDTO(testOrder);
         Order expectedOrder = new Order(testOrderDTO);
         expectedOrder.fulfillOrder();
 
-        when(mockOrderDAO.updateValue(new Order(testOrderDTO))).thenReturn(expectedOrder);
+        //When updateOrder is called return internal service error at not finding order
+        when(mockOrderDAO.updateOrder(new Order(testOrderDTO))).thenReturn(expectedOrder);
 
         //Invoke
         ResponseEntity<OrderDTO> response = this.orderController.fulfillOrder(testOrderDTO);
@@ -317,7 +309,7 @@ public class OrderControllerTests {
         OrderDTO testOrderDTO = new OrderDTO(testOrder);
 
         // When createOrder is called on the Mock Order DAO, throw an IOException
-        doThrow(new IOException()).when(mockOrderDAO).updateValue(new Order(testOrderDTO));
+        doThrow(new IOException()).when(mockOrderDAO).updateOrder(new Order(testOrderDTO));
 
         // Invoke
         ResponseEntity<OrderDTO> response = orderController.fulfillOrder(testOrderDTO);

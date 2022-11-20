@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,11 +26,11 @@ import java.util.*;
 /**
  * Unit tests for OrderFileDAO
  *
- * @author Team A - Bovines - Vincent Sarubbi
+ * @author Team A - Bovines - Maximo Bustillo
  */
 @Tag("Persistence-tier")
 public class OrderFileDAOTests {
-    GenericDAO<Order,UUID> testOrderFileDAO;
+    OrderDAO testOrderFileDAO;
     Order[] testOrders;
     ObjectMapper mockObjectMapper;
 
@@ -66,7 +65,7 @@ public class OrderFileDAOTests {
     @Test
     public void testGetOrders() throws IOException {  // getuser may throw IOException
         //Invoke
-        Order[] orders = testOrderFileDAO.getall();
+        Order[] orders = testOrderFileDAO.getallOrders();
 
         
         Set<Order> s1 = new HashSet<>();
@@ -86,30 +85,22 @@ public class OrderFileDAOTests {
         // Invoke
 
         User u2 = new User(2, "u2", "u2", null, "Email.com");
-        Order[] orders = testOrderFileDAO.search(u2);
-        Order[] failedSearch = testOrderFileDAO.search(new Object());
+        Order[] orders = testOrderFileDAO.findOrders(u2);
+        Order[] failedSearch = testOrderFileDAO.findOrders(new User(-2,"u3","u3",null,"email"));
 
         // Analyze
         assertEquals(orders.length,1);
         assertEquals(orders[0],orders[0]);
         assertNull(failedSearch);
     }
-    @Test
-    public void deleteOrder() throws IOException { //searchOrders may throw IOException
-        // Invoke
-        boolean remove = testOrderFileDAO.deleteValue(UUID.randomUUID());
-
-        // Analyze
-        assertFalse(remove);
-    }
 
     @Test
     public void updateOrder() throws IOException { //searchOrders may throw IOException
         // Invoke
         testOrders[0].fulfillOrder();
-        Order update = testOrderFileDAO.updateValue(testOrders[0]);
+        Order update = testOrderFileDAO.updateOrder(testOrders[0]);
         Order newOrder = new Order(testOrders[0].getProducts(),testOrders[0].getUser());
-        Order failedUpdate = testOrderFileDAO.updateValue(newOrder);
+        Order failedUpdate = testOrderFileDAO.updateOrder(newOrder);
 
         // Analyze
         assertEquals(update,testOrders[0]);
@@ -119,7 +110,7 @@ public class OrderFileDAOTests {
     @Test
     public void testGetOrder() throws IOException { //getOrders may throw IOException
         // Invoke
-        Order order = testOrderFileDAO.getbyID(testOrders[1].getUuid());
+        Order order = testOrderFileDAO.getOrderbyID(testOrders[1].getUuid());
 
         // Analzye
         assertEquals(order, testOrders[1]);
@@ -143,80 +134,23 @@ public class OrderFileDAOTests {
         Order order = new Order(s1,u1);
 
         //Invoke
-        Order result = assertDoesNotThrow(() -> testOrderFileDAO.createNew(order));
+        Order result = assertDoesNotThrow(() -> testOrderFileDAO.createNewOrder(order));
 
         //Analyze
         assertNotNull(result);
-        Order actual = testOrderFileDAO.getbyID(order.getUuid());
+        Order actual = testOrderFileDAO.getOrderbyID(order.getUuid());
         assertEquals(order, actual);
     }
 
-    // @Test
-    // public void testUpdateOrder() throws IOException {
-    //     //Setup
-
-    //     User u1 = new User(1, "u1", "u1", null, "Email.com");
-
-    //     Product p1 = new Product(1, "test", 2, 3);
-    //     Product p2 = new Product(2, "test2", 2, 3);
-
-
-    //     Set<Product> s1 = new HashSet<>();
-    //     s1.add(p1,p2);
-
-
-    //     Order updateOrder = new Order(s1,u1);
-
-    //     //Invoke
-    //     Order result = assertDoesNotThrow(() -> testOrderFileDAO.updateValue(updateOrder));
-
-    //     //Analyze
-    //     assertNotNull(result);
-    //     Order actual = testOrderFileDAO.getOrder(updateOrder.getId());
-    //     assertEquals(updateOrder, actual);
-    // }
-
-    // @Test
-    // public void testDeleteOrder() {
-    //     // Invoke
-    //     boolean result = assertDoesNotThrow(() -> testOrderFileDAO.deleteOrder(2),
-    //                         "Unexpected exception thrown");
-
-    //     // Analzye
-    //     assertEquals(result,true);
-    // }
 
     @Test
     public void testGetOrderNotFound() throws IOException {
         // Invoke
-        Order order = testOrderFileDAO.getbyID(UUID.randomUUID());
+        Order order = testOrderFileDAO.getOrderbyID(UUID.randomUUID());
 
         // Analyze
         assertEquals(order,null);
     }
-
-    // @Test
-    // public void testDeleteOrderNo() {
-    //     // Invoke
-    //     boolean result = assertDoesNotThrow(() -> testOrderFileDAO.deleteOrder(69),
-    //                                             "Unexpected exception thrown");
-
-    //     // Analyze
-    //     assertEquals(result, false);
-    // }
-
-    // @Test
-    // public void testUpdateOrderNotFound() {
-    //     // Setup
-    //     Order order = new Order(69, "newOrder", 69, 69);
-
-    //     // Invoke
-    //     Order result = assertDoesNotThrow(() -> testOrderFileDAO.updateOrder(order),
-    //                                             "Unexpected exception thrown");
-
-    //     // Analyze
-    //     assertNull(result);
-    // }
 
     @Test
     public void testConstructorException() throws IOException {
