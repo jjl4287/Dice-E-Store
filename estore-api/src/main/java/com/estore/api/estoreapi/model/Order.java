@@ -2,11 +2,9 @@ package com.estore.api.estoreapi.model;
 
 import java.util.*;
 
-import javax.swing.plaf.FontUIResource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Represents an Order
@@ -23,8 +21,7 @@ public class Order {
     private boolean fulfilled = false;
 
     /**
-     * Create a new User with the given id, username, and password
-     * 
+     * Create a new Order with the given product list, user, and UUID
      * @param products a set of products included in the order
      * @param user     The associated user
      * @param uuiid    a unique identifier of the order
@@ -47,13 +44,10 @@ public class Order {
     }
 
     /**
-     * Create a new User with the given id, username, and password
-     * 
+     * Create a new Order with the given products, and User
      * @param products a set of products included in the order
-     * @param user     The associated user
+     * @param user The associated user
      *
-     *
-     * 
      */
     public Order(Set<Product> products, User user) {
         this.products = new HashSet<>(products);
@@ -62,12 +56,10 @@ public class Order {
     }
 
     /**
-     * Create a new User with the given id, username, and password
-     * 
-     * @param orderDTO an orderDTO
+    /**
+     * Create a new Order given an OrderDTO
+     * @param orderdto an orderDTO to package as an order 
      *
-     *
-     * 
      */
     public Order(OrderDTO dto) {
         this.products = new HashSet<>(dto.getProducts());

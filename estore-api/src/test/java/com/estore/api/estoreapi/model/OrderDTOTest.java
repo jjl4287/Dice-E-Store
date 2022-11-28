@@ -55,30 +55,6 @@ public class OrderDTOTest {
         assertEquals(expected_uuid, order2.getUuid());
     }
 
-    @Test
-    public void testFullfillment() {
-        // Setup
-        int id = 1;
-        String userName = "test";
-        String password = "test";
-        Set<Product> shoppingCart = new HashSet();
-        String email = "test";
-        User usr = new User(id, userName, password, shoppingCart, email);
-        ArrayList<Product> purchase = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            purchase.add(new Product(i, "p" + i, 25 - i, 25.99f, "url", "desc"));
-        }
-
-        OrderDTO orderDTO = new OrderDTO(purchase, usr);
-
-        boolean expected_fulfillment = true;
-
-        // invoke
-        orderDTO.fulfillOrder();
-
-        // Analyze
-        assertEquals(expected_fulfillment, orderDTO.getFulfilled());
-    }
 
     @Test
     public void testEquality() {

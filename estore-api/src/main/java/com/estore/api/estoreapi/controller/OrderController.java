@@ -1,20 +1,15 @@
 package com.estore.api.estoreapi.controller;
 
-import com.estore.api.estoreapi.persistence.GenericDAO;
-import com.estore.api.estoreapi.persistence.OrderFileDAO;
+import com.estore.api.estoreapi.persistence.OrderDAO;
 import com.estore.util.sendEmail;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -27,25 +22,35 @@ import com.estore.api.estoreapi.model.User;
 
 import java.util.*;
 
+
+/**
+ * Handles REST API requests for the Order resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST API
+ * method handler to the Spring framework
+ * 
+ * @author Team A - Maximo Bustillo
+ */
+
 @RestController
 @RequestMapping("orders")
 public class OrderController {
     private static final Logger LOG = Logger.getLogger(StoreController.class.getName());
-    private GenericDAO<Order, UUID> orderDAO;
+    private OrderDAO orderDAO;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to reponds to requests for orders
      * 
      * @param orderDAO The Order Data Access Object to perform CRUD operations
      *                 <br>
      *                 This dependency is injected by the Spring Framework
      */
-    public OrderController(GenericDAO<Order, UUID> orderDAO) {
+    public OrderController(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
     }
 
     /**
-     * Responds to GET request for a order for the given id
+     * Responds to GET request for a order for the given a UUID
      * 
      * @param id The id of the order
      * 
@@ -59,9 +64,11 @@ public class OrderController {
     public ResponseEntity<OrderDTO> getOrder(@PathVariable UUID id) {
         LOG.info("GET /orders/" + id);
         try {
-            Order order = orderDAO.getbyID(id);
+            Order order = orderDAO.getOrderbyID(id);
             if (order != null)
-                return new ResponseEntity<OrderDTO>(new OrderDTO(order), HttpStatus.OK);
+            //order fouund
+            //convert to DTO
+                return new ResponseEntity<OrderDTO>(new OrderDTO(order),HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IOException e) {
@@ -82,11 +89,14 @@ public class OrderController {
     public ResponseEntity<OrderDTO[]> getOrders() {
         LOG.info("GET /orders");
         try {
-            Order[] array = orderDAO.getall();
+            //get all the orders
+            Order[] array = orderDAO.getallOrders();
+            //prepare a DTO array to send them
             OrderDTO[] dto = new OrderDTO[array.length];
-            for (int i = 0; i < array.length; i++) {
-                dto[i] = new OrderDTO(array[i]);
-
+            for (int i =0;i<array.length;i++) {
+                //transfer the orders to DTO
+                dto[i]=new OrderDTO(array[i]);
+                
             }
             return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
         } catch (IOException e) {
@@ -97,7 +107,7 @@ public class OrderController {
 
     /**
      * Responds to the GET request for all orders whose name contains
-     * the text in name
+     * the same User
      * 
      * @param user The user parameter which contains the user used to find the
      *             orders
@@ -115,7 +125,10 @@ public class OrderController {
         LOG.info("GET /orders/?name=" + user);
 
         try {
-            Order[] array = orderDAO.search(user);
+            //find the users
+            Order[] array = orderDAO.findOrders(user);
+
+            //transfer them to DTO array
             OrderDTO[] dto = new OrderDTO[array.length];
             for (int i = 0; i < array.length; i++) {
                 dto[i] = new OrderDTO(array[i]);
@@ -131,7 +144,7 @@ public class OrderController {
     /**
      * Creates a order with the provided order object
      * 
-     * @param order - The orders to create
+     * @param order - The order to create
      * 
      * @return ResponseEntity with created orders object and HTTP status of CREATED
      *         <br>
@@ -142,12 +155,14 @@ public class OrderController {
      */
     @PostMapping("")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO dto) {
+        //translate orderDTO into order
         Order order = new Order(dto);
         LOG.info("POST /orders " + order);
 
         try {
-            Order created = orderDAO.createNew(order);
-            if (created != null) {
+            //create the order
+            Order created = orderDAO.createNewOrder(order);
+            if(created != null) {
                 return new ResponseEntity<OrderDTO>(new OrderDTO(created), HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -157,14 +172,28 @@ public class OrderController {
         }
     }
 
+    /**
+     * updates an orders fullfillment status
+     * 
+     * @param order - The order to fulfill
+     * 
+     * @return ResponseEntity with created orders object and HTTP status of CREATED
+     * <br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR if mail not sent
+     * <br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PostMapping("/fulfill")
     public ResponseEntity<OrderDTO> fulfillOrder(@RequestBody OrderDTO order) {
         LOG.info("POST /fulfillorders " + order);
         try {
-            Order updatedOrder = orderDAO.updateValue(new Order(order));
+            //update the order in the DAO and get the original
+            Order updatedOrder = orderDAO.updateOrder(new Order(order));
+            //make the updated order a DTO
             OrderDTO updatedDTO = new OrderDTO(updatedOrder);
-            if (sendEmail.sendmail(updatedDTO.getUser().getEmail(), "Order Fulfilled", updatedDTO.toString(), false)) {
-                return new ResponseEntity<OrderDTO>(updatedDTO, HttpStatus.OK);
+            //try and send the emailS
+            if(sendEmail.sendmail(updatedDTO.getUser().getEmail(), "Order Fulfilled", updatedDTO.toString(), false)){
+                return new ResponseEntity<OrderDTO>(updatedDTO,HttpStatus.OK);
             }
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -174,60 +203,4 @@ public class OrderController {
         }
     }
 
-    // /**
-    // * Updates the order with the provided order object, if it exists
-    // *
-    // * @param order The orders to update
-    // *
-    // * @return ResponseEntity with updated orders object and
-    // * HTTP status of OK if updated
-    // * <br>
-    // * ResponseEntity with HTTP status of NOT_FOUND if not found
-    // * <br>
-    // * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-    // */
-    // @PutMapping("")
-    // public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-    // LOG.info("PUT /orders " + order);
-
-    // try {
-    // Order updated = orderDAO.updateValue(order);
-    // if(updated != null) {
-    // return new ResponseEntity<Order>(updated, HttpStatus.OK);
-    // }
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-    // catch(IOException e){
-    // LOG.log(Level.SEVERE,e.getLocalizedMessage());
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
-
-    // /**
-    // * Deletes a order with the given id
-    // *
-    // * @param id The id of the orders to delete
-    // *
-    // * @return ResponseEntity HTTP status of OK if deleted
-    // * <br>
-    // * ResponseEntity with HTTP status of NOT_FOUND if not found
-    // * <br>
-    // * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-    // */
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<Order> deleteOrder(@PathVariable UUID id) {
-    // LOG.info("DELETE /orders/" + id);
-
-    // try {
-    // boolean del = orderDAO.deleteValue(id);
-    // if(del) {
-    // return new ResponseEntity<Order>(HttpStatus.OK);
-    // }
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-    // catch(IOException e){
-    // LOG.log(Level.SEVERE,e.getLocalizedMessage());
-    // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    // }
 }
