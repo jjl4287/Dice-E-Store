@@ -25,7 +25,7 @@ An online E-store system built in Java 8=>11 and Angular
 2. Execute `mvn compile exec:java`
 3. Move to the estore-ui directory.
 4. Execute `npm install`
-5. Execute `ng serve -o`
+5. Execute `ng serve`
 6. Open in your browser `http://localhost:4200/`
 
 ## Known bugs and disclaimers
