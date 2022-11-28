@@ -140,4 +140,9 @@ public class OrderDTO {
     public String toString() {
         return String.format(STRING_FORMAT, products, user,uuid,fulfilled,size,price);
     }
+
+    @Override
+    public int hashCode() {
+        return this.uuid.hashCode();
+    }
 }

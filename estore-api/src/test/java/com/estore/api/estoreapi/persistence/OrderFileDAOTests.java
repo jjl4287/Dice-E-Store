@@ -88,7 +88,7 @@ public class OrderFileDAOTests {
 
         // Analyze
         assertEquals(orders.length, 1);
-        assertEquals(orders[0], orders[0]);
+        assertEquals(orders[0], testOrders[1]);
         assertNull(failedSearch);
     }
 

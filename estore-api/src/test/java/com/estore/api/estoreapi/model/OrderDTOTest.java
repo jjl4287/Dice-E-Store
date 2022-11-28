@@ -128,7 +128,7 @@ public class OrderDTOTest {
         OrderDTO order = new OrderDTO(purchase, usr);
 
         // Analyze
-        assertNotNull(order.hashCode());
+        assertNotEquals(order.hashCode(), "");
     }
 
 }
