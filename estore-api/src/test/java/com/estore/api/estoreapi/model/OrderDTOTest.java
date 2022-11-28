@@ -23,7 +23,7 @@ public class OrderDTOTest {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User expected_usr = new User(id, userName, password, shoppingCart, email);
         ArrayList<Product> expected_purchase = new ArrayList<>();
@@ -61,7 +61,7 @@ public class OrderDTOTest {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         ArrayList<Product> purchase = new ArrayList<>();
@@ -88,7 +88,7 @@ public class OrderDTOTest {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         ArrayList<Product> purchase = new ArrayList<>();
@@ -117,7 +117,7 @@ public class OrderDTOTest {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         ArrayList<Product> purchase = new ArrayList<>();

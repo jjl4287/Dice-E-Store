@@ -22,7 +22,7 @@ public class OrderTests {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User expected_usr = new User(id, userName, password, shoppingCart, email);
         Set<Product> expected_purchase = new HashSet<>();
@@ -54,7 +54,7 @@ public class OrderTests {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         Set<Product> purchase = new HashSet<>();
@@ -79,7 +79,7 @@ public class OrderTests {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         Set<Product> purchase = new HashSet<>();
@@ -106,7 +106,7 @@ public class OrderTests {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         Set<Product> purchase = new HashSet<>();
@@ -131,7 +131,7 @@ public class OrderTests {
         int id = 1;
         String userName = "test";
         String password = "test";
-        Set<Product> shoppingCart = new HashSet();
+        Set<Product> shoppingCart = new HashSet<Product>();
         String email = "test";
         User usr = new User(id, userName, password, shoppingCart, email);
         Set<Product> purchase = new HashSet<>();
