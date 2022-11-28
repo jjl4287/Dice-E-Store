@@ -1,5 +1,4 @@
 # E-Store:  DND Store selling different types of dice
-# Modify this document to expand any and all sections that are applicable for a better understanding from your users/testers/collaborators (remove this comment and other instructions areas for your FINAL release)
 
 An online E-store system built in Java 8=>11 and Angular
   
@@ -16,21 +15,24 @@ An online E-store system built in Java 8=>11 and Angular
 
 - Java 8=>11 (Make sure to have correct JAVA_HOME setup in your environment)
 - Maven
--  _add any other tech stack requirements_
+- Node/NPM
+- Angular 14.2.6
 
 
 ## How to run it
 
 1. Clone the repository and go to the root directory.
 2. Execute `mvn compile exec:java`
-3. Open in your browser `http://localhost:8080/`
-4.  _add any other steps required or examples of how to use/run_
+3. Move to the estore-ui directory.
+4. Execute `npm install`
+5. Execute `ng serve`
+6. Open in your browser `http://localhost:4200/`
 
 ## Known bugs and disclaimers
-(It may be the case that your implementation is not perfect.)
 
-Document any known bug or nuisance.
-If any shortcomings, make clear what these are and where they are located.
+This implementation would not work (mostly) if it were deployed publically, and multiple
+people were to log in at the same time. There is only one guest user, and logged in user
+only has one instance and is stored in the backend.
 
 ## How to test it
 
