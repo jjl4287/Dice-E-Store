@@ -6,11 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.estore.api.estoreapi.persistence.UserDAO;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.User;
 
@@ -22,12 +18,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;

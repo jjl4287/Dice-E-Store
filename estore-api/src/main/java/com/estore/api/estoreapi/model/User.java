@@ -1,10 +1,8 @@
 package com.estore.api.estoreapi.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Team A - Bovines - Brady Self
  */
 public class User {
-    private static final Logger LOG = Logger.getLogger(User.class.getName());
-
     // Package private for tests
     static final String STRING_FORMAT = "User [id=%d, username=%s, password=%s]";
 

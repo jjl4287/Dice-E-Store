@@ -44,18 +44,19 @@
                             <div *ngIf="currentUser != undefined; then thenBlock else elseBlock"></div>
                             <ng-template #thenBlock>
                                 <a class="dropdown-item" routerLink="/login">{{ currentUser?.username }}</a>
-                                <button *ngIf="currentUser?.username != 'Guest'" (click)="logout()"
-                                    class="dropdown-item">Logout</button>
                             </ng-template>
                             <ng-template #elseBlock>
                                 <a class="dropdown-item" routerLink="/login">Login</a>
                             </ng-template>
-                            <a *ngIf="currentUser?.username != 'Guest'" class="dropdown-item" routerLink="/my/orders">My
+                            <a *ngIf="currentUser?.username != 'Guest' && currentUser?.username != 'admin'"
+                                class="dropdown-item" routerLink="/my/orders">My
                                 Orders</a>
                             <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item"
                                 routerLink="admin/orders">Manage Orders</a>
                             <a *ngIf="currentUser?.username === 'admin'" class="dropdown-item"
                                 routerLink="admin/products">Manage Products</a>
+                            <button *ngIf="currentUser?.username != 'Guest'" (click)="logout()"
+                                class="dropdown-item">Logout</button>
                         </div>
                     </li>
                     <div ngbDropdown class="nav-item dropdown" id="search-component">

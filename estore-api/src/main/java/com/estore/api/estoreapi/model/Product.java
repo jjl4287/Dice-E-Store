@@ -1,7 +1,6 @@
 package com.estore.api.estoreapi.model;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Team A - Bovines
  */
 public class Product {
-    private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
     public static final String STRING_FORMAT = "Product [id=%d, name=%s, qty=%d, price=%f, url=%s, description=%s]";

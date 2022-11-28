@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -158,7 +157,6 @@ public class UserTests {
         String init_name = "UserName";
         String init_password = "Password";
         Set<Product> init_shoppingCart = new HashSet<>();
-        String init_email = "email";
         User user = new User(init_id, init_name, init_password, init_shoppingCart, init_password);
 
         String expected_password = "NewPassword";

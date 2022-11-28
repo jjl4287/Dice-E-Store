@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.estore.api.estoreapi.model.Product;
-
 /**
  * The unit test suite for the Product class
  * 
