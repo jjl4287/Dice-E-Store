@@ -16,7 +16,7 @@ export class ProductFormComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private productService: ProductService) {
     this.products = productService.getProducts();
-    if(this.route.snapshot.paramMap.get('id') != null) {
+    if (this.route.snapshot.paramMap.get('id') != null) {
       this.id = Number(this.route.snapshot.paramMap.get('id'));
       productService.getProduct(this.id).subscribe(currentProduct => this.currentProduct = currentProduct);
     } else {
@@ -47,7 +47,7 @@ export class ProductFormComponent implements OnInit {
     if (this.id === 0) {
       if (!product) { return; }
       this.productService.addProduct(product).subscribe(product => {
-          this.products.push(product);
+        this.products.push(product);
       });
     } else {
       if (!product) { return; }
@@ -56,7 +56,7 @@ export class ProductFormComponent implements OnInit {
       this.getProducts();
     }
     this.router.navigate(['/admin/products'])
-    
+
   }
 
   // using service to delete products

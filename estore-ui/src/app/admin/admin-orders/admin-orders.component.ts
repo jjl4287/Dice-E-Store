@@ -11,10 +11,10 @@ import { Order } from 'src/app/order'
 export class AdminOrdersComponent implements OnInit {
   orders: any;
 
-  constructor( private orderService: OrderService) {
-    this.orderService.getOrders().subscribe(orders => { 
+  constructor(private orderService: OrderService) {
+    this.orderService.getOrders().subscribe(orders => {
       console.log(orders);
-      this.orders = orders 
+      this.orders = orders
     });
   }
 

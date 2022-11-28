@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a User
  *
@@ -19,34 +20,43 @@ public class User {
     // Package private for tests
     static final String STRING_FORMAT = "User [id=%d, username=%s, password=%s]";
 
-    @JsonProperty("id") private int id;
-    @JsonProperty("username") private String username;
-    @JsonProperty("password") private String password;
-    @JsonProperty("shoppingCart") private Set<Product> shoppingCart;
-    @JsonProperty("email") private String email;
+    @JsonProperty("id")
+    private int id;
+    @JsonProperty("username")
+    private String username;
+    @JsonProperty("password")
+    private String password;
+    @JsonProperty("shoppingCart")
+    private Set<Product> shoppingCart;
+    @JsonProperty("email")
+    private String email;
     private boolean isAdmin;
-
 
     /**
      * Create a new User with the given id, username, and password
-     * @param id The id of the User
-     * @param username The username of the User
-     * @param password the password of the User
+     * 
+     * @param id           The id of the User
+     * @param username     The username of the User
+     * @param password     the password of the User
      * @param shoppingCart the orders that have not yet been fulfilled for the user
-     * @param email the email address of the user; used for email notification
+     * @param email        the email address of the user; used for email
+     *                     notification
      * 
      *
-     * {@literal @}JsonProperty is used in serialization and deserialization
-     * of the JSON object to the Java object in mapping the fields.  If field
-     * is not provided it will be set to default java value
+     *                     {@literal @}JsonProperty is used in serialization and
+     *                     deserialization
+     *                     of the JSON object to the Java object in mapping the
+     *                     fields. If field
+     *                     is not provided it will be set to default java value
      */
     @JsonCreator
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password,
-                    @JsonProperty("shoppingCart") Set<Product> shoppingCart, @JsonProperty("email") String email) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username,
+            @JsonProperty("password") String password,
+            @JsonProperty("shoppingCart") Set<Product> shoppingCart, @JsonProperty("email") String email) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.shoppingCart = shoppingCart==null?new HashSet<Product>():shoppingCart;
+        this.shoppingCart = shoppingCart == null ? new HashSet<Product>() : shoppingCart;
         this.email = email;
         this.isAdmin = username.equals("admin");
     }
@@ -62,6 +72,7 @@ public class User {
 
     /**
      * an equals function override for user comparison
+     * 
      * @param user to be compared
      * @return true if equal, false if not.
      */
@@ -78,6 +89,7 @@ public class User {
 
     /**
      * a hashcode generator for a User
+     * 
      * @return hashcode for User
      */
     @Override
@@ -85,9 +97,9 @@ public class User {
         return Objects.hash(id, username, password);
     }
 
-
     /**
      * Getter for password
+     * 
      * @return password of user
      */
     public String getPassword() {
@@ -96,6 +108,7 @@ public class User {
 
     /**
      * Setter for password
+     * 
      * @param password password of user
      */
     public void setPassword(String password) {
@@ -104,24 +117,34 @@ public class User {
 
     /**
      * getter for the user id
+     * 
      * @return The id of the user
      */
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
     /**
      * Sets the username of the user - necessary for JSON/JAVA deserialization
+     * 
      * @param username The username of the user
      */
-    public void setUsername(String username) {this.username = username;}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     /**
      * gets username of the user
+     * 
      * @return The username of the user
      */
-    public String getUsername() {return username;}
+    public String getUsername() {
+        return username;
+    }
 
     /**
      * Gets the email from the user
+     * 
      * @return the email of the user
      */
     public String getEmail() {
@@ -130,6 +153,7 @@ public class User {
 
     /**
      * Sets the email of the uesr
+     * 
      * @param email the email to set
      */
     public void setEmail(String email) {
@@ -138,6 +162,7 @@ public class User {
 
     /**
      * Gets the active orders of the user
+     * 
      * @return the active orders
      */
     public Set<Product> getShoppingCart() {
@@ -151,8 +176,8 @@ public class User {
      */
     public void addToCart(Product product) {
         for (Product p : shoppingCart) {
-            if(p.equals(product)){
-                p.setQty(p.getQty()+1);
+            if (p.equals(product)) {
+                p.setQty(p.getQty() + 1);
                 return;
             }
         }
@@ -166,28 +191,27 @@ public class User {
 
     public void reduceFromCart(Product product) {
         for (Product p : shoppingCart) {
-            if(p.equals(product)){
-                if(p.getQty()<=1){
+            if (p.equals(product)) {
+                if (p.getQty() <= 1) {
                     removeFromCart(product);
                     return;
-                }
-                else{
-                    p.setQty(p.getQty()-1);
+                } else {
+                    p.setQty(p.getQty() - 1);
                     return;
                 }
-                
+
             }
         }
     }
 
     /**
      * Returns whether or not the user is an admin or not
-     * @return  true if user is admin; false otherwise
+     * 
+     * @return true if user is admin; false otherwise
      */
     public boolean isAdmin() {
         return this.isAdmin;
     }
-
 
     /*
      * {@inheritDoc}

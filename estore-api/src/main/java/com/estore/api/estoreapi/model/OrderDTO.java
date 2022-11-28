@@ -34,14 +34,16 @@ public class OrderDTO {
      * is not provided it will be set to default java value
      */
     @JsonCreator
-    public OrderDTO(@JsonProperty("products") ArrayList<Product> products, @JsonProperty("user") User user, @JsonProperty("UUID") UUID uuid, 
-        @JsonProperty("fulfilled") boolean fulfilled, @JsonProperty("size") int size, @JsonProperty("price") double price){
+    public OrderDTO(@JsonProperty("products") ArrayList<Product> products, @JsonProperty("user") User user,
+            @JsonProperty("UUID") UUID uuid,
+            @JsonProperty("fulfilled") boolean fulfilled, @JsonProperty("size") int size,
+            @JsonProperty("price") double price) {
         this.products = new ArrayList<Product>(products);
-        this.uuid=uuid;
-        this.user=user;
+        this.uuid = uuid;
+        this.user = user;
         this.fulfilled = fulfilled;
-        this.size=size;
-        this.price=price;
+        this.size = size;
+        this.price = price;
     }
     /**
      * Create a new OrderDTO with the given products, and User
@@ -51,8 +53,8 @@ public class OrderDTO {
      */
     public OrderDTO(ArrayList<Product> products,User user){
         this.products = new ArrayList<Product>(products);
-        this.uuid=UUID.randomUUID();
-        this.user=user;
+        this.uuid = UUID.randomUUID();
+        this.user = user;
     }
     
      /**
@@ -62,14 +64,14 @@ public class OrderDTO {
      */
     public OrderDTO(Order order){
         this.products = new ArrayList<Product>(order.getProducts());
-        this.uuid=order.getUuid();
-        this.user=order.getUser();
+        this.uuid = order.getUuid();
+        this.user = order.getUser();
         this.fulfilled = order.getFulfilled();
 
         this.size = this.products.size();
-        this.price = 0; 
-        for(Product p:this.products){
-            this.price +=p.getQty()*p.getPrice();
+        this.price = 0;
+        for (Product p : this.products) {
+            this.price += p.getQty() * p.getPrice();
         }
     }
 

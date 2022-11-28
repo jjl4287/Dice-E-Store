@@ -62,8 +62,8 @@ export class UserService {
     }
     return this.http.get<User[]>(`${this.usersUrl}/?name=${term}`).pipe(
       tap(x => x.length ?
-         this.log(`found users matching "${term}"`) :
-         this.log(`no users matching "${term}"`)),
+        this.log(`found users matching "${term}"`) :
+        this.log(`no users matching "${term}"`)),
       catchError(this.handleError<User[]>('searchUsers', []))
     );
   }
@@ -129,7 +129,7 @@ export class UserService {
     );
   }
 
-  removeFromCart(product:Product): Observable<String> {
+  removeFromCart(product: Product): Observable<String> {
     const url = `${this.usersUrl}/shoppingCart/remove`;
     return this.http.post<String>(url, product, this.httpOptions).pipe(
       tap(_ => this.log(`updated user cart`)),
@@ -137,7 +137,7 @@ export class UserService {
     );
   }
 
-  reduceFromCart(product:Product): Observable<String> {
+  reduceFromCart(product: Product): Observable<String> {
     const url = `${this.usersUrl}/shoppingCart/reduce`;
     return this.http.post<String>(url, product, this.httpOptions).pipe(
       tap(_ => this.log(`updated user cart`)),
@@ -145,7 +145,7 @@ export class UserService {
     );
   }
 
-  addToCart(product:Product): Observable<String> {
+  addToCart(product: Product): Observable<String> {
     const url = `${this.usersUrl}/shoppingCart/add`;
     return this.http.post<String>(url, product, this.httpOptions).pipe(
       tap(_ => this.log(`updated user cart`)),

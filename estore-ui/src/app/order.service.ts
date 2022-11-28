@@ -60,10 +60,10 @@ export class OrderService {
   /* post orders whose name contains search term */
   searchOrders(term: User): Observable<Order[]> {
     const url = `${this.ordersUrl}/`;
-    return this.http.post<Order[]>(url,term,this.httpOptions).pipe(
+    return this.http.post<Order[]>(url, term, this.httpOptions).pipe(
       tap(x => x.length ?
-         this.log(`found orders matching "${term}"`) :
-         this.log(`no orders matching "${term}"`)),
+        this.log(`found orders matching "${term}"`) :
+        this.log(`no orders matching "${term}"`)),
       catchError(this.handleError<Order[]>('searchOrders'))
     );
   }
@@ -74,11 +74,11 @@ export class OrderService {
   addOrder(purchase: Array<Product>, user: User): Observable<Order> {
     console.log("true")
     const UUID = uuid.v4() as string;
-    let price =0;
+    let price = 0;
     purchase.forEach(p => {
-      price += p.qty*p.price;
+      price += p.qty * p.price;
     });
-    let order = {UUID,user,products:purchase,fulfilled:false,size:purchase.length,price} as Order;
+    let order = { UUID, user, products: purchase, fulfilled: false, size: purchase.length, price } as Order;
     return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       tap((newOrder: Order) => this.log(`added order w/ id=${newOrder.UUID}`)),
       catchError(this.handleError<Order>('addOrder'))

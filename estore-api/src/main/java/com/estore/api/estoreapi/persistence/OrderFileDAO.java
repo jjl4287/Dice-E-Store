@@ -21,7 +21,7 @@ import java.util.*;
  * Provides for JSON File based persistence
  * 
  * {@literal @} Creates single instance of class and injects into others
- *              as needed.
+ * as needed.
  * 
  * @author Team A - Bovines - Maximo Bustillo
  */
@@ -44,7 +44,7 @@ public class OrderFileDAO implements OrderDAO {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public OrderFileDAO(@Value("${orders.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public OrderFileDAO(@Value("${orders.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();  // load the Orders from the file
@@ -102,7 +102,7 @@ public class OrderFileDAO implements OrderDAO {
         // Translates the Java Objects to JSON objects, then to the file
         // writeValue will throw IOException if error
         // with file or reading from file
-        objectMapper.writeValue(new File(filename),OrderArray);
+        objectMapper.writeValue(new File(filename), OrderArray);
         return true;
     }
 
@@ -120,8 +120,8 @@ public class OrderFileDAO implements OrderDAO {
 
         // Reads JSON objects from file into array of  Orders
         // readValue will throw IOException on error
-        Order[] OrderArray = objectMapper.readValue(new File(filename),Order[].class);
-        for (Order order: OrderArray){
+        Order[] OrderArray = objectMapper.readValue(new File(filename), Order[].class);
+        for (Order order : OrderArray) {
             Orders.put(order.getUuid(), order);
         }
 
@@ -129,7 +129,7 @@ public class OrderFileDAO implements OrderDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order[] getallOrders() {
@@ -139,7 +139,7 @@ public class OrderFileDAO implements OrderDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order[] findOrders(User user) {
@@ -149,7 +149,7 @@ public class OrderFileDAO implements OrderDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order getOrderbyID(UUID id) {
@@ -162,22 +162,22 @@ public class OrderFileDAO implements OrderDAO {
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order createNewOrder(Order order) throws IOException {
         synchronized(Orders) {
             // We create a new Order object because the id field is immutable
             // and we need to assign the next unique id
-            Order newOrder = new Order(order.getProducts(), order.getUser(), order.getUuid(),order.getFulfilled());
-            Orders.put(newOrder.getUuid(),newOrder);
+            Order newOrder = new Order(order.getProducts(), order.getUser(), order.getUuid(), order.getFulfilled());
+            Orders.put(newOrder.getUuid(), newOrder);
             save(); // may throw an IOException
             return newOrder;
         }
     }
 
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Order updateOrder(Order order) throws IOException {
@@ -186,7 +186,7 @@ public class OrderFileDAO implements OrderDAO {
                 return null;  // Order does not exist
 
             order.fulfillOrder();
-            Orders.put(order.getUuid(),order);
+            Orders.put(order.getUuid(), order);
             save(); // may throw an IOException
             return order;
         }

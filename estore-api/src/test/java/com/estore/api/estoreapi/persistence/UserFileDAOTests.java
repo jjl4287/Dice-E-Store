@@ -32,7 +32,6 @@ import java.util.Base64;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * The unit test suite for the UserFileDAO class
  * 
@@ -50,21 +49,21 @@ public class UserFileDAOTests {
         mockObjectMapper = mock(ObjectMapper.class);
         testUsers = new User[3];
         testUsers[0] = new User(1, "TestUser1", "testUser1Password", new HashSet<Product>(), "testEmail1");
-        testUsers[1] = new User(2, "TestUser2", "testUser2Password",  new HashSet<Product>(), "testEmail2");
-        testUsers[2] = new User(3, "TestUser3", "testUser3Password",  new HashSet<Product>(), "testEmail3");
+        testUsers[1] = new User(2, "TestUser2", "testUser2Password", new HashSet<Product>(), "testEmail2");
+        testUsers[2] = new User(3, "TestUser3", "testUser3Password", new HashSet<Product>(), "testEmail3");
 
         when(mockObjectMapper
-            .readValue(new File("mockUsersFile.txt"),User[].class))
+                .readValue(new File("mockUsersFile.txt"), User[].class))
                 .thenReturn(testUsers);
         testUserFileDAO = new UserFileDAO("mockUsersFile.txt", mockObjectMapper);
     }
 
     @Test
-    public void testGetUsers() throws IOException {  // getuser may throw IOException
-        //Invoke
+    public void testGetUsers() throws IOException { // getuser may throw IOException
+        // Invoke
         User[] users = testUserFileDAO.getUsers();
 
-        //Analyze
+        // Analyze
         assertEquals(users.length, testUsers.length);
         for (int i = 0; i < users.length; i++) {
             assertEquals(users[i], testUsers[i]);
@@ -77,10 +76,10 @@ public class UserFileDAOTests {
         User[] users = testUserFileDAO.searchUsers("1");
 
         // Analyze
-        assertEquals(users.length,1);
-        assertEquals(users[0],testUsers[0]);
+        assertEquals(users.length, 1);
+        assertEquals(users[0], testUsers[0]);
     }
-    
+
     @Test
     public void testGetUser() {
         // Invoke
@@ -94,22 +93,22 @@ public class UserFileDAOTests {
     public void testDeleteUser() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> testUserFileDAO.deleteUser(2),
-                            "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analzye
-        assertEquals(result,true);
-        assertEquals(testUserFileDAO.users.size(),testUsers.length-1);
+        assertEquals(result, true);
+        assertEquals(testUserFileDAO.users.size(), testUsers.length - 1);
     }
 
     @Test
     public void testCreateUser() {
-        //Setup
+        // Setup
         User user = new User(4, "TestCreateUser", "TestCreateUserPassword", new HashSet<Product>(), "testCreateEmail");
 
-        //Invoke
+        // Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.createUser(user));
 
-        //Analyze
+        // Analyze
         assertNotNull(result);
         User actual = testUserFileDAO.getUser(user.getId());
         assertEquals(user, actual);
@@ -117,13 +116,13 @@ public class UserFileDAOTests {
 
     @Test
     public void testUpdateUser() {
-        //Setup
-        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword",  new HashSet<Product>(), "testEmail");
+        // Setup
+        User updateUser = new User(1, "TestUpdateUser", "TestUpdateUserPassword", new HashSet<Product>(), "testEmail");
 
-        //Invoke
+        // Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(updateUser));
 
-        //Analyze
+        // Analyze
         assertNotNull(result);
         User actual = testUserFileDAO.getUser(updateUser.getId());
         assertEquals(updateUser, actual);
@@ -131,56 +130,56 @@ public class UserFileDAOTests {
 
     @Test
     public void testLogIn() throws IOException {
-        //Invoke
+        // Invoke
         String testUsername = Base64.getEncoder().encodeToString(testUsers[0].getUsername().getBytes());
         String testPassword = Base64.getEncoder().encodeToString(testUsers[0].getPassword().getBytes());
-        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsername,testPassword));
-        
-        //Analyze
+        User user = assertDoesNotThrow(() -> testUserFileDAO.login(testUsername, testPassword));
+
+        // Analyze
         assertNotNull(user);
         User actual = testUserFileDAO.getCurrentUser();
         assertEquals(user, actual);
 
         testUserFileDAO.logout();
         User actualAfterLogout = testUserFileDAO.getCurrentUser();
-        User expected = new User(0, "Guest", "guestPassword",  new HashSet<Product>(), "guestEmail");
+        User expected = new User(0, "Guest", "guestPassword", new HashSet<Product>(), "guestEmail");
         assertEquals(actualAfterLogout, expected);
     }
 
     @Test
     public void testGetCurrentUser() {
-        //Invoke
+        // Invoke
         User user = assertDoesNotThrow(() -> testUserFileDAO.getCurrentUser());
 
-        //Analyze
-        User expected = new User(0, "Guest", "guestPassword",  new HashSet<Product>(), "guestEmail");
+        // Analyze
+        User expected = new User(0, "Guest", "guestPassword", new HashSet<Product>(), "guestEmail");
         assertEquals(user, expected);
     }
 
     @Test
     public void testLogInFailed() {
-        //Invoke
+        // Invoke
         String testUsername = Base64.getEncoder().encodeToString(testUsers[0].getUsername().getBytes());
         assertDoesNotThrow(() -> testUserFileDAO.login(testUsername, ""));
         User user = assertDoesNotThrow(() -> testUserFileDAO.login("", ""));
         User user2 = assertDoesNotThrow(() -> testUserFileDAO.login(testUsername, ""));
 
-        //Analyze
+        // Analyze
         assertNull(user);
         assertNull(user2);
     }
 
     @Test
-    public void testSaveException() throws IOException{
+    public void testSaveException() throws IOException {
         doThrow(new IOException())
-            .when(mockObjectMapper)
-                .writeValue(any(File.class),any(User[].class));
+                .when(mockObjectMapper)
+                .writeValue(any(File.class), any(User[].class));
 
         User user = new User(testUsers[0]);
 
         assertThrows(IOException.class,
-                        () -> testUserFileDAO.createUser(user),
-                        "IOException not thrown");
+                () -> testUserFileDAO.createUser(user),
+                "IOException not thrown");
     }
 
     @Test
@@ -189,14 +188,14 @@ public class UserFileDAOTests {
         User user = testUserFileDAO.getUser(98);
 
         // Analyze
-        assertEquals(user,null);
+        assertEquals(user, null);
     }
 
     @Test
     public void testDeleteUserNo() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> testUserFileDAO.deleteUser(98),
-                                                "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analyze
         assertEquals(result, false);
@@ -210,7 +209,7 @@ public class UserFileDAOTests {
 
         // Invoke
         User result = assertDoesNotThrow(() -> testUserFileDAO.updateUser(user),
-                                                "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analyze
         assertNull(result);
@@ -221,21 +220,21 @@ public class UserFileDAOTests {
         // Setup
         ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
         doThrow(new IOException())
-            .when(mockObjectMapper)
-                .readValue(new File("doesnt_matter.txt"),User[].class);
+                .when(mockObjectMapper)
+                .readValue(new File("doesnt_matter.txt"), User[].class);
 
         // Invoke & Analyze
         assertThrows(IOException.class,
-                        () -> new UserFileDAO("doesnt_matter.txt",mockObjectMapper),
-                        "IOException not thrown");
+                () -> new UserFileDAO("doesnt_matter.txt", mockObjectMapper),
+                "IOException not thrown");
     }
 
     @Test
     public void testGetShoppingCart() throws IOException {
-        //Invoke
+        // Invoke
         Set<Product> shoppingCart = assertDoesNotThrow(() -> testUserFileDAO.getShoppingCart());
 
-        //Analyze
+        // Analyze
         assertEquals(shoppingCart, new HashSet<Product>());
     }
 }

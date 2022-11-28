@@ -18,7 +18,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This semester project is creating an online e-store selling non other than Dungeons & Dragons related items. These items include dice, boards, tokens, and figurines to help anyone immerse themselves in the world of D&D. The project includes having a customer interface that allows shoppers to login, add or remove products to their cart and checkout and their cart is saved even when they logout and log back in, while the owner can login with an admin account and add items to the shop and edit item info. Our own addition to the shop is an order menu that tracks customer orders and allows the owner to fulfill the order than alert the customer that their order is on the way. 
+This semester project is creating an online e-store selling non other than Dungeons & Dragons related items. These items include dice, boards, tokens, and figurines to help anyone immerse themselves in the world of D&D. The project includes having a customer interface that allows shoppers to login, add or remove products to their cart and checkout and their cart is saved even when they logout and log back in, while the owner can login with an admin account and add items to the shop and edit item info. Our own addition to the shop is an order menu that tracks customer orders and allows the owner to fulfill the order than alert the customer that their order is on the way. This includes showing the customers their order page with the orders they have checked out and the status of if it has been fulfilled or not. On the owner side they can view their pending orders and choose to fullfill them sending an email notification to the user as well as marking the customer order as fulfilled.
 
 ### Purpose
 This project is targeted towards making an easy to use e-shop that sells D&D related items and allows owners to control inventory and ship out orders and lets users browse and add products to their orders and checkout and get notified when their order has been fulfilled.
@@ -34,32 +34,23 @@ This project is targeted towards making an easy to use e-shop that sells D&D rel
 
 ## Requirements
 
-This section describes the features of the application.
+Login authentication for new/returning users and store owners. The customers can browse the inventory and search for specific products and add them to their shopping cart and keep them there even if they log out. Once ready to checkout the customer can checkout in the cart and get a notification that their order has been recieved and an email when it gets fulfilled.
 
-* The central design of the store includes a user and an admin
-* Both parties will have usernames and passwords which will allow them unique access to the store
-* the admin will be able to manage teh store by adding deleting and modifying products 
-* The user will be able to then borwse the store and add products to their shopping cart 
-* The user must then be able to place an order which will be relayed to the admin 
-* the admin will then be given the ability to send an automated email when the order is fulfilled 
-
+An Owner can add, edit, or remove products from the inventory and see a list of orders currently pending from customers. The owner can then fulfill these orders and send an email notification to the customer as well as change the order status to fulfilled.
 
 ### Definition of MVP
-* A minimum viable product includes a store which can be logged into with 2 rolls 
-* One which can add modify and delete products and teh other which can view them
+The basic store should operate as one would expect. Customers can login/logout with their credentials but the wrong credentials won't get logged in. The customers can browse, search, and add/remove products to their cart. Once they are done shopping they can then checkout. Owners can add, delete, or edit products from the inventory.
 
 ### MVP Features
-* A user identification system with differing privilidges 
-* A user storage solution
-* A product model with an assosiated storage solution
-* A Robust front end with attractive design 
+Minimal Authentication for customer/owner login. Customers can see a list of products, search for a product, and can add and remove items from their shopping cart as well as checkout. The owner can add, remove, or edit the products in the inventory. The customer shopping cart stays the same even when you log out and a new user logs in. The customer can see their currently placed orders and the status and the owner can see the placed orders and can fulfill them.
+> _Provide a list of top-level Epics and/or Stories of the MVP._
 
 ### Roadmap of Enhancements
-* A check out page allowing the customer to purchase products 
-* An order to keep track of each individual purchase 
-* A way of displaying these orders for both users and the admin 
-* An email system to send automated emails
-
+Pictures and descriptions for the products.
+Create an order summary page for customers that shows thier past and placed orders and the status of whether they have been fulfilled or not.
+Create the Owner order page where they can see the orders that customers placed and have the choice to fulfill them.
+Send a notification out to customers upon checkout that the order has been recieved. A page after clicking checkout that says it has been placed.
+Send an email to the customer once the owner has fulfilled the order.
 
 ## Application Domain
 
@@ -93,9 +84,7 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
-
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+The user views and interacts with the e-store through our front end UI which starts at the login page and after a successful login displays the main page of the shop where a customer can go to the product, about us, or contact page. In the top right corner the customer can select their shopping cart to see the shopping cart page or a dropdown menu to logout or see their placed orders.
 
 
 ### View Tier
@@ -121,14 +110,6 @@ with the e-store application.
 
 
 ### Model Tier
-
-* A product represents a single class of item on sale
-* it includes a name quantity and price as well as an unique ID 
-* An order consists of a list of products and a fulfillment status, the owner it belongs to and an unique ID
-* Orders are only equal if their IDs are the same as any two Orders might contain identical products but still be unique
-* The User represetns a single user split between the admin category and the customer category
-* The User contians an ID a Username and a Password. these all distinguish two users from each other 
-
 > _Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
 > Tier above._
@@ -137,9 +118,6 @@ with the e-store application.
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 
 ### Static Code Analysis/Design Improvements
-
-* I would like to revisit how our utility functions are implimented. I found the static email class inelligent. 
-
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
@@ -163,8 +141,6 @@ with the e-store application.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-* Our testing results report 100% passing with 100% coverage
-
 > _Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your

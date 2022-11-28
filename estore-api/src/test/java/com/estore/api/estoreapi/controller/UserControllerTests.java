@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-
-
 /**
  * Test the user Controller class
  * 
@@ -42,7 +40,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testGetUser() throws IOException {  // getuser may throw IOException
+    public void testGetUser() throws IOException { // getuser may throw IOException
         // Setup
         User user = new User(1, "testUserName", "testPassword", new HashSet<Product>(), "email");
         // When the same id is passed in, our mock user DAO will return the user object
@@ -52,8 +50,8 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getUser(user.getId());
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(user,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(user, response.getBody());
     }
 
     @Test
@@ -68,7 +66,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getUser(userId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -82,7 +80,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getUser(userId);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     /*****************************************************************
@@ -91,7 +89,7 @@ public class UserControllerTests {
      ****************************************************************/
 
     @Test
-    public void testCreateUser() throws IOException {  // createuser may throw IOException
+    public void testCreateUser() throws IOException { // createuser may throw IOException
         // Setup
         User user = new User(1, "testUserName", "testPassword", new HashSet<Product>(), "email");
         // when createuser is called, return true simulating successful
@@ -102,12 +100,12 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(user,response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(user, response.getBody());
     }
 
     @Test
-    public void testCreateUserFailed() throws IOException {  // createuser may throw IOException
+    public void testCreateUserFailed() throws IOException { // createuser may throw IOException
         // Setup
         User user = new User(1, "testUserName", "testPassword", new HashSet<Product>(), "email");
         // when createuser is called, return false simulating failed
@@ -118,11 +116,11 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
     @Test
-    public void testCreateUserHandleException() throws IOException {  // createuser may throw IOException
+    public void testCreateUserHandleException() throws IOException { // createuser may throw IOException
         // Setup
         User user = new User(1, "testUserName4", "testPassword4", new HashSet<Product>(), "email");
 
@@ -133,7 +131,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.createUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -150,8 +148,8 @@ public class UserControllerTests {
         response = userController.updateUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(user,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(user, response.getBody());
     }
 
     @Test
@@ -166,7 +164,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.updateUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -180,7 +178,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.updateUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -196,8 +194,8 @@ public class UserControllerTests {
         ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(users,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(users, response.getBody());
     }
 
     @Test
@@ -210,7 +208,7 @@ public class UserControllerTests {
         ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -228,8 +226,8 @@ public class UserControllerTests {
         ResponseEntity<User[]> response = userController.searchUsers(searchString);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(users,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(users, response.getBody());
     }
 
     @Test
@@ -243,7 +241,7 @@ public class UserControllerTests {
         ResponseEntity<User[]> response = userController.searchUsers(searchString);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -257,7 +255,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -271,7 +269,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -285,7 +283,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.deleteUser(userId);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -299,8 +297,8 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
-        assertEquals(HttpStatus.CREATED,response.getStatusCode());
-        assertEquals(user,response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(user, response.getBody());
     }
 
     @Test
@@ -314,7 +312,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
     @Test
@@ -328,7 +326,7 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.login(user.getUsername(), user.getPassword());
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
@@ -342,9 +340,10 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getCurrentUser();
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(user,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(user, response.getBody());
     }
+
     @Test
     public void testGetCurrentUserHandleException() throws IOException {
         // testing a ioexception throw
@@ -354,107 +353,115 @@ public class UserControllerTests {
         ResponseEntity<User> response = userController.getCurrentUser();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
     @Test
     public void testLogout() throws IOException {
-        //Invoke
+        // Invoke
         userController.logout();
         ResponseEntity<User> response = userController.getGuest();
 
-        //Analyze
+        // Analyze
         assertEquals(userController.getCurrentUser(), response);
     }
+
     @Test
     public void testLogoutError() throws IOException {
-        //Invoke
+        // Invoke
         doThrow(new IOException()).when(mockUserDAO).logout();
         ResponseEntity<User> logoutResponse = userController.logout();
 
         doThrow(new IOException()).when(mockUserDAO).getGuest();
         ResponseEntity<User> response = userController.getGuest();
 
-
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
         assertEquals(logoutResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     public void testGetShoppingCart() throws IOException {
-        //Invoke
+        // Invoke
         ResponseEntity<Set<Product>> shoppingCartResponse = userController.getShoppingCart();
 
-        //Analyze
+        // Analyze
         assertEquals(new HashSet<Product>(), shoppingCartResponse.getBody());
     }
+
     @Test
     public void testGetShoppingCartError() throws IOException {
-        //Invoke
+        // Invoke
         doThrow(new IOException()).when(mockUserDAO).getShoppingCart();
         ResponseEntity<Set<Product>> shoppingCartResponse = userController.getShoppingCart();
 
-        //Analyze
+        // Analyze
         assertEquals(shoppingCartResponse.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @Test
     public void testaddShoppingCart() {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
         ResponseEntity<String> response = userController.addToCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
+
     @Test
     public void testaddShoppingCartError() throws IOException {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
 
         doThrow(new IOException()).when(mockUserDAO).addToCart(p);
         ResponseEntity<String> response = userController.addToCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @Test
     public void testremoveShoppingCart() {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
         ResponseEntity<String> response = userController.removeFromCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
+
     @Test
     public void testremoveShoppingCartError() throws IOException {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
 
         doThrow(new IOException()).when(mockUserDAO).removeFromCart(p);
         ResponseEntity<String> response = userController.removeFromCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @Test
     public void testreduceShoppingCart() {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
         ResponseEntity<String> response = userController.reduceFromCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
+
     @Test
     public void testreduceShoppingCartError() throws IOException {
         Product p = new Product(1, "test", 1, 1, "url", "desc");
 
         doThrow(new IOException()).when(mockUserDAO).reduceFromCart(p);
         ResponseEntity<String> response = userController.reduceFromCart(p);
-        //Invoke
+        // Invoke
 
-        //Analyze
+        // Analyze
         assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

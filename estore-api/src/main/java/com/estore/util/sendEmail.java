@@ -13,11 +13,11 @@ import javax.mail.internet.*;
 import javax.mail.Session;
 import javax.mail.Transport;
 
-
 public class sendEmail {
-    private final  static String sender = "swen261.bovine@gmail.com";
+    private final static String sender = "swen261.bovine@gmail.com";
     private final static String password = "nenqdckafwcedcdr";
-    public static boolean sendmail(String recipient, String subject, String body,boolean debug) { 
+
+    public static boolean sendmail(String recipient, String subject, String body, boolean debug) {
         // Sender's email ID needs to be mentioned
         // Assuming you are sending email from through gmails smtp
         String host = "smtp.gmail.com";
@@ -41,25 +41,25 @@ public class sendEmail {
             }
 
         });
-             // Used to debug SMTP issues
+        // Used to debug SMTP issues
         session.setDebug(debug);
 
         try {
             // Create a default MimeMessage object.
             MimeMessage message = new MimeMessage(session);
-    
+
             // Set From: header field of the header.
             message.setFrom(new InternetAddress(sender));
-    
+
             // Set To: header field of the header.
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-    
+
             // Set Subject: header field
             message.setSubject(subject);
-    
+
             // Now set the actual message
             message.setText(body);
-    
+
             System.out.println("sending...");
             // Send message
             Transport.send(message);
@@ -72,4 +72,3 @@ public class sendEmail {
 
     }
 }
-

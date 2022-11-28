@@ -23,7 +23,8 @@ public interface ProductDAO {
      * 
      * @param containsText The text to match against
      * 
-     * @return An array of products whose nemes contains the given text, may be empty
+     * @return An array of products whose nemes contains the given text, may be
+     *         empty
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -35,8 +36,8 @@ public interface ProductDAO {
      * @param id The id of the Product to get
      * 
      * @return a Product object with the matching id
-     * <br>
-     * null if no Product with a matching id is found
+     *         <br>
+     *         null if no Product with a matching id is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -46,8 +47,9 @@ public interface ProductDAO {
      * Creates and saves a product
      * 
      * @param Product product object to be created and saved
-     * <br>
-     * The id of the Product object is ignored and a new unique id is assigned
+     *                <br>
+     *                The id of the Product object is ignored and a new unique id is
+     *                assigned
      *
      * @return new Product if successful, on error false
      * 
@@ -61,7 +63,7 @@ public interface ProductDAO {
      * @param Product object to be updated and saved
      * 
      * @return updated Product if successful, null if
-     * Product not found
+     *         Product not found
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
@@ -73,8 +75,8 @@ public interface ProductDAO {
      * @param id The id of the {@link Product Product}
      * 
      * @return true if the Product was deleted
-     * <br>
-     * false if Product with the given id does not exist
+     *         <br>
+     *         false if Product with the given id does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */

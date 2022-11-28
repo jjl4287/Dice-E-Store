@@ -36,20 +36,20 @@ public class ProductFileDAOTests {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
         testProducts[0] = new Product(1, "TestProduct1", 10, 10, "url", "Description");
-        testProducts[1] = new Product(2,"TestProduct2", 20, 20, "url", "Description");
+        testProducts[1] = new Product(2, "TestProduct2", 20, 20, "url", "Description");
         testProducts[2] = new Product(3, "TestProduct3", 30, 30, "url", "Description");
         when(mockObjectMapper
-            .readValue(new File("mockProductsFile.txt"),Product[].class))
+                .readValue(new File("mockProductsFile.txt"), Product[].class))
                 .thenReturn(testProducts);
-        testProductFileDAO = new ProductFileDAO("mockProductsFile.txt",mockObjectMapper);
+        testProductFileDAO = new ProductFileDAO("mockProductsFile.txt", mockObjectMapper);
     }
 
     @Test
-    public void testGetUsers() throws IOException {  // getuser may throw IOException
-        //Invoke
+    public void testGetUsers() throws IOException { // getuser may throw IOException
+        // Invoke
         Product[] users = testProductFileDAO.getProducts();
 
-        //Analyze
+        // Analyze
         assertEquals(users.length, testProducts.length);
         for (int i = 0; i < users.length; i++) {
             assertEquals(users[i], testProducts[i]);
@@ -57,17 +57,17 @@ public class ProductFileDAOTests {
     }
 
     @Test
-    public void testFindProducts() throws IOException { //searchProducts may throw IOException
+    public void testFindProducts() throws IOException { // searchProducts may throw IOException
         // Invoke
         Product[] products = testProductFileDAO.searchProducts("1");
 
         // Analyze
-        assertEquals(products.length,1);
-        assertEquals(products[0],products[0]);
+        assertEquals(products.length, 1);
+        assertEquals(products[0], products[0]);
     }
 
     @Test
-    public void testGetProduct() throws IOException { //getProducts may throw IOException
+    public void testGetProduct() throws IOException { // getProducts may throw IOException
         // Invoke
         Product product = testProductFileDAO.getProduct(2);
 
@@ -76,14 +76,14 @@ public class ProductFileDAOTests {
     }
 
     @Test
-    public void testCreateProduct() throws IOException { //createProduct may throw IOException
-        //Setup
+    public void testCreateProduct() throws IOException { // createProduct may throw IOException
+        // Setup
         Product product = new Product(4, "TestProduct4", 40, 40, "url", "Description");
 
-        //Invoke
+        // Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.createProduct(product));
 
-        //Analyze
+        // Analyze
         assertNotNull(result);
         Product actual = testProductFileDAO.getProduct(product.getId());
         assertEquals(product, actual);
@@ -91,13 +91,13 @@ public class ProductFileDAOTests {
 
     @Test
     public void testUpdateProduct() throws IOException {
-        //Setup
+        // Setup
         Product updateProduct = new Product(1, "TestUpdateProduct", 99, 99, "url", "Description");
 
-        //Invoke
+        // Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.updateProduct(updateProduct));
 
-        //Analyze
+        // Analyze
         assertNotNull(result);
         Product actual = testProductFileDAO.getProduct(updateProduct.getId());
         assertEquals(updateProduct, actual);
@@ -107,10 +107,10 @@ public class ProductFileDAOTests {
     public void testDeleteProduct() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> testProductFileDAO.deleteProduct(2),
-                            "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analzye
-        assertEquals(result,true);
+        assertEquals(result, true);
     }
 
     @Test
@@ -119,14 +119,14 @@ public class ProductFileDAOTests {
         Product product = testProductFileDAO.getProduct(69);
 
         // Analyze
-        assertEquals(product,null);
+        assertEquals(product, null);
     }
 
     @Test
     public void testDeleteProductNo() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> testProductFileDAO.deleteProduct(69),
-                                                "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analyze
         assertEquals(result, false);
@@ -139,7 +139,7 @@ public class ProductFileDAOTests {
 
         // Invoke
         Product result = assertDoesNotThrow(() -> testProductFileDAO.updateProduct(product),
-                                                "Unexpected exception thrown");
+                "Unexpected exception thrown");
 
         // Analyze
         assertNull(result);
@@ -150,12 +150,12 @@ public class ProductFileDAOTests {
         // Setup
         ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
         doThrow(new IOException())
-            .when(mockObjectMapper)
-                .readValue(new File("doesnt_matter.txt"),Product[].class);
+                .when(mockObjectMapper)
+                .readValue(new File("doesnt_matter.txt"), Product[].class);
 
         // Invoke & Analyze
         assertThrows(IOException.class,
-                        () -> new ProductFileDAO("doesnt_matter.txt",mockObjectMapper),
-                        "IOException not thrown");
+                () -> new ProductFileDAO("doesnt_matter.txt", mockObjectMapper),
+                "IOException not thrown");
     }
 }

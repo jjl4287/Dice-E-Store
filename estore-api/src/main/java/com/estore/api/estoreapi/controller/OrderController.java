@@ -42,8 +42,8 @@ public class OrderController {
      * Creates a REST API controller to reponds to requests for orders
      * 
      * @param orderDAO The Order Data Access Object to perform CRUD operations
-     * <br>
-     * This dependency is injected by the Spring Framework
+     *                 <br>
+     *                 This dependency is injected by the Spring Framework
      */
     public OrderController(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
@@ -55,10 +55,10 @@ public class OrderController {
      * @param id The id of the order
      * 
      * @return ResponseEntity with order object and HTTP status of OK if found
-     * <br>
-     * ResponseEntity with HTTP status of NOT_FOUND if not found
-     * <br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         <br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found
+     *         <br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable UUID id) {
@@ -71,9 +71,8 @@ public class OrderController {
                 return new ResponseEntity<OrderDTO>(new OrderDTO(order),HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -82,9 +81,9 @@ public class OrderController {
      * Responds to the GET request for all orders
      * 
      * @return ResponseEntity with array of order objects (may be empty) and
-     * HTTP status of OK
-     * <br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         HTTP status of OK
+     *         <br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
     public ResponseEntity<OrderDTO[]> getOrders() {
@@ -100,9 +99,8 @@ public class OrderController {
                 
             }
             return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
-        }
-        catch(IOException e){
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -111,19 +109,20 @@ public class OrderController {
      * Responds to the GET request for all orders whose name contains
      * the same User
      * 
-     * @param user The user parameter which contains the user used to find the orders
+     * @param user The user parameter which contains the user used to find the
+     *             orders
      * 
      * @return ResponseEntity with array of orders objects (may be empty) and
-     * HTTP status of OK
-     * <br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     * <p>
-     * Example: Find all orders that contain the text "nameHere"
-     * GET http://localhost:8080/orders/?name=nameHere
+     *         HTTP status of OK
+     *         <br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         <p>
+     *         Example: Find all orders that contain the text "nameHere"
+     *         GET http://localhost:8080/orders/?name=nameHere
      */
     @PostMapping("/")
     public ResponseEntity<OrderDTO[]> searchOrders(@RequestBody User user) {
-        LOG.info("GET /orders/?name="+user);
+        LOG.info("GET /orders/?name=" + user);
 
         try {
             //find the users
@@ -131,14 +130,13 @@ public class OrderController {
 
             //transfer them to DTO array
             OrderDTO[] dto = new OrderDTO[array.length];
-            for (int i =0;i<array.length;i++) {
-                dto[i]=new OrderDTO(array[i]);
+            for (int i = 0; i < array.length; i++) {
+                dto[i] = new OrderDTO(array[i]);
                 System.out.println(dto[i]);
             }
             return new ResponseEntity<OrderDTO[]>(dto, HttpStatus.OK);
-        }
-        catch(IOException e){
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -149,10 +147,11 @@ public class OrderController {
      * @param order - The order to create
      * 
      * @return ResponseEntity with created orders object and HTTP status of CREATED
-     * <br>
-     * ResponseEntity with HTTP status of CONFLICT if orders object already exists
-     * <br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         <br>
+     *         ResponseEntity with HTTP status of CONFLICT if orders object already
+     *         exists
+     *         <br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO dto) {
@@ -166,10 +165,9 @@ public class OrderController {
             if(created != null) {
                 return new ResponseEntity<OrderDTO>(new OrderDTO(created), HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(HttpStatus.CONFLICT);        
-        }
-        catch(IOException e){
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -197,11 +195,10 @@ public class OrderController {
             if(sendEmail.sendmail(updatedDTO.getUser().getEmail(), "Order Fulfilled", updatedDTO.toString(), false)){
                 return new ResponseEntity<OrderDTO>(updatedDTO,HttpStatus.OK);
             }
-                
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);        
-        }
-        catch(IOException e){
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

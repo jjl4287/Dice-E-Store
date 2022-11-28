@@ -4,15 +4,16 @@
             <form #f="ngForm" (ngSubmit)="Save(f.value)">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input #name="ngModel" [(ngModel)]="currentProduct.name" name="name" id="name" type="text" class="form-control" required>
+                    <input #name="ngModel" [(ngModel)]="currentProduct.name" name="name" id="name" type="text"
+                        class="form-control" required>
                     <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
                         Name is required.
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input #quantity="ngModel" [(ngModel)]="currentProduct.qty" name="qty" id="quantity" type="number" class="form-control"
-                        required>
+                    <input #quantity="ngModel" [(ngModel)]="currentProduct.qty" name="qty" id="quantity" type="number"
+                        class="form-control" required>
                     <div class="alert alert-danger" *ngIf="quantity.touched && quantity.invalid">
                         Quantity is required.
                     </div>
@@ -21,8 +22,8 @@
                     <label for="price">Price</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input #price="ngModel" [(ngModel)]="currentProduct.price" name="price" id="price" type="number" class="form-control"
-                            required>
+                        <input #price="ngModel" [(ngModel)]="currentProduct.price" name="price" id="price" type="number"
+                            class="form-control" required>
                     </div>
                     <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
                         Price is required.
@@ -30,14 +31,16 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input #description="ngModel" [(ngModel)]="currentProduct.description" name="description" id="description" type="text" class="form-control">
+                    <input #description="ngModel" [(ngModel)]="currentProduct.description" name="description"
+                        id="description" type="text" class="form-control">
                     <div class="alert alert-danger" *ngIf="description.touched && description.invalid">
                         Description is required.
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="url">Image URL</label>
-                    <input #url="ngModel" [(ngModel)]="currentProduct.url" name="url" id="url" type="text" class="form-control">
+                    <input #url="ngModel" [(ngModel)]="currentProduct.url" name="url" id="url" type="text"
+                        class="form-control">
                     <div class="alert alert-danger" *ngIf="url.touched && url.invalid">
                         Url is required.
                     </div>
