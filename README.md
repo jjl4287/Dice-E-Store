@@ -70,3 +70,6 @@ To run tests on all the tiers in isolation do this:
 MIT License
 
 See LICENSE for details.
+You are free to use this project for any purpose, except for commercial purposes.
+
+
